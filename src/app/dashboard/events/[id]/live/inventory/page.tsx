@@ -86,7 +86,7 @@ export default function InventoryMonitorPage() {
     const pct = getPercent(item);
     if (pct === 0) return "bg-red-500";
     if (pct < 20) return "bg-amber-500";
-    return "bg-[#8BC34A]";
+    return "bg-eco";
   }
 
   function getBorderColor(item: InventoryItem): string {
@@ -116,7 +116,7 @@ export default function InventoryMonitorPage() {
           <p className="mb-4 text-lg text-red-600">{error}</p>
           <button
             onClick={fetchInventory}
-            className="rounded-xl bg-[#8BC34A] px-8 py-3 text-lg font-semibold text-white"
+            className="rounded-xl bg-eco px-8 py-3 text-lg font-semibold text-white"
           >
             Retry
           </button>
@@ -132,7 +132,7 @@ export default function InventoryMonitorPage() {
         <div className="mx-auto max-w-2xl">
           <Link
             href={`/dashboard/events/${eventId}/live`}
-            className="mb-2 inline-flex items-center gap-1 text-sm font-medium text-[#7CB342]"
+            className="mb-2 inline-flex items-center gap-1 text-sm font-medium text-eco-dark"
           >
             <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
@@ -149,7 +149,7 @@ export default function InventoryMonitorPage() {
       <div className="mx-auto max-w-2xl px-4 py-3">
         <div className="flex flex-wrap gap-4 text-sm">
           <div className="flex items-center gap-2">
-            <div className="h-3 w-6 rounded bg-[#8BC34A]" />
+            <div className="h-3 w-6 rounded bg-eco" />
             <span className="text-[#6B7366]">Healthy</span>
           </div>
           <div className="flex items-center gap-2">
@@ -203,7 +203,7 @@ export default function InventoryMonitorPage() {
                             ? "text-red-600"
                             : pct < 20
                             ? "text-amber-600"
-                            : "text-[#7CB342]"
+                            : "text-eco-dark"
                         }`}
                       >
                         {pct === 0

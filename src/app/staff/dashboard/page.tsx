@@ -101,7 +101,7 @@ export default function StaffDashboardPage() {
       case "waiting":
         return "bg-amber-400 border-amber-500 text-amber-900";
       case "served":
-        return "bg-emerald-400 border-[#8BC34A] text-emerald-900";
+        return "bg-emerald-400 border-eco text-emerald-900";
       default:
         return "bg-gray-200 border-[#E3E8E1] text-[#6B7366]";
     }
@@ -127,7 +127,7 @@ export default function StaffDashboardPage() {
           <p className="mb-4 text-lg text-red-600">{error}</p>
           <button
             onClick={fetchTables}
-            className="min-h-[48px] rounded-xl bg-[#8BC34A] px-8 py-3 text-lg font-semibold text-white"
+            className="min-h-[48px] rounded-xl bg-eco px-8 py-3 text-lg font-semibold text-white"
           >
             Retry
           </button>
@@ -162,7 +162,7 @@ export default function StaffDashboardPage() {
             <span className="text-[#6B7366]">Waiting</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="h-4 w-4 rounded-full bg-emerald-400 border border-[#8BC34A]" />
+            <div className="h-4 w-4 rounded-full bg-emerald-400 border border-eco" />
             <span className="text-[#6B7366]">Served</span>
           </div>
         </div>
@@ -238,7 +238,7 @@ export default function StaffDashboardPage() {
                   selectedSeat.seat.status === "waiting"
                     ? "text-amber-600"
                     : selectedSeat.seat.status === "served"
-                    ? "text-[#7CB342]"
+                    ? "text-eco-dark"
                     : "text-[#6B7366]"
                 }`}
               >

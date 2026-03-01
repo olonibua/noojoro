@@ -39,8 +39,8 @@ export default function StaffLoginPage() {
       <div className="w-full max-w-sm">
         {/* Logo / Title */}
         <div className="mb-8 text-center">
-          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#8BC34A]/10">
-            <svg className="h-8 w-8 text-[#7CB342]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-eco/10">
+            <svg className="h-8 w-8 text-eco-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
             </svg>
           </div>
@@ -66,7 +66,7 @@ export default function StaffLoginPage() {
               value={eventCode}
               onChange={(e) => setEventCode(e.target.value)}
               placeholder="e.g. WDNG-2024"
-              className="min-h-[52px] w-full rounded-xl border-2 border-[#E3E8E1] bg-white px-4 py-3 text-lg text-[#1C1F1A] placeholder-[#9CA396] outline-none focus:border-[#8BC34A]"
+              className="min-h-[52px] w-full rounded-xl border-2 border-[#E3E8E1] bg-white px-4 py-3 text-lg text-[#1C1F1A] placeholder-[#9CA396] outline-none focus:border-eco"
             />
           </div>
 
@@ -82,14 +82,14 @@ export default function StaffLoginPage() {
               value={pin}
               onChange={(e) => setPin(e.target.value)}
               placeholder="Enter your PIN"
-              className="min-h-[52px] w-full rounded-xl border-2 border-[#E3E8E1] bg-white px-4 py-3 text-lg text-[#1C1F1A] placeholder-[#9CA396] outline-none focus:border-[#8BC34A]"
+              className="min-h-[52px] w-full rounded-xl border-2 border-[#E3E8E1] bg-white px-4 py-3 text-lg text-[#1C1F1A] placeholder-[#9CA396] outline-none focus:border-eco"
             />
           </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="min-h-[52px] w-full rounded-xl bg-[#8BC34A] px-6 py-3 text-lg font-bold text-white transition-colors active:bg-emerald-600 disabled:opacity-50"
+            className="min-h-[52px] w-full rounded-xl bg-eco px-6 py-3 text-lg font-bold text-white transition-colors active:bg-emerald-600 disabled:opacity-50"
           >
             {loading ? "Signing in..." : "Sign In"}
           </button>

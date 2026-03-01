@@ -206,7 +206,7 @@ export default function MenuBuilderPage() {
   if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-[#F4F6F3]">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#8BC34A] border-t-transparent" />
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-eco border-t-transparent" />
       </div>
     );
   }
@@ -267,13 +267,13 @@ export default function MenuBuilderPage() {
                 value={newCategoryName}
                 onChange={(e) => setNewCategoryName(e.target.value)}
                 placeholder="e.g. Spirits, Cocktails, Beer"
-                className="w-full rounded-lg border border-[#E3E8E1] bg-white px-4 py-2.5 text-sm text-[#1C1F1A] placeholder-[#9CA396] outline-none focus:border-[#8BC34A] focus:ring-2 focus:ring-emerald-500/20"
+                className="w-full rounded-lg border border-[#E3E8E1] bg-white px-4 py-2.5 text-sm text-[#1C1F1A] placeholder-[#9CA396] outline-none focus:border-eco focus:ring-2 focus:ring-emerald-500/20"
               />
             </div>
             <button
               type="submit"
               disabled={addingCategory}
-              className="rounded-lg bg-[#8BC34A] px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#7CB342] disabled:opacity-50"
+              className="rounded-lg bg-eco px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-eco-dark disabled:opacity-50"
             >
               {addingCategory ? "Adding..." : "Add Category"}
             </button>
@@ -316,7 +316,7 @@ export default function MenuBuilderPage() {
                     >
                       <div className="flex-1">
                         <p className="font-medium text-[#1C1F1A]">{item.name}</p>
-                        <p className="mt-0.5 text-sm text-[#7CB342] font-semibold">
+                        <p className="mt-0.5 text-sm text-eco-dark font-semibold">
                           {"\u20A6"}{formatPrice(item.price)}
                         </p>
                       </div>
@@ -334,13 +334,13 @@ export default function MenuBuilderPage() {
                                 onChange={(e) =>
                                   setEditStockValue(e.target.value)
                                 }
-                                className="w-20 rounded border border-[#E3E8E1] px-2 py-1 text-sm text-[#1C1F1A] outline-none focus:border-[#8BC34A]"
+                                className="w-20 rounded border border-[#E3E8E1] px-2 py-1 text-sm text-[#1C1F1A] outline-none focus:border-eco"
                               />
                               <button
                                 onClick={() =>
                                   handleStockSave(category.id, item.id)
                                 }
-                                className="rounded bg-[#8BC34A] px-2 py-1 text-xs font-medium text-white hover:bg-[#7CB342]"
+                                className="rounded bg-eco px-2 py-1 text-xs font-medium text-white hover:bg-eco-dark"
                               >
                                 Save
                               </button>
@@ -372,7 +372,7 @@ export default function MenuBuilderPage() {
                             toggleAvailability(category.id, item)
                           }
                           className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors ${
-                            item.is_available ? "bg-[#8BC34A]" : "bg-gray-300"
+                            item.is_available ? "bg-eco" : "bg-gray-300"
                           }`}
                           role="switch"
                           aria-checked={item.is_available}
@@ -403,7 +403,7 @@ export default function MenuBuilderPage() {
                           onChange={(e) =>
                             updateItemForm(category.id, "name", e.target.value)
                           }
-                          className="rounded-lg border border-[#E3E8E1] bg-white px-3 py-2 text-sm text-[#1C1F1A] placeholder-[#9CA396] outline-none focus:border-[#8BC34A] focus:ring-2 focus:ring-emerald-500/20"
+                          className="rounded-lg border border-[#E3E8E1] bg-white px-3 py-2 text-sm text-[#1C1F1A] placeholder-[#9CA396] outline-none focus:border-eco focus:ring-2 focus:ring-emerald-500/20"
                         />
                         <input
                           type="number"
@@ -414,7 +414,7 @@ export default function MenuBuilderPage() {
                           onChange={(e) =>
                             updateItemForm(category.id, "price", e.target.value)
                           }
-                          className="rounded-lg border border-[#E3E8E1] bg-white px-3 py-2 text-sm text-[#1C1F1A] placeholder-[#9CA396] outline-none focus:border-[#8BC34A] focus:ring-2 focus:ring-emerald-500/20"
+                          className="rounded-lg border border-[#E3E8E1] bg-white px-3 py-2 text-sm text-[#1C1F1A] placeholder-[#9CA396] outline-none focus:border-eco focus:ring-2 focus:ring-emerald-500/20"
                         />
                         <input
                           type="number"
@@ -424,14 +424,14 @@ export default function MenuBuilderPage() {
                           onChange={(e) =>
                             updateItemForm(category.id, "stock", e.target.value)
                           }
-                          className="rounded-lg border border-[#E3E8E1] bg-white px-3 py-2 text-sm text-[#1C1F1A] placeholder-[#9CA396] outline-none focus:border-[#8BC34A] focus:ring-2 focus:ring-emerald-500/20"
+                          className="rounded-lg border border-[#E3E8E1] bg-white px-3 py-2 text-sm text-[#1C1F1A] placeholder-[#9CA396] outline-none focus:border-eco focus:ring-2 focus:ring-emerald-500/20"
                         />
                       </div>
                       <div className="flex items-center gap-2">
                         <button
                           onClick={() => handleAddItem(category.id)}
                           disabled={addingItem === category.id}
-                          className="rounded-lg bg-[#8BC34A] px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#7CB342] disabled:opacity-50"
+                          className="rounded-lg bg-eco px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-eco-dark disabled:opacity-50"
                         >
                           {addingItem === category.id
                             ? "Adding..."
@@ -448,7 +448,7 @@ export default function MenuBuilderPage() {
                   ) : (
                     <button
                       onClick={() => openItemForm(category.id)}
-                      className="inline-flex items-center gap-1.5 text-sm font-medium text-[#7CB342] hover:text-[#7CB342]"
+                      className="inline-flex items-center gap-1.5 text-sm font-medium text-eco-dark hover:text-eco-dark"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"

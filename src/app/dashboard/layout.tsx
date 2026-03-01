@@ -89,7 +89,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   if (loading) {
     return (
       <div className="flex h-screen items-center justify-center bg-[#F4F6F3]">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#E3E8E1] border-t-[#22C55E]" />
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#E3E8E1] border-t-eco" />
       </div>
     );
   }
@@ -111,12 +111,12 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         }`}
       >
         <div className="flex h-16 items-center gap-2 border-b border-[#E3E8E1] px-6">
-          <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#22C55E] shadow-sm shadow-[#22C55E]/20">
+          <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-eco shadow-sm shadow-eco/20">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                 </svg>
               </div>
-              <span className="text-xl font-bold text-[#1C1F1A]">No <span className="text-[#22C55E]">Ojoro</span></span>
+              <span className="text-xl font-bold text-[#1C1F1A]">No <span className="text-eco">Ojoro</span></span>
           <button
             className="ml-auto lg:hidden"
             onClick={() => setSidebarOpen(false)}
@@ -139,7 +139,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 }}
                 className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors ${
                   active
-                    ? "bg-[#22C55E]/10 text-[#22C55E]"
+                    ? "bg-eco/10 text-eco"
                     : "text-[#6B7366] hover:bg-[#F0F3EF] hover:text-[#1C1F1A]"
                 }`}
               >
@@ -180,7 +180,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 <p className="text-sm font-semibold text-[#1C1F1A]">{user.email || user.phone}</p>
                 <p className="text-xs text-[#6B7366] capitalize">{user.role?.replace("_", " ")}</p>
               </div>
-              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#22C55E] text-white text-sm font-bold">
+              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-eco text-white text-sm font-bold">
                 {(user.email || user.phone || "U").charAt(0).toUpperCase()}
               </div>
             </div>

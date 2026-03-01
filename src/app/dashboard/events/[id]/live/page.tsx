@@ -88,7 +88,7 @@ export default function CatererLiveDashboardPage() {
           <p className="mb-4 text-lg text-red-600">{error}</p>
           <button
             onClick={fetchDashboard}
-            className="rounded-xl bg-[#8BC34A] px-8 py-3 text-lg font-semibold text-white"
+            className="rounded-xl bg-eco px-8 py-3 text-lg font-semibold text-white"
           >
             Retry
           </button>
@@ -128,7 +128,7 @@ export default function CatererLiveDashboardPage() {
                 cy="70"
                 r={radius}
                 fill="none"
-                stroke="#8BC34A"
+                stroke="#22C55E"
                 strokeWidth="10"
                 strokeLinecap="round"
                 strokeDasharray={circumference}
@@ -149,7 +149,7 @@ export default function CatererLiveDashboardPage() {
               <p className="text-sm text-[#6B7366]">Total</p>
             </div>
             <div>
-              <p className="text-2xl font-bold text-[#7CB342]">{used}</p>
+              <p className="text-2xl font-bold text-eco-dark">{used}</p>
               <p className="text-sm text-[#6B7366]">Used</p>
             </div>
             <div>
@@ -168,10 +168,10 @@ export default function CatererLiveDashboardPage() {
             <p className="text-sm font-medium text-amber-600">Waiting</p>
           </div>
           <div className="rounded-xl border-2 border-emerald-200 bg-emerald-50 p-4 text-center">
-            <p className="text-3xl font-bold text-[#7CB342]">
+            <p className="text-3xl font-bold text-eco-dark">
               {data?.orders.served ?? 0}
             </p>
-            <p className="text-sm font-medium text-[#7CB342]">Served</p>
+            <p className="text-sm font-medium text-eco-dark">Served</p>
           </div>
         </div>
 

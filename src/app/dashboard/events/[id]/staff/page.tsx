@@ -132,7 +132,7 @@ export default function StaffManagementPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#E3E8E1] border-t-[#8BC34A]" />
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#E3E8E1] border-t-eco" />
       </div>
     );
   }
@@ -169,7 +169,7 @@ export default function StaffManagementPage() {
         </div>
       )}
       {success && (
-        <div className="mt-4 rounded-lg bg-[#F1F8E9] border border-[#C5E1A5] px-4 py-3 text-sm text-[#7CB342]">
+        <div className="mt-4 rounded-lg bg-[#F1F8E9] border border-[#C5E1A5] px-4 py-3 text-sm text-eco-dark">
           {success}
         </div>
       )}
@@ -186,7 +186,7 @@ export default function StaffManagementPage() {
                 value={addForm.name}
                 onChange={(e) => setAddForm((p) => ({ ...p, name: e.target.value }))}
                 placeholder="Staff name"
-                className="mt-1 block w-full rounded-lg border border-[#E3E8E1] px-3 py-2.5 text-sm text-[#1C1F1A] placeholder-[#9CA396] focus:border-[#8BC34A] focus:outline-none focus:ring-1 focus:ring-[#8BC34A]"
+                className="mt-1 block w-full rounded-lg border border-[#E3E8E1] px-3 py-2.5 text-sm text-[#1C1F1A] placeholder-[#9CA396] focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
               />
             </div>
             <div>
@@ -198,7 +198,7 @@ export default function StaffManagementPage() {
                 onChange={(e) => setAddForm((p) => ({ ...p, pin: e.target.value }))}
                 placeholder="4-digit PIN"
                 maxLength={4}
-                className="mt-1 block w-full rounded-lg border border-[#E3E8E1] px-3 py-2.5 text-sm text-[#1C1F1A] placeholder-[#9CA396] focus:border-[#8BC34A] focus:outline-none focus:ring-1 focus:ring-[#8BC34A]"
+                className="mt-1 block w-full rounded-lg border border-[#E3E8E1] px-3 py-2.5 text-sm text-[#1C1F1A] placeholder-[#9CA396] focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
               />
             </div>
           </div>
@@ -213,7 +213,7 @@ export default function StaffManagementPage() {
                 value={addForm.table_range_start}
                 onChange={(e) => setAddForm((p) => ({ ...p, table_range_start: e.target.value }))}
                 placeholder="1"
-                className="mt-1 block w-full rounded-lg border border-[#E3E8E1] px-3 py-2.5 text-sm text-[#1C1F1A] placeholder-[#9CA396] focus:border-[#8BC34A] focus:outline-none focus:ring-1 focus:ring-[#8BC34A]"
+                className="mt-1 block w-full rounded-lg border border-[#E3E8E1] px-3 py-2.5 text-sm text-[#1C1F1A] placeholder-[#9CA396] focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
               />
             </div>
             <div>
@@ -226,14 +226,14 @@ export default function StaffManagementPage() {
                 value={addForm.table_range_end}
                 onChange={(e) => setAddForm((p) => ({ ...p, table_range_end: e.target.value }))}
                 placeholder="10"
-                className="mt-1 block w-full rounded-lg border border-[#E3E8E1] px-3 py-2.5 text-sm text-[#1C1F1A] placeholder-[#9CA396] focus:border-[#8BC34A] focus:outline-none focus:ring-1 focus:ring-[#8BC34A]"
+                className="mt-1 block w-full rounded-lg border border-[#E3E8E1] px-3 py-2.5 text-sm text-[#1C1F1A] placeholder-[#9CA396] focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
               />
             </div>
           </div>
           <button
             type="submit"
             disabled={adding}
-            className="rounded-lg bg-[#8BC34A] px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#7CB342] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="rounded-lg bg-eco px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-eco-dark disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
             {adding ? "Adding..." : "Add Staff"}
           </button>
@@ -263,13 +263,13 @@ export default function StaffManagementPage() {
                         value={editForm.name}
                         onChange={(e) => setEditForm((p) => ({ ...p, name: e.target.value }))}
                         placeholder="Name"
-                        className="block w-full rounded-lg border border-[#E3E8E1] px-3 py-2 text-sm focus:border-[#8BC34A] focus:outline-none focus:ring-1 focus:ring-[#8BC34A]"
+                        className="block w-full rounded-lg border border-[#E3E8E1] px-3 py-2 text-sm focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
                       />
                       <input
                         value={editForm.pin}
                         onChange={(e) => setEditForm((p) => ({ ...p, pin: e.target.value }))}
                         placeholder="PIN (optional)"
-                        className="block w-full rounded-lg border border-[#E3E8E1] px-3 py-2 text-sm focus:border-[#8BC34A] focus:outline-none focus:ring-1 focus:ring-[#8BC34A]"
+                        className="block w-full rounded-lg border border-[#E3E8E1] px-3 py-2 text-sm focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
                       />
                     </div>
                     <div className="grid gap-3 sm:grid-cols-2">
@@ -278,20 +278,20 @@ export default function StaffManagementPage() {
                         value={editForm.table_range_start}
                         onChange={(e) => setEditForm((p) => ({ ...p, table_range_start: e.target.value }))}
                         placeholder="Table start"
-                        className="block w-full rounded-lg border border-[#E3E8E1] px-3 py-2 text-sm focus:border-[#8BC34A] focus:outline-none focus:ring-1 focus:ring-[#8BC34A]"
+                        className="block w-full rounded-lg border border-[#E3E8E1] px-3 py-2 text-sm focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
                       />
                       <input
                         type="number"
                         value={editForm.table_range_end}
                         onChange={(e) => setEditForm((p) => ({ ...p, table_range_end: e.target.value }))}
                         placeholder="Table end"
-                        className="block w-full rounded-lg border border-[#E3E8E1] px-3 py-2 text-sm focus:border-[#8BC34A] focus:outline-none focus:ring-1 focus:ring-[#8BC34A]"
+                        className="block w-full rounded-lg border border-[#E3E8E1] px-3 py-2 text-sm focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
                       />
                     </div>
                     <div className="flex gap-2">
                       <button
                         onClick={() => handleEdit(s.id)}
-                        className="rounded-lg bg-[#8BC34A] px-3 py-1.5 text-sm font-medium text-white hover:bg-[#7CB342]"
+                        className="rounded-lg bg-eco px-3 py-1.5 text-sm font-medium text-white hover:bg-eco-dark"
                       >
                         Save
                       </button>

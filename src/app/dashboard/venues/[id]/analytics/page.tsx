@@ -50,7 +50,7 @@ export default function AnalyticsPage() {
   if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-[#F4F6F3]">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#8BC34A] border-t-transparent" />
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-eco border-t-transparent" />
       </div>
     );
   }
@@ -63,7 +63,7 @@ export default function AnalyticsPage() {
         </div>
         <Link
           href={`/dashboard/venues/${venueId}`}
-          className="mt-4 text-sm font-medium text-[#7CB342] hover:text-[#7CB342]"
+          className="mt-4 text-sm font-medium text-eco-dark hover:text-eco-dark"
         >
           Back to Venue
         </Link>
@@ -159,7 +159,7 @@ export default function AnalyticsPage() {
                 <div key={item.name}>
                   <div className="mb-1.5 flex items-center justify-between">
                     <span className="flex items-center gap-2 text-sm font-medium text-[#1C1F1A]">
-                      <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#8BC34A]/10 text-[10px] font-bold text-[#7CB342]">
+                      <span className="flex h-5 w-5 items-center justify-center rounded-full bg-eco/10 text-[10px] font-bold text-eco-dark">
                         {index + 1}
                       </span>
                       {item.name}
@@ -170,7 +170,7 @@ export default function AnalyticsPage() {
                   </div>
                   <div className="h-3 w-full overflow-hidden rounded-full bg-[#F0F3EF]">
                     <div
-                      className="h-3 rounded-full bg-[#8BC34A] transition-all duration-500"
+                      className="h-3 rounded-full bg-eco transition-all duration-500"
                       style={{
                         width: `${(item.total_sold / maxQuantity) * 100}%`,
                       }}
@@ -212,9 +212,9 @@ export default function AnalyticsPage() {
                         <span
                           className={`inline-flex h-6 w-6 items-center justify-center rounded-full text-xs font-bold ${
                             index === 0
-                              ? "bg-[#8BC34A]/10 text-[#7CB342]"
+                              ? "bg-eco/10 text-eco-dark"
                               : index === 1
-                              ? "bg-emerald-50 text-[#7CB342]"
+                              ? "bg-emerald-50 text-eco-dark"
                               : index === 2
                               ? "bg-[#F0F3EF] text-[#6B7366]"
                               : "text-[#9CA396]"

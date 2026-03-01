@@ -70,8 +70,8 @@ export default function RegisterForm({ onNavigate }: RegisterFormProps) {
           onClick={() => setMode("email")}
           className={`flex-1 rounded-lg py-2.5 text-sm font-medium transition-all ${
             mode === "email"
-              ? "bg-[#8BC34A] text-white shadow-sm"
-              : "t-text-muted hover:text-[#8BC34A]"
+              ? "bg-eco text-white shadow-sm"
+              : "t-text-muted hover:text-eco"
           }`}
         >
           Email
@@ -81,8 +81,8 @@ export default function RegisterForm({ onNavigate }: RegisterFormProps) {
           onClick={() => setMode("phone")}
           className={`flex-1 rounded-lg py-2.5 text-sm font-medium transition-all ${
             mode === "phone"
-              ? "bg-[#8BC34A] text-white shadow-sm"
-              : "t-text-muted hover:text-[#8BC34A]"
+              ? "bg-eco text-white shadow-sm"
+              : "t-text-muted hover:text-eco"
           }`}
         >
           Phone
@@ -166,7 +166,7 @@ export default function RegisterForm({ onNavigate }: RegisterFormProps) {
         <button
           type="button"
           onClick={() => onNavigate("login")}
-          className="font-medium text-[#8BC34A] hover:text-[#7CB342]"
+          className="font-medium text-eco hover:text-eco-dark"
         >
           Sign In
         </button>

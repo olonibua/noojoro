@@ -19,7 +19,7 @@ interface EventDetail {
 
 const statusColors: Record<string, string> = {
   draft: "bg-yellow-100 text-yellow-800",
-  active: "bg-[#8BC34A]/10 text-[#7CB342]",
+  active: "bg-eco/10 text-eco-dark",
   completed: "bg-[#F0F3EF] text-[#6B7366]",
 };
 
@@ -50,7 +50,7 @@ export default function EventDetailPage() {
         date: data.date || "",
         time: data.time || "",
         venue_name: data.venue_name,
-        theme_color: data.theme_color || "#8BC34A",
+        theme_color: data.theme_color || "#22C55E",
       });
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to load event");
@@ -89,7 +89,7 @@ export default function EventDetailPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#E3E8E1] border-t-[#8BC34A]" />
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#E3E8E1] border-t-eco" />
       </div>
     );
   }
@@ -100,7 +100,7 @@ export default function EventDetailPage() {
         <p className="text-red-600">{error || "Event not found"}</p>
         <button
           onClick={() => router.push("/dashboard/events")}
-          className="mt-4 text-sm text-[#8BC34A] hover:underline"
+          className="mt-4 text-sm text-eco hover:underline"
         >
           Back to Events
         </button>
@@ -136,7 +136,7 @@ export default function EventDetailPage() {
                   <input
                     value={editForm.name}
                     onChange={(e) => setEditForm((p) => ({ ...p, name: e.target.value }))}
-                    className="mt-1 block w-full rounded-lg border border-[#E3E8E1] px-3 py-2 text-sm focus:border-[#8BC34A] focus:outline-none focus:ring-1 focus:ring-[#8BC34A]"
+                    className="mt-1 block w-full rounded-lg border border-[#E3E8E1] px-3 py-2 text-sm focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
                   />
                 </div>
                 <div className="grid gap-4 sm:grid-cols-3">
@@ -146,7 +146,7 @@ export default function EventDetailPage() {
                       type="date"
                       value={editForm.date}
                       onChange={(e) => setEditForm((p) => ({ ...p, date: e.target.value }))}
-                      className="mt-1 block w-full rounded-lg border border-[#E3E8E1] px-3 py-2 text-sm focus:border-[#8BC34A] focus:outline-none focus:ring-1 focus:ring-[#8BC34A]"
+                      className="mt-1 block w-full rounded-lg border border-[#E3E8E1] px-3 py-2 text-sm focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
                     />
                   </div>
                   <div>
@@ -155,7 +155,7 @@ export default function EventDetailPage() {
                       type="time"
                       value={editForm.time}
                       onChange={(e) => setEditForm((p) => ({ ...p, time: e.target.value }))}
-                      className="mt-1 block w-full rounded-lg border border-[#E3E8E1] px-3 py-2 text-sm focus:border-[#8BC34A] focus:outline-none focus:ring-1 focus:ring-[#8BC34A]"
+                      className="mt-1 block w-full rounded-lg border border-[#E3E8E1] px-3 py-2 text-sm focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
                     />
                   </div>
                   <div>
@@ -163,7 +163,7 @@ export default function EventDetailPage() {
                     <input
                       value={editForm.venue_name}
                       onChange={(e) => setEditForm((p) => ({ ...p, venue_name: e.target.value }))}
-                      className="mt-1 block w-full rounded-lg border border-[#E3E8E1] px-3 py-2 text-sm focus:border-[#8BC34A] focus:outline-none focus:ring-1 focus:ring-[#8BC34A]"
+                      className="mt-1 block w-full rounded-lg border border-[#E3E8E1] px-3 py-2 text-sm focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
                     />
                   </div>
                 </div>
@@ -173,7 +173,7 @@ export default function EventDetailPage() {
                     <input
                       value={editForm.theme_color}
                       onChange={(e) => setEditForm((p) => ({ ...p, theme_color: e.target.value }))}
-                      className="block w-full rounded-lg border border-[#E3E8E1] px-3 py-2 text-sm focus:border-[#8BC34A] focus:outline-none focus:ring-1 focus:ring-[#8BC34A]"
+                      className="block w-full rounded-lg border border-[#E3E8E1] px-3 py-2 text-sm focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
                     />
                     <input
                       type="color"
@@ -187,7 +187,7 @@ export default function EventDetailPage() {
                   <button
                     onClick={handleSave}
                     disabled={saving}
-                    className="rounded-lg bg-[#8BC34A] px-4 py-2 text-sm font-semibold text-white hover:bg-[#7CB342] disabled:opacity-50"
+                    className="rounded-lg bg-eco px-4 py-2 text-sm font-semibold text-white hover:bg-eco-dark disabled:opacity-50"
                   >
                     {saving ? "Saving..." : "Save Changes"}
                   </button>
@@ -236,7 +236,7 @@ export default function EventDetailPage() {
             <div className="flex items-center gap-2">
               <div
                 className="h-6 w-6 rounded-full border border-[#E3E8E1]"
-                style={{ backgroundColor: event.theme_color || "#8BC34A" }}
+                style={{ backgroundColor: event.theme_color || "#22C55E" }}
                 title={event.theme_color}
               />
               <button
@@ -256,10 +256,10 @@ export default function EventDetailPage() {
           <button
             key={link.href}
             onClick={() => router.push(link.href)}
-            className="flex items-center gap-3 rounded-xl border border-[#E3E8E1] bg-white p-4 text-left shadow-sm transition-all hover:border-[#8BC34A]/40 hover:shadow-md"
+            className="flex items-center gap-3 rounded-xl border border-[#E3E8E1] bg-white p-4 text-left shadow-sm transition-all hover:border-eco/40 hover:shadow-md"
           >
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#8BC34A]/10">
-              <span className="text-sm font-bold text-[#8BC34A]">
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-eco/10">
+              <span className="text-sm font-bold text-eco">
                 {link.label.charAt(0)}
               </span>
             </div>

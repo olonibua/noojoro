@@ -73,7 +73,7 @@ export default function StaffPerformancePage() {
           <p className="mb-4 text-lg text-red-600">{error}</p>
           <button
             onClick={fetchStaff}
-            className="rounded-xl bg-[#8BC34A] px-8 py-3 text-lg font-semibold text-white"
+            className="rounded-xl bg-eco px-8 py-3 text-lg font-semibold text-white"
           >
             Retry
           </button>
@@ -89,7 +89,7 @@ export default function StaffPerformancePage() {
         <div className="mx-auto max-w-2xl">
           <Link
             href={`/dashboard/events/${eventId}/live`}
-            className="mb-2 inline-flex items-center gap-1 text-sm font-medium text-[#7CB342]"
+            className="mb-2 inline-flex items-center gap-1 text-sm font-medium text-eco-dark"
           >
             <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
@@ -112,7 +112,7 @@ export default function StaffPerformancePage() {
             <p className="text-sm text-[#6B7366]">Staff Active</p>
           </div>
           <div className="rounded-xl border-2 border-[#E3E8E1] p-4 text-center">
-            <p className="text-3xl font-bold text-[#7CB342]">
+            <p className="text-3xl font-bold text-eco-dark">
               {rankedStaff.reduce((s, m) => s + m.confirmations, 0)}
             </p>
             <p className="text-sm text-[#6B7366]">Total Confirmations</p>
@@ -158,7 +158,7 @@ export default function StaffPerformancePage() {
               <div className="flex gap-4 text-sm">
                 <div>
                   <span className="text-[#6B7366]">Confirmations: </span>
-                  <span className="font-bold text-[#7CB342]">
+                  <span className="font-bold text-eco-dark">
                     {member.confirmations}
                   </span>
                 </div>
@@ -224,7 +224,7 @@ export default function StaffPerformancePage() {
                   <td className="px-4 py-3 text-sm text-[#6B7366]">
                     {member.table_range}
                   </td>
-                  <td className="px-4 py-3 text-right text-base font-bold text-[#7CB342]">
+                  <td className="px-4 py-3 text-right text-base font-bold text-eco-dark">
                     {member.confirmations}
                   </td>
                   <td className="px-4 py-3 text-right">

@@ -122,7 +122,7 @@ export default function VenueDetailPage() {
   if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-[#F4F6F3]">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#8BC34A] border-t-transparent" />
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-eco border-t-transparent" />
       </div>
     );
   }
@@ -135,7 +135,7 @@ export default function VenueDetailPage() {
         </div>
         <Link
           href="/dashboard"
-          className="mt-4 text-sm font-medium text-[#7CB342] hover:text-[#7CB342]"
+          className="mt-4 text-sm font-medium text-eco-dark hover:text-eco-dark"
         >
           Back to Dashboard
         </Link>
@@ -200,7 +200,7 @@ export default function VenueDetailPage() {
                   required
                   value={editName}
                   onChange={(e) => setEditName(e.target.value)}
-                  className="w-full rounded-lg border border-[#E3E8E1] bg-white px-4 py-2.5 text-sm text-[#1C1F1A] outline-none focus:border-[#8BC34A] focus:ring-2 focus:ring-emerald-500/20"
+                  className="w-full rounded-lg border border-[#E3E8E1] bg-white px-4 py-2.5 text-sm text-[#1C1F1A] outline-none focus:border-eco focus:ring-2 focus:ring-emerald-500/20"
                 />
               </div>
               <div>
@@ -212,7 +212,7 @@ export default function VenueDetailPage() {
                   required
                   value={editAddress}
                   onChange={(e) => setEditAddress(e.target.value)}
-                  className="w-full rounded-lg border border-[#E3E8E1] bg-white px-4 py-2.5 text-sm text-[#1C1F1A] outline-none focus:border-[#8BC34A] focus:ring-2 focus:ring-emerald-500/20"
+                  className="w-full rounded-lg border border-[#E3E8E1] bg-white px-4 py-2.5 text-sm text-[#1C1F1A] outline-none focus:border-eco focus:ring-2 focus:ring-emerald-500/20"
                 />
               </div>
               <div>
@@ -226,7 +226,7 @@ export default function VenueDetailPage() {
                   max={500}
                   value={editTableCount}
                   onChange={(e) => setEditTableCount(Number(e.target.value))}
-                  className="w-full rounded-lg border border-[#E3E8E1] bg-white px-4 py-2.5 text-sm text-[#1C1F1A] outline-none focus:border-[#8BC34A] focus:ring-2 focus:ring-emerald-500/20"
+                  className="w-full rounded-lg border border-[#E3E8E1] bg-white px-4 py-2.5 text-sm text-[#1C1F1A] outline-none focus:border-eco focus:ring-2 focus:ring-emerald-500/20"
                 />
               </div>
               <div>
@@ -238,7 +238,7 @@ export default function VenueDetailPage() {
                   value={editLogoUrl}
                   onChange={(e) => setEditLogoUrl(e.target.value)}
                   placeholder="https://example.com/logo.png"
-                  className="w-full rounded-lg border border-[#E3E8E1] bg-white px-4 py-2.5 text-sm text-[#1C1F1A] placeholder-[#9CA396] outline-none focus:border-[#8BC34A] focus:ring-2 focus:ring-emerald-500/20"
+                  className="w-full rounded-lg border border-[#E3E8E1] bg-white px-4 py-2.5 text-sm text-[#1C1F1A] placeholder-[#9CA396] outline-none focus:border-eco focus:ring-2 focus:ring-emerald-500/20"
                 />
               </div>
             </div>
@@ -247,7 +247,7 @@ export default function VenueDetailPage() {
               <button
                 type="submit"
                 disabled={saving}
-                className="rounded-lg bg-[#8BC34A] px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#7CB342] disabled:opacity-50"
+                className="rounded-lg bg-eco px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-eco-dark disabled:opacity-50"
               >
                 {saving ? "Saving..." : "Save Changes"}
               </button>
@@ -276,7 +276,7 @@ export default function VenueDetailPage() {
                 </h1>
                 <p className="mt-1 text-sm text-[#6B7366]">{venue.address}</p>
                 <div className="mt-3 flex flex-wrap gap-3">
-                  <span className="inline-flex items-center rounded-full bg-emerald-50 px-3 py-1 text-xs font-medium text-[#7CB342]">
+                  <span className="inline-flex items-center rounded-full bg-emerald-50 px-3 py-1 text-xs font-medium text-eco-dark">
                     {venue.table_count} {venue.table_count === 1 ? "table" : "tables"}
                   </span>
                 </div>
@@ -292,10 +292,10 @@ export default function VenueDetailPage() {
             <Link
               key={link.href}
               href={link.href}
-              className="group rounded-xl border border-[#E3E8E1] bg-white p-5 transition-all hover:border-[#8BC34A]/40 hover:shadow-md"
+              className="group rounded-xl border border-[#E3E8E1] bg-white p-5 transition-all hover:border-eco/40 hover:shadow-md"
             >
               <div className="flex items-start gap-4">
-                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-emerald-50 text-[#7CB342] transition-colors group-hover:bg-[#8BC34A]/10">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-emerald-50 text-eco-dark transition-colors group-hover:bg-eco/10">
                   {link.icon}
                 </div>
                 <div>

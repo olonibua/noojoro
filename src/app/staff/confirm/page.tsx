@@ -167,7 +167,7 @@ export default function StaffConfirmPage() {
       <div className="flex min-h-screen flex-col items-center justify-center bg-white px-6">
         <div className="text-center">
           {/* Animated checkmark */}
-          <div className="mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-[#8BC34A]/10">
+          <div className="mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-eco/10">
             <svg
               className="h-14 w-14 text-emerald-500"
               fill="none"
@@ -184,7 +184,7 @@ export default function StaffConfirmPage() {
             </svg>
           </div>
 
-          <h1 className="mb-2 text-3xl font-bold text-[#7CB342]">
+          <h1 className="mb-2 text-3xl font-bold text-eco-dark">
             Confirmed!
           </h1>
           <p className="mb-1 text-lg text-gray-800">
@@ -200,7 +200,7 @@ export default function StaffConfirmPage() {
 
         <button
           onClick={reset}
-          className="mt-8 min-h-[52px] w-full max-w-sm rounded-xl bg-[#8BC34A] px-6 py-3 text-lg font-bold text-white active:bg-emerald-600"
+          className="mt-8 min-h-[52px] w-full max-w-sm rounded-xl bg-eco px-6 py-3 text-lg font-bold text-white active:bg-emerald-600"
         >
           Confirm Another
         </button>
@@ -223,7 +223,7 @@ export default function StaffConfirmPage() {
         </div>
         <button
           onClick={reset}
-          className="mt-8 min-h-[52px] w-full max-w-sm rounded-xl bg-[#8BC34A] px-6 py-3 text-lg font-bold text-white active:bg-emerald-600"
+          className="mt-8 min-h-[52px] w-full max-w-sm rounded-xl bg-eco px-6 py-3 text-lg font-bold text-white active:bg-emerald-600"
         >
           Try Again
         </button>
@@ -263,7 +263,7 @@ export default function StaffConfirmPage() {
             }}
             className={`min-h-[48px] flex-1 py-3 text-base font-semibold transition-colors ${
               tab === "scan"
-                ? "bg-[#8BC34A] text-white"
+                ? "bg-eco text-white"
                 : "bg-white text-[#6B7366]"
             }`}
           >
@@ -276,7 +276,7 @@ export default function StaffConfirmPage() {
             }}
             className={`min-h-[48px] flex-1 py-3 text-base font-semibold transition-colors ${
               tab === "code"
-                ? "bg-[#8BC34A] text-white"
+                ? "bg-eco text-white"
                 : "bg-white text-[#6B7366]"
             }`}
           >
@@ -291,7 +291,7 @@ export default function StaffConfirmPage() {
           {cameraAvailable && !scanning && (
             <button
               onClick={startCamera}
-              className="min-h-[52px] w-full rounded-xl bg-[#8BC34A] px-6 py-3 text-lg font-bold text-white active:bg-emerald-600"
+              className="min-h-[52px] w-full rounded-xl bg-eco px-6 py-3 text-lg font-bold text-white active:bg-emerald-600"
             >
               Start Camera
             </button>
@@ -320,12 +320,12 @@ export default function StaffConfirmPage() {
                 value={manualCode}
                 onChange={(e) => setManualCode(e.target.value)}
                 placeholder="Enter barcode"
-                className="min-h-[52px] flex-1 rounded-xl border-2 border-[#E3E8E1] px-4 py-3 text-lg text-[#1C1F1A] outline-none focus:border-[#8BC34A]"
+                className="min-h-[52px] flex-1 rounded-xl border-2 border-[#E3E8E1] px-4 py-3 text-lg text-[#1C1F1A] outline-none focus:border-eco"
               />
               <button
                 onClick={() => submitBarcode(manualCode)}
                 disabled={!manualCode.trim()}
-                className="min-h-[52px] rounded-xl bg-[#8BC34A] px-6 py-3 text-lg font-bold text-white disabled:opacity-40"
+                className="min-h-[52px] rounded-xl bg-eco px-6 py-3 text-lg font-bold text-white disabled:opacity-40"
               >
                 Go
               </button>
@@ -354,7 +354,7 @@ export default function StaffConfirmPage() {
                 value={digit}
                 onChange={(e) => handlePinChange(i, e.target.value)}
                 onKeyDown={(e) => handlePinKeyDown(i, e)}
-                className="h-16 w-16 rounded-xl border-2 border-[#E3E8E1] text-center text-3xl font-bold text-[#1C1F1A] outline-none focus:border-[#8BC34A]"
+                className="h-16 w-16 rounded-xl border-2 border-[#E3E8E1] text-center text-3xl font-bold text-[#1C1F1A] outline-none focus:border-eco"
               />
             ))}
           </div>
@@ -362,7 +362,7 @@ export default function StaffConfirmPage() {
           <button
             onClick={submitPin}
             disabled={pin.some((d) => d === "")}
-            className="min-h-[52px] w-full rounded-xl bg-[#8BC34A] px-6 py-3 text-lg font-bold text-white disabled:opacity-40 active:bg-emerald-600"
+            className="min-h-[52px] w-full rounded-xl bg-eco px-6 py-3 text-lg font-bold text-white disabled:opacity-40 active:bg-emerald-600"
           >
             Confirm
           </button>

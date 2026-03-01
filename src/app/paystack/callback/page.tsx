@@ -109,7 +109,7 @@ function PaystackCallbackInner() {
     <div className="w-full max-w-md rounded-xl border border-gray-200 bg-white p-8 text-center shadow-sm">
       {status === "loading" && (
         <>
-          <div className="mx-auto h-12 w-12 animate-spin rounded-full border-4 border-gray-200 border-t-[#22C55E]" />
+          <div className="mx-auto h-12 w-12 animate-spin rounded-full border-4 border-gray-200 border-t-eco" />
           <h1 className="mt-6 text-xl font-bold text-gray-900">Verifying Payment</h1>
           <p className="mt-2 text-sm text-gray-500">
             Please wait while we confirm your payment...
@@ -126,7 +126,7 @@ function PaystackCallbackInner() {
         <>
           <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
             <svg
-              className="h-8 w-8 text-[#22C55E]"
+              className="h-8 w-8 text-eco"
               fill="none"
               viewBox="0 0 24 24"
               strokeWidth={2}
@@ -149,7 +149,7 @@ function PaystackCallbackInner() {
             {eventId && (
               <button
                 onClick={() => router.push(`/dashboard/events/${eventId}/tokens`)}
-                className="w-full rounded-lg bg-[#22C55E] px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#16A34A] transition-colors"
+                className="w-full rounded-lg bg-eco px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-eco-dark transition-colors"
               >
                 Back to Tokens
               </button>
@@ -188,7 +188,7 @@ function PaystackCallbackInner() {
             {eventId && (
               <button
                 onClick={() => router.push(`/dashboard/events/${eventId}/tokens`)}
-                className="w-full rounded-lg bg-[#22C55E] px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#16A34A] transition-colors"
+                className="w-full rounded-lg bg-eco px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-eco-dark transition-colors"
               >
                 Try Again
               </button>
@@ -212,7 +212,7 @@ export default function PaystackCallbackPage() {
       <Suspense
         fallback={
           <div className="w-full max-w-md rounded-xl border border-gray-200 bg-white p-8 text-center shadow-sm">
-            <div className="mx-auto h-12 w-12 animate-spin rounded-full border-4 border-gray-200 border-t-[#22C55E]" />
+            <div className="mx-auto h-12 w-12 animate-spin rounded-full border-4 border-gray-200 border-t-eco" />
             <h1 className="mt-6 text-xl font-bold text-gray-900">Verifying Payment</h1>
             <p className="mt-2 text-sm text-gray-500">Please wait...</p>
           </div>

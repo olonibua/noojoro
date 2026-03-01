@@ -80,8 +80,8 @@ export default function LoginForm({ onNavigate, onClose }: LoginFormProps) {
           onClick={() => setMode("email")}
           className={`flex-1 rounded-lg py-2.5 text-sm font-medium transition-all ${
             mode === "email"
-              ? "bg-[#22C55E] text-white shadow-sm"
-              : "t-text-muted hover:text-[#22C55E]"
+              ? "bg-eco text-white shadow-sm"
+              : "t-text-muted hover:text-eco"
           }`}
         >
           Email
@@ -91,8 +91,8 @@ export default function LoginForm({ onNavigate, onClose }: LoginFormProps) {
           onClick={() => setMode("phone")}
           className={`flex-1 rounded-lg py-2.5 text-sm font-medium transition-all ${
             mode === "phone"
-              ? "bg-[#22C55E] text-white shadow-sm"
-              : "t-text-muted hover:text-[#22C55E]"
+              ? "bg-eco text-white shadow-sm"
+              : "t-text-muted hover:text-eco"
           }`}
         >
           Phone
@@ -160,7 +160,7 @@ export default function LoginForm({ onNavigate, onClose }: LoginFormProps) {
         <button
           type="button"
           onClick={() => onNavigate("reset")}
-          className="font-medium text-[#22C55E] hover:text-[#16A34A]"
+          className="font-medium text-eco hover:text-eco-dark"
         >
           Forgot your password?
         </button>
@@ -169,7 +169,7 @@ export default function LoginForm({ onNavigate, onClose }: LoginFormProps) {
           <button
             type="button"
             onClick={() => onNavigate("register")}
-            className="font-medium text-[#22C55E] hover:text-[#16A34A]"
+            className="font-medium text-eco hover:text-eco-dark"
           >
             Create Account
           </button>

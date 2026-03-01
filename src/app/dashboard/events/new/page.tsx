@@ -20,7 +20,7 @@ export default function CreateEventPage() {
     venue_name: "",
     table_count: 10,
     guests_per_table: 10,
-    theme_color: "#8BC34A",
+    theme_color: "#22C55E",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -93,7 +93,7 @@ export default function CreateEventPage() {
               value={form.name}
               onChange={handleChange}
               placeholder="e.g., Tunde & Adaeze's Wedding"
-              className="mt-1 block w-full rounded-lg border border-[#E3E8E1] px-3 py-2.5 text-sm text-[#1C1F1A] placeholder-[#9CA396] focus:border-[#8BC34A] focus:outline-none focus:ring-1 focus:ring-[#8BC34A]"
+              className="mt-1 block w-full rounded-lg border border-[#E3E8E1] px-3 py-2.5 text-sm text-[#1C1F1A] placeholder-[#9CA396] focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
             />
           </div>
 
@@ -110,7 +110,7 @@ export default function CreateEventPage() {
                 required
                 value={form.date}
                 onChange={handleChange}
-                className="mt-1 block w-full rounded-lg border border-[#E3E8E1] px-3 py-2.5 text-sm text-[#1C1F1A] focus:border-[#8BC34A] focus:outline-none focus:ring-1 focus:ring-[#8BC34A]"
+                className="mt-1 block w-full rounded-lg border border-[#E3E8E1] px-3 py-2.5 text-sm text-[#1C1F1A] focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
               />
             </div>
             <div>
@@ -123,7 +123,7 @@ export default function CreateEventPage() {
                 type="time"
                 value={form.time}
                 onChange={handleChange}
-                className="mt-1 block w-full rounded-lg border border-[#E3E8E1] px-3 py-2.5 text-sm text-[#1C1F1A] focus:border-[#8BC34A] focus:outline-none focus:ring-1 focus:ring-[#8BC34A]"
+                className="mt-1 block w-full rounded-lg border border-[#E3E8E1] px-3 py-2.5 text-sm text-[#1C1F1A] focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
               />
             </div>
           </div>
@@ -141,7 +141,7 @@ export default function CreateEventPage() {
               value={form.venue_name}
               onChange={handleChange}
               placeholder="e.g., Eko Hotels Convention Centre"
-              className="mt-1 block w-full rounded-lg border border-[#E3E8E1] px-3 py-2.5 text-sm text-[#1C1F1A] placeholder-[#9CA396] focus:border-[#8BC34A] focus:outline-none focus:ring-1 focus:ring-[#8BC34A]"
+              className="mt-1 block w-full rounded-lg border border-[#E3E8E1] px-3 py-2.5 text-sm text-[#1C1F1A] placeholder-[#9CA396] focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
             />
           </div>
 
@@ -159,7 +159,7 @@ export default function CreateEventPage() {
                 required
                 value={form.table_count}
                 onChange={handleChange}
-                className="mt-1 block w-full rounded-lg border border-[#E3E8E1] px-3 py-2.5 text-sm text-[#1C1F1A] focus:border-[#8BC34A] focus:outline-none focus:ring-1 focus:ring-[#8BC34A]"
+                className="mt-1 block w-full rounded-lg border border-[#E3E8E1] px-3 py-2.5 text-sm text-[#1C1F1A] focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
               />
             </div>
             <div>
@@ -174,7 +174,7 @@ export default function CreateEventPage() {
                 required
                 value={form.guests_per_table}
                 onChange={handleChange}
-                className="mt-1 block w-full rounded-lg border border-[#E3E8E1] px-3 py-2.5 text-sm text-[#1C1F1A] focus:border-[#8BC34A] focus:outline-none focus:ring-1 focus:ring-[#8BC34A]"
+                className="mt-1 block w-full rounded-lg border border-[#E3E8E1] px-3 py-2.5 text-sm text-[#1C1F1A] focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
               />
             </div>
           </div>
@@ -191,9 +191,9 @@ export default function CreateEventPage() {
                 type="text"
                 value={form.theme_color}
                 onChange={handleChange}
-                placeholder="#8BC34A"
+                placeholder="#22C55E"
                 pattern="^#[0-9A-Fa-f]{6}$"
-                className="block w-full rounded-lg border border-[#E3E8E1] px-3 py-2.5 text-sm text-[#1C1F1A] placeholder-[#9CA396] focus:border-[#8BC34A] focus:outline-none focus:ring-1 focus:ring-[#8BC34A]"
+                className="block w-full rounded-lg border border-[#E3E8E1] px-3 py-2.5 text-sm text-[#1C1F1A] placeholder-[#9CA396] focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
               />
               <input
                 type="color"
@@ -213,7 +213,7 @@ export default function CreateEventPage() {
             <button
               type="submit"
               disabled={loading}
-              className="rounded-lg bg-[#8BC34A] px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#7CB342] disabled:opacity-50 disabled:cursor-not-allowed"
+              className="rounded-lg bg-eco px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-eco-dark disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? "Creating..." : "Create Event"}
             </button>

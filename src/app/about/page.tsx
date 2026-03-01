@@ -119,7 +119,7 @@ export default function AboutPage() {
         <div className="mx-auto mt-16 grid max-w-5xl gap-6 sm:grid-cols-2">
           {values.map((v) => (
             <div key={v.title} className="card-elevated p-8">
-              <div className="t-icon-container mb-4 flex h-12 w-12 items-center justify-center text-[#8BC34A]">
+              <div className="t-icon-container mb-4 flex h-12 w-12 items-center justify-center text-eco">
                 {v.icon}
               </div>
               <h3 className="mb-2 text-lg font-bold">{v.title}</h3>
@@ -149,7 +149,7 @@ export default function AboutPage() {
           </p>
           <Link
             href="?auth=register" scroll={false}
-            className="glow-green mt-8 inline-flex items-center gap-2 rounded-full bg-[#8BC34A] px-8 py-4 font-bold text-white hover:bg-[#7CB342]"
+            className="glow-green mt-8 inline-flex items-center gap-2 rounded-full bg-eco px-8 py-4 font-bold text-white hover:bg-eco-dark"
           >
             Get Started
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>

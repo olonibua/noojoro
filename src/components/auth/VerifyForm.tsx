@@ -107,7 +107,7 @@ export default function VerifyForm({ onClose }: VerifyFormProps) {
         <div className="t-icon-container flex h-16 w-16 items-center justify-center rounded-full">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-8 w-8 text-[#22C55E]"
+            className="h-8 w-8 text-eco"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -172,7 +172,7 @@ export default function VerifyForm({ onClose }: VerifyFormProps) {
         <button
           type="button"
           disabled={resending}
-          className="font-medium text-[#22C55E] hover:text-[#16A34A] disabled:opacity-50"
+          className="font-medium text-eco hover:text-eco-dark disabled:opacity-50"
           onClick={async () => {
             const verifyEmail = localStorage.getItem("verify_email");
             const verifyPhone = localStorage.getItem("verify_phone");

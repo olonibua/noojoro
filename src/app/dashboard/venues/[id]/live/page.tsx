@@ -105,7 +105,7 @@ export default function LiveDashboardPage() {
   if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-[#F4F6F3]">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#8BC34A] border-t-transparent" />
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-eco border-t-transparent" />
       </div>
     );
   }
@@ -135,7 +135,7 @@ export default function LiveDashboardPage() {
           <div className="flex items-center gap-2">
             <span className="relative flex h-2.5 w-2.5">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[#8BC34A]" />
+              <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-eco" />
             </span>
             <span className="text-xs text-[#6B7366]">
               {lastUpdated
@@ -258,12 +258,12 @@ export default function LiveDashboardPage() {
             {/* Fulfilled */}
             <div className="rounded-xl border border-[#E3E8E1] bg-white p-5">
               <p className="text-sm font-medium text-[#6B7366]">Fulfilled</p>
-              <p className="mt-2 text-3xl font-bold text-[#7CB342]">
+              <p className="mt-2 text-3xl font-bold text-eco-dark">
                 {dashboard.orders_fulfilled}
               </p>
               <div className="mt-2 h-1 w-full rounded-full bg-[#F0F3EF]">
                 <div
-                  className="h-1 rounded-full bg-[#8BC34A]"
+                  className="h-1 rounded-full bg-eco"
                   style={{
                     width: `${
                       dashboard.orders_fulfilled
@@ -284,13 +284,13 @@ export default function LiveDashboardPage() {
 
             {/* Revenue */}
             <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-5">
-              <p className="text-sm font-medium text-[#7CB342]">
+              <p className="text-sm font-medium text-eco-dark">
                 Total Revenue
               </p>
-              <p className="mt-2 text-3xl font-bold text-[#7CB342]">
+              <p className="mt-2 text-3xl font-bold text-eco-dark">
                 {"\u20A6"}{formatCurrency(dashboard.total_revenue)}
               </p>
-              <p className="mt-2 text-xs text-[#7CB342]">Live total</p>
+              <p className="mt-2 text-xs text-eco-dark">Live total</p>
             </div>
           </div>
         )}
@@ -353,7 +353,7 @@ export default function LiveDashboardPage() {
                                   ? "bg-red-500"
                                   : isLow
                                   ? "bg-amber-500"
-                                  : "bg-[#8BC34A]"
+                                  : "bg-eco"
                               }`}
                               style={{ width: `${pct}%` }}
                             />
@@ -374,7 +374,7 @@ export default function LiveDashboardPage() {
                             Low Stock
                           </span>
                         ) : (
-                          <span className="inline-flex rounded-full bg-[#8BC34A]/10 px-2.5 py-0.5 text-xs font-medium text-[#7CB342]">
+                          <span className="inline-flex rounded-full bg-eco/10 px-2.5 py-0.5 text-xs font-medium text-eco-dark">
                             In Stock
                           </span>
                         )}

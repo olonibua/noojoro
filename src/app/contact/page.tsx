@@ -46,7 +46,7 @@ export default function ContactPage() {
               <div key={info.label} className="card-elevated p-6">
                 <p className="mb-1 text-xs font-semibold uppercase tracking-wider t-text-faint">{info.label}</p>
                 {info.href ? (
-                  <a href={info.href} className="text-lg font-semibold t-text transition-colors hover:text-[#8BC34A]">
+                  <a href={info.href} className="text-lg font-semibold t-text transition-colors hover:text-eco">
                     {info.value}
                   </a>
                 ) : (
@@ -61,7 +61,7 @@ export default function ContactPage() {
             {submitted ? (
               <div className="flex flex-col items-center justify-center py-16 text-center">
                 <div className="t-icon-container mb-6 flex h-16 w-16 items-center justify-center rounded-full">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-[#8BC34A]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-eco" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
@@ -69,7 +69,7 @@ export default function ContactPage() {
                 <p className="t-text-muted">We&rsquo;ll get back to you within 24 hours.</p>
                 <button
                   onClick={() => { setSubmitted(false); setFormData({ name: "", email: "", subject: "", message: "" }); }}
-                  className="mt-6 text-sm font-semibold text-[#8BC34A] hover:text-[#7CB342]"
+                  className="mt-6 text-sm font-semibold text-eco hover:text-eco-dark"
                 >
                   Send Another Message
                 </button>
@@ -115,7 +115,7 @@ export default function ContactPage() {
           </p>
           <Link
             href="?auth=register" scroll={false}
-            className="glow-green mt-8 inline-flex items-center gap-2 rounded-full bg-[#8BC34A] px-8 py-4 font-bold text-white hover:bg-[#7CB342]"
+            className="glow-green mt-8 inline-flex items-center gap-2 rounded-full bg-eco px-8 py-4 font-bold text-white hover:bg-eco-dark"
           >
             Create Free Account
           </Link>

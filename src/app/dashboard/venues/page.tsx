@@ -32,7 +32,7 @@ export default function VenuesListPage() {
         <h1 className="text-2xl font-bold text-[#1C1F1A]">My Venues</h1>
         <button
           onClick={() => router.push("/dashboard/venues/new")}
-          className="rounded-lg bg-[#8BC34A] px-4 py-2 text-sm font-semibold text-white hover:bg-[#7CB342]"
+          className="rounded-lg bg-eco px-4 py-2 text-sm font-semibold text-white hover:bg-eco-dark"
         >
           + Create Venue
         </button>
@@ -40,7 +40,7 @@ export default function VenuesListPage() {
 
       {loading ? (
         <div className="flex justify-center py-12">
-          <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#8BC34A] border-t-transparent" />
+          <div className="h-8 w-8 animate-spin rounded-full border-4 border-eco border-t-transparent" />
         </div>
       ) : venues.length === 0 ? (
         <div className="rounded-xl border border-dashed border-[#E3E8E1] bg-white px-6 py-16 text-center">
@@ -50,7 +50,7 @@ export default function VenuesListPage() {
           </p>
           <button
             onClick={() => router.push("/dashboard/venues/new")}
-            className="rounded-lg bg-[#8BC34A] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#7CB342]"
+            className="rounded-lg bg-eco px-5 py-2.5 text-sm font-semibold text-white hover:bg-eco-dark"
           >
             Create Venue
           </button>
@@ -61,16 +61,16 @@ export default function VenuesListPage() {
             <Link
               key={venue.id}
               href={`/dashboard/venues/${venue.id}`}
-              className="group rounded-xl border border-[#E3E8E1] bg-white p-5 transition hover:border-[#8BC34A]/40 hover:shadow-md"
+              className="group rounded-xl border border-[#E3E8E1] bg-white p-5 transition hover:border-eco/40 hover:shadow-md"
             >
               <div className="mb-3 flex items-start justify-between">
-                <h3 className="text-lg font-semibold text-[#1C1F1A] group-hover:text-[#7CB342]">
+                <h3 className="text-lg font-semibold text-[#1C1F1A] group-hover:text-eco-dark">
                   {venue.name}
                 </h3>
                 <span
                   className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${
                     venue.status === "active"
-                      ? "bg-[#8BC34A]/10 text-[#7CB342]"
+                      ? "bg-eco/10 text-eco-dark"
                       : "bg-[#F0F3EF] text-[#3A3D37]"
                   }`}
                 >

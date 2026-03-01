@@ -93,7 +93,7 @@ export default function CreateVenuePage() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="e.g. The Velvet Lounge"
-              className="w-full rounded-lg border border-[#E3E8E1] bg-white px-4 py-2.5 text-sm text-[#1C1F1A] placeholder-[#9CA396] outline-none transition-colors focus:border-[#8BC34A] focus:ring-2 focus:ring-emerald-500/20"
+              className="w-full rounded-lg border border-[#E3E8E1] bg-white px-4 py-2.5 text-sm text-[#1C1F1A] placeholder-[#9CA396] outline-none transition-colors focus:border-eco focus:ring-2 focus:ring-emerald-500/20"
             />
           </div>
 
@@ -112,7 +112,7 @@ export default function CreateVenuePage() {
               value={address}
               onChange={(e) => setAddress(e.target.value)}
               placeholder="e.g. 12 Admiralty Way, Lekki Phase 1, Lagos"
-              className="w-full rounded-lg border border-[#E3E8E1] bg-white px-4 py-2.5 text-sm text-[#1C1F1A] placeholder-[#9CA396] outline-none transition-colors focus:border-[#8BC34A] focus:ring-2 focus:ring-emerald-500/20"
+              className="w-full rounded-lg border border-[#E3E8E1] bg-white px-4 py-2.5 text-sm text-[#1C1F1A] placeholder-[#9CA396] outline-none transition-colors focus:border-eco focus:ring-2 focus:ring-emerald-500/20"
             />
           </div>
 
@@ -132,7 +132,7 @@ export default function CreateVenuePage() {
               max={500}
               value={tableCount}
               onChange={(e) => setTableCount(Number(e.target.value))}
-              className="w-full rounded-lg border border-[#E3E8E1] bg-white px-4 py-2.5 text-sm text-[#1C1F1A] placeholder-[#9CA396] outline-none transition-colors focus:border-[#8BC34A] focus:ring-2 focus:ring-emerald-500/20"
+              className="w-full rounded-lg border border-[#E3E8E1] bg-white px-4 py-2.5 text-sm text-[#1C1F1A] placeholder-[#9CA396] outline-none transition-colors focus:border-eco focus:ring-2 focus:ring-emerald-500/20"
             />
           </div>
 
@@ -150,7 +150,7 @@ export default function CreateVenuePage() {
               value={logoUrl}
               onChange={(e) => setLogoUrl(e.target.value)}
               placeholder="https://example.com/logo.png"
-              className="w-full rounded-lg border border-[#E3E8E1] bg-white px-4 py-2.5 text-sm text-[#1C1F1A] placeholder-[#9CA396] outline-none transition-colors focus:border-[#8BC34A] focus:ring-2 focus:ring-emerald-500/20"
+              className="w-full rounded-lg border border-[#E3E8E1] bg-white px-4 py-2.5 text-sm text-[#1C1F1A] placeholder-[#9CA396] outline-none transition-colors focus:border-eco focus:ring-2 focus:ring-emerald-500/20"
             />
             <p className="mt-1 text-xs text-[#9CA396]">Optional</p>
           </div>
@@ -160,7 +160,7 @@ export default function CreateVenuePage() {
             <button
               type="submit"
               disabled={loading}
-              className="rounded-lg bg-[#8BC34A] px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#7CB342] disabled:cursor-not-allowed disabled:opacity-50"
+              className="rounded-lg bg-eco px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-eco-dark disabled:cursor-not-allowed disabled:opacity-50"
             >
               {loading ? "Creating..." : "Create Venue"}
             </button>

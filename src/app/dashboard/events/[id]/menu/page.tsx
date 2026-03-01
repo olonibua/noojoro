@@ -173,7 +173,7 @@ export default function MenuBuilderPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#E3E8E1] border-t-[#8BC34A]" />
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#E3E8E1] border-t-eco" />
       </div>
     );
   }
@@ -189,7 +189,7 @@ export default function MenuBuilderPage() {
         </button>
         <button
           onClick={() => router.push(`/dashboard/events/${eventId}/menu/vip`)}
-          className="rounded-lg border border-[#8BC34A] px-4 py-2 text-sm font-medium text-[#8BC34A] hover:bg-[#8BC34A]/5 transition-colors"
+          className="rounded-lg border border-eco px-4 py-2 text-sm font-medium text-eco hover:bg-eco/5 transition-colors"
         >
           VIP Menu &rarr;
         </button>
@@ -206,7 +206,7 @@ export default function MenuBuilderPage() {
         </div>
       )}
       {success && (
-        <div className="mt-4 rounded-lg bg-[#F1F8E9] border border-[#C5E1A5] px-4 py-3 text-sm text-[#7CB342]">
+        <div className="mt-4 rounded-lg bg-[#F1F8E9] border border-[#C5E1A5] px-4 py-3 text-sm text-eco-dark">
           {success}
         </div>
       )}
@@ -220,19 +220,19 @@ export default function MenuBuilderPage() {
             value={newCatName}
             onChange={(e) => setNewCatName(e.target.value)}
             placeholder="Category name (e.g. Starters)"
-            className="flex-1 min-w-[200px] rounded-lg border border-[#E3E8E1] px-3 py-2.5 text-sm text-[#1C1F1A] placeholder-[#9CA396] focus:border-[#8BC34A] focus:outline-none focus:ring-1 focus:ring-[#8BC34A]"
+            className="flex-1 min-w-[200px] rounded-lg border border-[#E3E8E1] px-3 py-2.5 text-sm text-[#1C1F1A] placeholder-[#9CA396] focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
           />
           <input
             type="number"
             value={newCatOrder}
             onChange={(e) => setNewCatOrder(e.target.value)}
             placeholder="Order"
-            className="w-24 rounded-lg border border-[#E3E8E1] px-3 py-2.5 text-sm text-[#1C1F1A] focus:border-[#8BC34A] focus:outline-none focus:ring-1 focus:ring-[#8BC34A]"
+            className="w-24 rounded-lg border border-[#E3E8E1] px-3 py-2.5 text-sm text-[#1C1F1A] focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
           />
           <button
             type="submit"
             disabled={addingCat}
-            className="rounded-lg bg-[#8BC34A] px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#7CB342] disabled:opacity-50 transition-colors"
+            className="rounded-lg bg-eco px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-eco-dark disabled:opacity-50 transition-colors"
           >
             {addingCat ? "Adding..." : "Add Category"}
           </button>
@@ -261,18 +261,18 @@ export default function MenuBuilderPage() {
                     <input
                       value={editCatName}
                       onChange={(e) => setEditCatName(e.target.value)}
-                      className="flex-1 min-w-[150px] rounded-lg border border-[#E3E8E1] px-3 py-1.5 text-sm focus:border-[#8BC34A] focus:outline-none focus:ring-1 focus:ring-[#8BC34A]"
+                      className="flex-1 min-w-[150px] rounded-lg border border-[#E3E8E1] px-3 py-1.5 text-sm focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
                     />
                     <input
                       type="number"
                       value={editCatOrder}
                       onChange={(e) => setEditCatOrder(e.target.value)}
-                      className="w-20 rounded-lg border border-[#E3E8E1] px-3 py-1.5 text-sm focus:border-[#8BC34A] focus:outline-none focus:ring-1 focus:ring-[#8BC34A]"
+                      className="w-20 rounded-lg border border-[#E3E8E1] px-3 py-1.5 text-sm focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
                       title="Display order"
                     />
                     <button
                       onClick={() => handleUpdateCategory(cat.id)}
-                      className="rounded-lg bg-[#8BC34A] px-3 py-1.5 text-sm font-medium text-white hover:bg-[#7CB342]"
+                      className="rounded-lg bg-eco px-3 py-1.5 text-sm font-medium text-white hover:bg-eco-dark"
                     >
                       Save
                     </button>
@@ -325,14 +325,14 @@ export default function MenuBuilderPage() {
                             value={editItemName}
                             onChange={(e) => setEditItemName(e.target.value)}
                             placeholder="Item name"
-                            className="flex-1 min-w-[150px] rounded-lg border border-[#E3E8E1] px-3 py-1.5 text-sm focus:border-[#8BC34A] focus:outline-none focus:ring-1 focus:ring-[#8BC34A]"
+                            className="flex-1 min-w-[150px] rounded-lg border border-[#E3E8E1] px-3 py-1.5 text-sm focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
                           />
                           <input
                             type="number"
                             value={editItemQty}
                             onChange={(e) => setEditItemQty(e.target.value)}
                             placeholder="Qty"
-                            className="w-24 rounded-lg border border-[#E3E8E1] px-3 py-1.5 text-sm focus:border-[#8BC34A] focus:outline-none focus:ring-1 focus:ring-[#8BC34A]"
+                            className="w-24 rounded-lg border border-[#E3E8E1] px-3 py-1.5 text-sm focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
                             title="Total quantity"
                           />
                           <input
@@ -340,12 +340,12 @@ export default function MenuBuilderPage() {
                             value={editItemOrder}
                             onChange={(e) => setEditItemOrder(e.target.value)}
                             placeholder="Order"
-                            className="w-20 rounded-lg border border-[#E3E8E1] px-3 py-1.5 text-sm focus:border-[#8BC34A] focus:outline-none focus:ring-1 focus:ring-[#8BC34A]"
+                            className="w-20 rounded-lg border border-[#E3E8E1] px-3 py-1.5 text-sm focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
                             title="Display order"
                           />
                           <button
                             onClick={() => handleUpdateItem(item.id)}
-                            className="rounded-lg bg-[#8BC34A] px-3 py-1.5 text-sm font-medium text-white hover:bg-[#7CB342]"
+                            className="rounded-lg bg-eco px-3 py-1.5 text-sm font-medium text-white hover:bg-eco-dark"
                           >
                             Save
                           </button>
@@ -400,19 +400,19 @@ export default function MenuBuilderPage() {
                       value={newItemName}
                       onChange={(e) => setNewItemName(e.target.value)}
                       placeholder="Item name"
-                      className="flex-1 min-w-[150px] rounded-lg border border-[#E3E8E1] px-3 py-1.5 text-sm placeholder-[#9CA396] focus:border-[#8BC34A] focus:outline-none focus:ring-1 focus:ring-[#8BC34A]"
+                      className="flex-1 min-w-[150px] rounded-lg border border-[#E3E8E1] px-3 py-1.5 text-sm placeholder-[#9CA396] focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
                     />
                     <input
                       type="number"
                       value={newItemQty}
                       onChange={(e) => setNewItemQty(e.target.value)}
                       placeholder="Total qty"
-                      className="w-28 rounded-lg border border-[#E3E8E1] px-3 py-1.5 text-sm focus:border-[#8BC34A] focus:outline-none focus:ring-1 focus:ring-[#8BC34A]"
+                      className="w-28 rounded-lg border border-[#E3E8E1] px-3 py-1.5 text-sm focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
                     />
                     <button
                       onClick={() => handleAddItem(cat.id)}
                       disabled={addingItem || !newItemName}
-                      className="rounded-lg bg-[#8BC34A] px-3 py-1.5 text-sm font-medium text-white hover:bg-[#7CB342] disabled:opacity-50"
+                      className="rounded-lg bg-eco px-3 py-1.5 text-sm font-medium text-white hover:bg-eco-dark disabled:opacity-50"
                     >
                       {addingItem ? "Adding..." : "Add"}
                     </button>
@@ -430,7 +430,7 @@ export default function MenuBuilderPage() {
                 ) : (
                   <button
                     onClick={() => setAddingItemCatId(cat.id)}
-                    className="text-sm font-medium text-[#8BC34A] hover:text-[#7CB342] transition-colors"
+                    className="text-sm font-medium text-eco hover:text-eco-dark transition-colors"
                   >
                     + Add Item
                   </button>

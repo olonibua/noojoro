@@ -126,7 +126,7 @@ export default function CelebrantPhotosPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#E3E8E1] border-t-[#8BC34A]" />
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#E3E8E1] border-t-eco" />
       </div>
     );
   }
@@ -153,7 +153,7 @@ export default function CelebrantPhotosPage() {
         </div>
       )}
       {success && (
-        <div className="mt-4 rounded-lg bg-[#F1F8E9] border border-[#C5E1A5] px-4 py-3 text-sm text-[#7CB342]">
+        <div className="mt-4 rounded-lg bg-[#F1F8E9] border border-[#C5E1A5] px-4 py-3 text-sm text-eco-dark">
           {success}
         </div>
       )}
@@ -168,7 +168,7 @@ export default function CelebrantPhotosPage() {
           onClick={() => fileInputRef.current?.click()}
           className={`mt-4 flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed p-10 transition-colors ${
             dragOver
-              ? "border-[#8BC34A] bg-[#8BC34A]/5"
+              ? "border-eco bg-eco/5"
               : "border-[#E3E8E1] hover:border-gray-400"
           }`}
         >
@@ -243,12 +243,12 @@ export default function CelebrantPhotosPage() {
             placeholder="Min 6 characters"
             required
             minLength={6}
-            className="block flex-1 rounded-lg border border-[#E3E8E1] px-3 py-2.5 text-sm text-[#1C1F1A] placeholder-[#9CA396] focus:border-[#8BC34A] focus:outline-none focus:ring-1 focus:ring-[#8BC34A]"
+            className="block flex-1 rounded-lg border border-[#E3E8E1] px-3 py-2.5 text-sm text-[#1C1F1A] placeholder-[#9CA396] focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
           />
           <button
             type="submit"
             disabled={savingPassword}
-            className="rounded-lg bg-[#8BC34A] px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#7CB342] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="rounded-lg bg-eco px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-eco-dark disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
             {savingPassword ? "Saving..." : "Set Password"}
           </button>

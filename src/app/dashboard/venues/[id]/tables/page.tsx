@@ -99,7 +99,7 @@ export default function TableConfigPage() {
   if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-[#F4F6F3]">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#8BC34A] border-t-transparent" />
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-eco border-t-transparent" />
       </div>
     );
   }
@@ -142,7 +142,7 @@ export default function TableConfigPage() {
           <button
             onClick={handleDownloadQR}
             disabled={downloading || tables.length === 0}
-            className="inline-flex items-center gap-2 rounded-lg bg-[#8BC34A] px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#7CB342] disabled:cursor-not-allowed disabled:opacity-50"
+            className="inline-flex items-center gap-2 rounded-lg bg-eco px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-eco-dark disabled:cursor-not-allowed disabled:opacity-50"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -169,7 +169,7 @@ export default function TableConfigPage() {
         )}
 
         {successMsg && (
-          <div className="mb-6 rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-[#7CB342]">
+          <div className="mb-6 rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-eco-dark">
             {successMsg}
           </div>
         )}
@@ -193,13 +193,13 @@ export default function TableConfigPage() {
                 max={500}
                 value={newCount}
                 onChange={(e) => setNewCount(Number(e.target.value))}
-                className="w-full rounded-lg border border-[#E3E8E1] bg-white px-4 py-2.5 text-sm text-[#1C1F1A] outline-none focus:border-[#8BC34A] focus:ring-2 focus:ring-emerald-500/20"
+                className="w-full rounded-lg border border-[#E3E8E1] bg-white px-4 py-2.5 text-sm text-[#1C1F1A] outline-none focus:border-eco focus:ring-2 focus:ring-emerald-500/20"
               />
             </div>
             <button
               type="submit"
               disabled={saving || newCount === currentCount}
-              className="rounded-lg bg-[#8BC34A] px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#7CB342] disabled:cursor-not-allowed disabled:opacity-50"
+              className="rounded-lg bg-eco px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-eco-dark disabled:cursor-not-allowed disabled:opacity-50"
             >
               {saving ? "Updating..." : "Update Count"}
             </button>
