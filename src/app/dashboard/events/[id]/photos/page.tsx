@@ -276,7 +276,7 @@ export default function CelebrantPhotosPage() {
                 className="group relative aspect-square overflow-hidden rounded-lg border t-border t-bg"
               >
                 <img
-                  src={`${API_URL}${photo.url}`}
+                  src={photo.url.startsWith("http") ? photo.url : `${API_URL}${photo.url}`}
                   alt={photo.filename || "Photo"}
                   className="h-full w-full object-cover transition-transform group-hover:scale-105"
                 />

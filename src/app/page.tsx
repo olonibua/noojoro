@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import Navbar from "@/components/ui/Navbar";
@@ -53,6 +55,18 @@ const ArrowRight = () => (
 );
 
 export default function LandingPage() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  // Auto-open register modal when visiting with a referral link
+  useEffect(() => {
+    const ref = searchParams.get("ref");
+    const auth = searchParams.get("auth");
+    if (ref && !auth) {
+      router.replace(`/?auth=register&ref=${ref}`, { scroll: false });
+    }
+  }, [searchParams, router]);
+
   return (
     <div className="min-h-screen t-bg t-text">
       <Navbar />

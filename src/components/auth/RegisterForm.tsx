@@ -7,9 +7,10 @@ type InputMode = "email" | "phone";
 
 interface RegisterFormProps {
   onNavigate: (view: string) => void;
+  referralCode?: string;
 }
 
-export default function RegisterForm({ onNavigate }: RegisterFormProps) {
+export default function RegisterForm({ onNavigate, referralCode }: RegisterFormProps) {
   const [mode, setMode] = useState<InputMode>("email");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -33,6 +34,10 @@ export default function RegisterForm({ onNavigate }: RegisterFormProps) {
         body.phone = phone;
       }
 
+      if (referralCode) {
+        body.referral_code = referralCode;
+      }
+
       await api.post("/api/auth/register", body);
 
       if (mode === "email") {
@@ -54,9 +59,18 @@ export default function RegisterForm({ onNavigate }: RegisterFormProps) {
   return (
     <>
       <h1 className="mb-2 text-center text-3xl font-bold">Create Account</h1>
-      <p className="mb-8 text-center text-sm t-text-muted">
+      <p className="mb-4 text-center text-sm t-text-muted">
         Join No Ojoro and streamline your operations
       </p>
+
+      {referralCode && (
+        <div className="mb-6 flex items-center justify-center gap-2 rounded-xl border border-eco/20 bg-eco/5 px-4 py-2.5 text-sm text-eco">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+          </svg>
+          Referred by a partner
+        </div>
+      )}
 
       {error && (
         <div className="mb-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">

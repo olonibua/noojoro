@@ -4,6 +4,8 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { useParams } from "next/navigation";
 import { api } from "@/lib/api";
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+
 /* ---------- Types ---------- */
 
 /* Backend response types */
@@ -103,7 +105,9 @@ export default function GuestCateringOrderPage() {
 
         // Convert celebrant_photos dict to photos array
         const photos: Photo[] = raw.celebrant_photos
-          ? Object.values(raw.celebrant_photos).map((url) => ({ url }))
+          ? Object.values(raw.celebrant_photos).map((url) => ({
+              url: url.startsWith("http") ? url : `${API_URL}${url}`,
+            }))
           : [];
 
         // Map backend categories to display format

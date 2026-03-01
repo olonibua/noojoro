@@ -73,6 +73,23 @@ function CloseIcon({ className }: { className?: string }) {
   );
 }
 
+function UsersIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
+    </svg>
+  );
+}
+
+function CameraIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z" />
+    </svg>
+  );
+}
+
 function ChevronDoubleRightIcon({ className }: { className?: string }) {
   return (
     <svg className={className} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
@@ -127,12 +144,16 @@ const navItems = [
   { label: "Dashboard", href: "/dashboard", icon: GridIcon, exact: true },
   { label: "Events", href: "/dashboard/events", icon: CalendarIcon },
   { label: "Venues", href: "/dashboard/venues", icon: BuildingIcon },
+  { label: "Referrals", href: "/dashboard/referrals", icon: UsersIcon },
+  { label: "Event Proofs", href: "/dashboard/event-proofs", icon: CameraIcon },
 ];
 
 function getPageInfo(pathname: string): { title: string; icon: React.ComponentType<{ className?: string }> } {
   if (pathname === "/dashboard") return { title: "Dashboard", icon: GridIcon };
   if (pathname.startsWith("/dashboard/events")) return { title: "Events", icon: CalendarIcon };
   if (pathname.startsWith("/dashboard/venues")) return { title: "Venues", icon: BuildingIcon };
+  if (pathname.startsWith("/dashboard/referrals")) return { title: "Referrals", icon: UsersIcon };
+  if (pathname.startsWith("/dashboard/event-proofs")) return { title: "Event Proofs", icon: CameraIcon };
   return { title: "Dashboard", icon: GridIcon };
 }
 

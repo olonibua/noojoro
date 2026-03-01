@@ -31,6 +31,6 @@ export function clearAuthTokens(): void {
 export function setAuthTokens(accessToken: string): void {
   if (typeof window === "undefined") return;
   // Store access token as a first-party cookie (avoids cross-domain cookie blocking)
-  document.cookie = `noojoro_token=${encodeURIComponent(accessToken)}; path=/; max-age=${30 * 60}; samesite=lax`;
-  document.cookie = `logged_in=true; path=/; max-age=${30 * 60}; samesite=lax`;
+  document.cookie = `noojoro_token=${encodeURIComponent(accessToken)}; path=/; max-age=${7 * 24 * 60 * 60}; samesite=lax`;
+  document.cookie = `logged_in=true; path=/; max-age=${7 * 24 * 60 * 60}; samesite=lax`;
 }

@@ -80,7 +80,7 @@ function AuthModalInner() {
 
           {/* Form content */}
           {authView === "login" && <LoginForm onNavigate={navigate} onClose={close} />}
-          {authView === "register" && <RegisterForm onNavigate={navigate} />}
+          {authView === "register" && <RegisterForm onNavigate={navigate} referralCode={searchParams.get("ref") || undefined} />}
           {authView === "verify" && <VerifyForm onClose={close} />}
           {authView === "reset" && <ResetPasswordForm onNavigate={navigate} />}
         </div>
