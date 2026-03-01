@@ -40,6 +40,7 @@ export default function Navbar() {
             { href: "/#features", label: "Features" },
             { href: "/#how-it-works", label: "How It Works" },
             { href: "/#pricing", label: "Pricing" },
+            { href: "/referrals", label: "Referrals" },
             { href: "/about", label: "About" },
             { href: "/contact", label: "Contact" },
           ].map((item) => (
@@ -122,6 +123,7 @@ export default function Navbar() {
               { href: "/#features", label: "Features" },
               { href: "/#how-it-works", label: "How It Works" },
               { href: "/#pricing", label: "Pricing" },
+              { href: "/referrals", label: "Referrals" },
               { href: "/about", label: "About" },
               { href: "/contact", label: "Contact" },
             ].map((item) => (

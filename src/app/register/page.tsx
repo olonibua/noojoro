@@ -9,6 +9,7 @@ function RegisterRedirect() {
   const ref = searchParams.get("ref");
   const target = ref ? `/?auth=register&ref=${ref}` : "/?auth=register";
   redirect(target);
+  return null;
 }
 
 export default function RegisterPage() {

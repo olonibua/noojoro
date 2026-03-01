@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
@@ -54,11 +54,10 @@ const ArrowRight = () => (
   </svg>
 );
 
-export default function LandingPage() {
+function ReferralRedirect() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  // Auto-open register modal when visiting with a referral link
   useEffect(() => {
     const ref = searchParams.get("ref");
     const auth = searchParams.get("auth");
@@ -67,8 +66,15 @@ export default function LandingPage() {
     }
   }, [searchParams, router]);
 
+  return null;
+}
+
+export default function LandingPage() {
   return (
     <div className="min-h-screen t-bg t-text">
+      <Suspense fallback={null}>
+        <ReferralRedirect />
+      </Suspense>
       <Navbar />
 
       {/* ═══ HERO ═══ */}
