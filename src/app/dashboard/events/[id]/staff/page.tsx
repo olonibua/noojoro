@@ -1,0 +1,343 @@
+"use client";
+
+import { useEffect, useState, useCallback } from "react";
+import { useRouter, useParams } from "next/navigation";
+import { api } from "@/lib/api";
+
+interface Staff {
+  id: string;
+  name: string;
+  pin?: string;
+  table_range_start?: number;
+  table_range_end?: number;
+  role?: string;
+}
+
+interface EventInfo {
+  event_code: string;
+  name: string;
+}
+
+export default function StaffManagementPage() {
+  const router = useRouter();
+  const params = useParams();
+  const eventId = params.id as string;
+
+  const [staffList, setStaffList] = useState<Staff[]>([]);
+  const [eventInfo, setEventInfo] = useState<EventInfo | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+
+  // Add staff form
+  const [adding, setAdding] = useState(false);
+  const [addForm, setAddForm] = useState({
+    name: "",
+    pin: "",
+    table_range_start: "",
+    table_range_end: "",
+  });
+
+  // Edit staff
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editForm, setEditForm] = useState({
+    name: "",
+    pin: "",
+    table_range_start: "",
+    table_range_end: "",
+  });
+
+  const fetchStaff = useCallback(async () => {
+    try {
+      const [staff, event] = await Promise.all([
+        api.get<Staff[]>(`/api/events/${eventId}/staff`),
+        api.get<EventInfo>(`/api/events/${eventId}`),
+      ]);
+      setStaffList(Array.isArray(staff) ? staff : []);
+      setEventInfo(event);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to load staff");
+    } finally {
+      setLoading(false);
+    }
+  }, [eventId]);
+
+  useEffect(() => {
+    fetchStaff();
+  }, [fetchStaff]);
+
+  const handleAdd = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+    setSuccess("");
+    setAdding(true);
+
+    try {
+      await api.post(`/api/events/${eventId}/staff`, {
+        name: addForm.name,
+        pin: addForm.pin || undefined,
+        table_range_start: addForm.table_range_start ? parseInt(addForm.table_range_start) : undefined,
+        table_range_end: addForm.table_range_end ? parseInt(addForm.table_range_end) : undefined,
+      });
+      setAddForm({ name: "", pin: "", table_range_start: "", table_range_end: "" });
+      setSuccess("Staff member added!");
+      await fetchStaff();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to add staff");
+    } finally {
+      setAdding(false);
+    }
+  };
+
+  const handleEdit = async (id: string) => {
+    setError("");
+    setSuccess("");
+    try {
+      await api.put(`/api/events/${eventId}/staff/${id}`, {
+        name: editForm.name,
+        pin: editForm.pin || undefined,
+        table_range_start: editForm.table_range_start ? parseInt(editForm.table_range_start) : undefined,
+        table_range_end: editForm.table_range_end ? parseInt(editForm.table_range_end) : undefined,
+      });
+      setEditingId(null);
+      setSuccess("Staff member updated!");
+      await fetchStaff();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to update staff");
+    }
+  };
+
+  const handleDelete = async (id: string) => {
+    if (!confirm("Remove this staff member?")) return;
+    setError("");
+    try {
+      await api.delete(`/api/events/${eventId}/staff/${id}`);
+      setSuccess("Staff member removed.");
+      await fetchStaff();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to delete staff");
+    }
+  };
+
+  const startEdit = (s: Staff) => {
+    setEditingId(s.id);
+    setEditForm({
+      name: s.name,
+      pin: s.pin || "",
+      table_range_start: s.table_range_start?.toString() || "",
+      table_range_end: s.table_range_end?.toString() || "",
+    });
+  };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-20">
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-200 border-t-[#22C55E]" />
+      </div>
+    );
+  }
+
+  return (
+    <div className="mx-auto max-w-4xl">
+      <div className="mb-6">
+        <button
+          onClick={() => router.push(`/dashboard/events/${eventId}`)}
+          className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
+        >
+          &larr; Back to Event
+        </button>
+      </div>
+
+      <div className="flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">Staff Management</h1>
+          <p className="mt-1 text-sm text-gray-500">
+            Add and manage staff members for this event.
+          </p>
+        </div>
+        {eventInfo?.event_code && (
+          <div className="rounded-lg border border-gray-200 bg-gray-50 px-4 py-2">
+            <p className="text-xs text-gray-500">Event Code (share with staff)</p>
+            <p className="font-mono text-lg font-bold text-gray-900">{eventInfo.event_code}</p>
+          </div>
+        )}
+      </div>
+
+      {error && (
+        <div className="mt-4 rounded-lg bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-700">
+          {error}
+        </div>
+      )}
+      {success && (
+        <div className="mt-4 rounded-lg bg-green-50 border border-green-200 px-4 py-3 text-sm text-green-700">
+          {success}
+        </div>
+      )}
+
+      {/* Add Staff Form */}
+      <div className="mt-6 rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+        <h2 className="text-lg font-semibold text-gray-900">Add Staff Member</h2>
+        <form onSubmit={handleAdd} className="mt-4 space-y-4">
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Name</label>
+              <input
+                required
+                value={addForm.name}
+                onChange={(e) => setAddForm((p) => ({ ...p, name: e.target.value }))}
+                placeholder="Staff name"
+                className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:border-[#22C55E] focus:outline-none focus:ring-1 focus:ring-[#22C55E]"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                PIN <span className="text-gray-400">(optional)</span>
+              </label>
+              <input
+                value={addForm.pin}
+                onChange={(e) => setAddForm((p) => ({ ...p, pin: e.target.value }))}
+                placeholder="4-digit PIN"
+                maxLength={4}
+                className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:border-[#22C55E] focus:outline-none focus:ring-1 focus:ring-[#22C55E]"
+              />
+            </div>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Table Range Start <span className="text-gray-400">(optional)</span>
+              </label>
+              <input
+                type="number"
+                min={1}
+                value={addForm.table_range_start}
+                onChange={(e) => setAddForm((p) => ({ ...p, table_range_start: e.target.value }))}
+                placeholder="1"
+                className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:border-[#22C55E] focus:outline-none focus:ring-1 focus:ring-[#22C55E]"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Table Range End <span className="text-gray-400">(optional)</span>
+              </label>
+              <input
+                type="number"
+                min={1}
+                value={addForm.table_range_end}
+                onChange={(e) => setAddForm((p) => ({ ...p, table_range_end: e.target.value }))}
+                placeholder="10"
+                className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:border-[#22C55E] focus:outline-none focus:ring-1 focus:ring-[#22C55E]"
+              />
+            </div>
+          </div>
+          <button
+            type="submit"
+            disabled={adding}
+            className="rounded-lg bg-[#22C55E] px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#16A34A] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          >
+            {adding ? "Adding..." : "Add Staff"}
+          </button>
+        </form>
+      </div>
+
+      {/* Staff List */}
+      <div className="mt-6 rounded-xl border border-gray-200 bg-white shadow-sm">
+        <div className="border-b border-gray-200 px-6 py-4">
+          <h2 className="text-lg font-semibold text-gray-900">
+            Current Staff ({staffList.length})
+          </h2>
+        </div>
+
+        {staffList.length === 0 ? (
+          <div className="px-6 py-12 text-center text-sm text-gray-500">
+            No staff members added yet. Use the form above to add staff.
+          </div>
+        ) : (
+          <div className="divide-y divide-gray-100">
+            {staffList.map((s) => (
+              <div key={s.id} className="px-6 py-4">
+                {editingId === s.id ? (
+                  <div className="space-y-3">
+                    <div className="grid gap-3 sm:grid-cols-2">
+                      <input
+                        value={editForm.name}
+                        onChange={(e) => setEditForm((p) => ({ ...p, name: e.target.value }))}
+                        placeholder="Name"
+                        className="block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-[#22C55E] focus:outline-none focus:ring-1 focus:ring-[#22C55E]"
+                      />
+                      <input
+                        value={editForm.pin}
+                        onChange={(e) => setEditForm((p) => ({ ...p, pin: e.target.value }))}
+                        placeholder="PIN (optional)"
+                        className="block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-[#22C55E] focus:outline-none focus:ring-1 focus:ring-[#22C55E]"
+                      />
+                    </div>
+                    <div className="grid gap-3 sm:grid-cols-2">
+                      <input
+                        type="number"
+                        value={editForm.table_range_start}
+                        onChange={(e) => setEditForm((p) => ({ ...p, table_range_start: e.target.value }))}
+                        placeholder="Table start"
+                        className="block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-[#22C55E] focus:outline-none focus:ring-1 focus:ring-[#22C55E]"
+                      />
+                      <input
+                        type="number"
+                        value={editForm.table_range_end}
+                        onChange={(e) => setEditForm((p) => ({ ...p, table_range_end: e.target.value }))}
+                        placeholder="Table end"
+                        className="block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-[#22C55E] focus:outline-none focus:ring-1 focus:ring-[#22C55E]"
+                      />
+                    </div>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => handleEdit(s.id)}
+                        className="rounded-lg bg-[#22C55E] px-3 py-1.5 text-sm font-medium text-white hover:bg-[#16A34A]"
+                      >
+                        Save
+                      </button>
+                      <button
+                        onClick={() => setEditingId(null)}
+                        className="rounded-lg border border-gray-300 px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-50"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="font-medium text-gray-900">{s.name}</p>
+                      <div className="mt-1 flex flex-wrap gap-3 text-xs text-gray-500">
+                        {s.pin && <span>PIN: {s.pin}</span>}
+                        {s.table_range_start != null && s.table_range_end != null && (
+                          <span>
+                            Tables {s.table_range_start}-{s.table_range_end}
+                          </span>
+                        )}
+                        {s.role && <span className="capitalize">{s.role}</span>}
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={() => startEdit(s)}
+                        className="rounded px-2 py-1 text-xs font-medium text-gray-600 hover:bg-gray-100 transition-colors"
+                      >
+                        Edit
+                      </button>
+                      <button
+                        onClick={() => handleDelete(s.id)}
+                        className="rounded px-2 py-1 text-xs font-medium text-red-600 hover:bg-red-50 transition-colors"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}

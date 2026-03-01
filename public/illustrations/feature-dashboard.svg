@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 280" fill="none">
+  <rect width="280" height="280" rx="20" fill="#0a1628"/>
+
+  <!-- Glow -->
+  <circle cx="140" cy="120" r="90" fill="#10b981" opacity="0.05"/>
+
+  <!-- Dashboard screen -->
+  <rect x="40" y="50" width="200" height="140" rx="10" fill="#1e293b" stroke="#10b981" stroke-width="1.5"/>
+  <!-- Screen top bar -->
+  <rect x="40" y="50" width="200" height="24" rx="10" fill="#0f172a"/>
+  <rect x="40" y="64" width="200" height="10" fill="#0f172a"/>
+  <circle cx="56" cy="62" r="4" fill="#ef4444" opacity="0.7"/>
+  <circle cx="68" cy="62" r="4" fill="#f59e0b" opacity="0.7"/>
+  <circle cx="80" cy="62" r="4" fill="#10b981" opacity="0.7"/>
+  <text x="140" y="66" text-anchor="middle" font-family="system-ui, sans-serif" font-size="8" font-weight="600" fill="#64748b">No Ojoro Dashboard</text>
+
+  <!-- LIVE badge -->
+  <rect x="195" y="55" width="35" height="14" rx="7" fill="#10b981" opacity="0.2"/>
+  <circle cx="203" cy="62" r="3" fill="#10b981">
+    <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  <text x="218" y="66" text-anchor="middle" font-family="system-ui, sans-serif" font-size="7" font-weight="700" fill="#10b981">LIVE</text>
+
+  <!-- Stats row -->
+  <rect x="52" y="82" width="52" height="36" rx="6" fill="#0f172a"/>
+  <text x="78" y="97" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" font-weight="800" fill="#10b981">247</text>
+  <text x="78" y="110" text-anchor="middle" font-family="system-ui, sans-serif" font-size="6" fill="#64748b">Served</text>
+
+  <rect x="114" y="82" width="52" height="36" rx="6" fill="#0f172a"/>
+  <text x="140" y="97" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" font-weight="800" fill="#f59e0b">53</text>
+  <text x="140" y="110" text-anchor="middle" font-family="system-ui, sans-serif" font-size="6" fill="#64748b">Waiting</text>
+
+  <rect x="176" y="82" width="52" height="36" rx="6" fill="#0f172a"/>
+  <text x="202" y="97" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" font-weight="800" fill="#8b5cf6">300</text>
+  <text x="202" y="110" text-anchor="middle" font-family="system-ui, sans-serif" font-size="6" fill="#64748b">Total</text>
+
+  <!-- Mini bar chart -->
+  <rect x="52" y="126" width="82" height="52" rx="4" fill="#0f172a"/>
+  <rect x="60" y="158" width="8" height="14" rx="2" fill="#10b981" opacity="0.8"/>
+  <rect x="72" y="150" width="8" height="22" rx="2" fill="#10b981" opacity="0.6"/>
+  <rect x="84" y="142" width="8" height="30" rx="2" fill="#10b981" opacity="0.9"/>
+  <rect x="96" y="154" width="8" height="18" rx="2" fill="#10b981" opacity="0.5"/>
+  <rect x="108" y="148" width="8" height="24" rx="2" fill="#10b981" opacity="0.7"/>
+  <text x="93" y="136" text-anchor="middle" font-family="system-ui, sans-serif" font-size="6" fill="#64748b">Orders / Hour</text>
+
+  <!-- Table status grid -->
+  <rect x="142" y="126" width="90" height="52" rx="4" fill="#0f172a"/>
+  <text x="187" y="136" text-anchor="middle" font-family="system-ui, sans-serif" font-size="6" fill="#64748b">Table Status</text>
+  <!-- Mini table dots -->
+  <circle cx="158" cy="148" r="5" fill="#10b981" opacity="0.8"/>
+  <circle cx="173" cy="148" r="5" fill="#10b981" opacity="0.8"/>
+  <circle cx="188" cy="148" r="5" fill="#f59e0b" opacity="0.8"/>
+  <circle cx="203" cy="148" r="5" fill="#10b981" opacity="0.8"/>
+  <circle cx="218" cy="148" r="5" fill="#10b981" opacity="0.8"/>
+  <circle cx="158" cy="163" r="5" fill="#10b981" opacity="0.8"/>
+  <circle cx="173" cy="163" r="5" fill="#f59e0b" opacity="0.8"/>
+  <circle cx="188" cy="163" r="5" fill="#10b981" opacity="0.8"/>
+  <circle cx="203" cy="163" r="5" fill="#10b981" opacity="0.8"/>
+  <circle cx="218" cy="163" r="5" fill="#64748b" opacity="0.5"/>
+
+  <!-- Monitor stand -->
+  <rect x="125" y="190" width="30" height="6" rx="2" fill="#334155"/>
+  <rect x="115" y="194" width="50" height="4" rx="2" fill="#334155"/>
+
+  <!-- Notification bell -->
+  <circle cx="210" cy="216" r="16" fill="#10b981" opacity="0.1"/>
+  <path d="M210 208 L210 204 M204 218 L216 218 M202 213 C202 209 205 204 210 204 C215 204 218 209 218 213 L218 216 L202 216 Z" stroke="#10b981" stroke-width="1.5" fill="none"/>
+  <circle cx="210" cy="218" r="2" fill="#10b981"/>
+
+  <!-- Title -->
+  <text x="140" y="248" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="white">Real-Time Dashboard</text>
+  <text x="140" y="263" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#64748b">Live tracking • Instant updates</text>
+</svg>

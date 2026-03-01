@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 280" fill="none">
+  <rect width="280" height="280" rx="20" fill="#0a1628"/>
+
+  <defs>
+    <linearGradient id="tokenGlow" x1="140" y1="60" x2="140" y2="220" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#10b981" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#10b981" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Glow behind token -->
+  <circle cx="140" cy="125" r="80" fill="url(#tokenGlow)"/>
+
+  <!-- Token card -->
+  <rect x="60" y="65" width="160" height="110" rx="14" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+
+  <!-- QR code pattern -->
+  <rect x="80" y="82" width="44" height="44" rx="4" fill="#0f172a"/>
+  <rect x="85" y="87" width="8" height="8" fill="#10b981" opacity="0.8"/>
+  <rect x="95" y="87" width="8" height="8" fill="#10b981" opacity="0.6"/>
+  <rect x="105" y="87" width="8" height="8" fill="#10b981" opacity="0.8"/>
+  <rect x="85" y="97" width="8" height="8" fill="#10b981" opacity="0.5"/>
+  <rect x="95" y="97" width="8" height="8" fill="#10b981" opacity="0.9"/>
+  <rect x="105" y="97" width="8" height="8" fill="#10b981" opacity="0.4"/>
+  <rect x="85" y="107" width="8" height="8" fill="#10b981" opacity="0.8"/>
+  <rect x="95" y="107" width="8" height="8" fill="#10b981" opacity="0.6"/>
+  <rect x="105" y="107" width="8" height="8" fill="#10b981" opacity="0.7"/>
+
+  <!-- Token text -->
+  <text x="145" y="98" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#10b981">TOKEN #0042</text>
+  <text x="145" y="113" font-family="system-ui, sans-serif" font-size="8" fill="#64748b">Table 7 • Seat A</text>
+  <text x="145" y="126" font-family="system-ui, sans-serif" font-size="8" fill="#64748b">Single Use Only</text>
+
+  <!-- Barcode -->
+  <g transform="translate(145, 132)">
+    <rect x="0" y="0" width="2" height="14" fill="#94a3b8" opacity="0.5"/>
+    <rect x="4" y="0" width="1" height="14" fill="#94a3b8" opacity="0.5"/>
+    <rect x="7" y="0" width="3" height="14" fill="#94a3b8" opacity="0.5"/>
+    <rect x="12" y="0" width="1" height="14" fill="#94a3b8" opacity="0.5"/>
+    <rect x="15" y="0" width="2" height="14" fill="#94a3b8" opacity="0.5"/>
+    <rect x="19" y="0" width="3" height="14" fill="#94a3b8" opacity="0.5"/>
+    <rect x="24" y="0" width="1" height="14" fill="#94a3b8" opacity="0.5"/>
+    <rect x="27" y="0" width="2" height="14" fill="#94a3b8" opacity="0.5"/>
+    <rect x="31" y="0" width="1" height="14" fill="#94a3b8" opacity="0.5"/>
+    <rect x="34" y="0" width="3" height="14" fill="#94a3b8" opacity="0.5"/>
+  </g>
+
+  <!-- BURNED stamp overlay -->
+  <rect x="62" y="90" width="156" height="60" rx="8" fill="#ef4444" opacity="0.08"/>
+  <text x="140" y="128" text-anchor="middle" font-family="system-ui, sans-serif" font-size="28" font-weight="900" fill="#ef4444" opacity="0.25" transform="rotate(-12, 140, 120)">BURNED</text>
+
+  <!-- Shield icon -->
+  <circle cx="140" cy="208" r="22" fill="#10b981" opacity="0.12"/>
+  <path d="M140 190 L155 197 L155 210 C155 218 148 224 140 228 C132 224 125 218 125 210 L125 197 Z" fill="none" stroke="#10b981" stroke-width="2"/>
+  <path d="M134 210 L138 214 L146 206" stroke="#10b981" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+
+  <!-- Title -->
+  <text x="140" y="258" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="white">Fraud-Proof Tokens</text>
+  <text x="140" y="273" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#64748b">Single-use • Cryptographic • Verified</text>
+</svg>

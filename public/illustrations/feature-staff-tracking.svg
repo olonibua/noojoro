@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 280" fill="none">
+  <rect width="280" height="280" rx="20" fill="#0a1628"/>
+
+  <!-- Glow -->
+  <circle cx="140" cy="120" r="80" fill="#10b981" opacity="0.05"/>
+
+  <!-- Staff member 1 (top-center) -->
+  <circle cx="140" cy="70" r="22" fill="#fbbf24" opacity="0.9"/>
+  <circle cx="133" cy="67" r="2.5" fill="#1a1a2e"/>
+  <circle cx="147" cy="67" r="2.5" fill="#1a1a2e"/>
+  <path d="M133 76 Q140 82 147 76" stroke="#1a1a2e" stroke-width="1.5" fill="none"/>
+  <rect x="127" y="92" width="26" height="32" rx="6" fill="#10b981" opacity="0.7"/>
+  <!-- Name badge -->
+  <rect x="130" y="98" width="20" height="10" rx="2" fill="white" opacity="0.9"/>
+  <text x="140" y="106" text-anchor="middle" font-family="system-ui, sans-serif" font-size="5" font-weight="700" fill="#0f172a">ADAMU</text>
+  <!-- PIN badge -->
+  <rect x="155" y="92" width="24" height="14" rx="4" fill="#10b981" opacity="0.3"/>
+  <text x="167" y="102" text-anchor="middle" font-family="system-ui, sans-serif" font-size="7" font-weight="700" fill="#10b981">PIN</text>
+
+  <!-- Staff member 2 (left) -->
+  <circle cx="65" cy="155" r="18" fill="#fbbf24" opacity="0.9"/>
+  <circle cx="60" cy="152" r="2" fill="#1a1a2e"/>
+  <circle cx="70" cy="152" r="2" fill="#1a1a2e"/>
+  <path d="M59 160 Q65 165 71 160" stroke="#1a1a2e" stroke-width="1.5" fill="none"/>
+  <rect x="53" y="173" width="24" height="28" rx="5" fill="#3b82f6" opacity="0.7"/>
+  <rect x="56" y="178" width="18" height="8" rx="2" fill="white" opacity="0.9"/>
+  <text x="65" y="185" text-anchor="middle" font-family="system-ui, sans-serif" font-size="4" font-weight="700" fill="#0f172a">BISI</text>
+
+  <!-- Staff member 3 (right) -->
+  <circle cx="215" cy="155" r="18" fill="#fbbf24" opacity="0.9"/>
+  <circle cx="210" cy="152" r="2" fill="#1a1a2e"/>
+  <circle cx="220" cy="152" r="2" fill="#1a1a2e"/>
+  <path d="M209 160 Q215 165 221 160" stroke="#1a1a2e" stroke-width="1.5" fill="none"/>
+  <rect x="203" y="173" width="24" height="28" rx="5" fill="#ec4899" opacity="0.7"/>
+  <rect x="206" y="178" width="18" height="8" rx="2" fill="white" opacity="0.9"/>
+  <text x="215" y="185" text-anchor="middle" font-family="system-ui, sans-serif" font-size="4" font-weight="700" fill="#0f172a">CHIDI</text>
+
+  <!-- Connecting lines to central log -->
+  <line x1="140" y1="124" x2="140" y2="145" stroke="#10b981" stroke-width="1" stroke-dasharray="4 2" opacity="0.4"/>
+  <line x1="77" y1="175" x2="105" y2="175" stroke="#10b981" stroke-width="1" stroke-dasharray="4 2" opacity="0.4"/>
+  <line x1="203" y1="175" x2="175" y2="175" stroke="#10b981" stroke-width="1" stroke-dasharray="4 2" opacity="0.4"/>
+
+  <!-- Central log/audit trail -->
+  <rect x="105" y="145" width="70" height="60" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="1.5"/>
+  <text x="140" y="157" text-anchor="middle" font-family="system-ui, sans-serif" font-size="7" font-weight="700" fill="#10b981">AUDIT LOG</text>
+
+  <!-- Log entries -->
+  <text x="112" y="169" font-family="system-ui, sans-serif" font-size="5.5" fill="#64748b">✓ Adamu → T7 12:04pm</text>
+  <text x="112" y="179" font-family="system-ui, sans-serif" font-size="5.5" fill="#64748b">✓ Bisi → T3 12:05pm</text>
+  <text x="112" y="189" font-family="system-ui, sans-serif" font-size="5.5" fill="#64748b">✓ Chidi → T9 12:06pm</text>
+  <text x="112" y="199" font-family="system-ui, sans-serif" font-size="5.5" fill="#f59e0b">⏳ Adamu → T12 waiting</text>
+
+  <!-- Performance metrics -->
+  <rect x="50" y="215" width="55" height="35" rx="6" fill="#1e293b"/>
+  <text x="77" y="228" text-anchor="middle" font-family="system-ui, sans-serif" font-size="6" font-weight="600" fill="#64748b">Adamu</text>
+  <text x="77" y="242" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="800" fill="#10b981">24</text>
+  <text x="77" y="248" text-anchor="middle" font-family="system-ui, sans-serif" font-size="5" fill="#64748b">deliveries</text>
+
+  <rect x="112" y="215" width="55" height="35" rx="6" fill="#1e293b"/>
+  <text x="139" y="228" text-anchor="middle" font-family="system-ui, sans-serif" font-size="6" font-weight="600" fill="#64748b">Bisi</text>
+  <text x="139" y="242" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="800" fill="#10b981">18</text>
+  <text x="139" y="248" text-anchor="middle" font-family="system-ui, sans-serif" font-size="5" fill="#64748b">deliveries</text>
+
+  <rect x="174" y="215" width="55" height="35" rx="6" fill="#1e293b"/>
+  <text x="201" y="228" text-anchor="middle" font-family="system-ui, sans-serif" font-size="6" font-weight="600" fill="#64748b">Chidi</text>
+  <text x="201" y="242" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="800" fill="#10b981">21</text>
+  <text x="201" y="248" text-anchor="middle" font-family="system-ui, sans-serif" font-size="5" fill="#64748b">deliveries</text>
+
+  <!-- Title -->
+  <text x="140" y="267" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="white">Staff Traceability</text>
+</svg>

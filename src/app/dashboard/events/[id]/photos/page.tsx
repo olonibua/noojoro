@@ -1,0 +1,259 @@
+"use client";
+
+import { useEffect, useState, useCallback, useRef } from "react";
+import { useRouter, useParams } from "next/navigation";
+import { api } from "@/lib/api";
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+
+interface Photo {
+  id: string;
+  url: string;
+  filename?: string;
+  created_at?: string;
+}
+
+export default function CelebrantPhotosPage() {
+  const router = useRouter();
+  const params = useParams();
+  const eventId = params.id as string;
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const [photos, setPhotos] = useState<Photo[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [uploading, setUploading] = useState(false);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [dragOver, setDragOver] = useState(false);
+
+  // Celebrant password
+  const [password, setPassword] = useState("");
+  const [savingPassword, setSavingPassword] = useState(false);
+
+  const fetchPhotos = useCallback(async () => {
+    try {
+      const event = await api.get<{ celebrant_photos: Record<string, string> | null }>(`/api/events/${eventId}`);
+      const photosMap = event.celebrant_photos || {};
+      const photoList: Photo[] = Object.entries(photosMap).map(([id, url]) => ({
+        id,
+        url: url as string,
+        filename: id,
+      }));
+      setPhotos(photoList);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to load photos");
+    } finally {
+      setLoading(false);
+    }
+  }, [eventId]);
+
+  useEffect(() => {
+    fetchPhotos();
+  }, [fetchPhotos]);
+
+  const uploadFiles = async (files: FileList | File[]) => {
+    setUploading(true);
+    setError("");
+    setSuccess("");
+
+    try {
+      for (const file of Array.from(files)) {
+        const formData = new FormData();
+        formData.append("file", file);
+
+        const response = await fetch(`${API_URL}/api/events/${eventId}/photos`, {
+          method: "POST",
+          body: formData,
+          credentials: "include",
+        });
+
+        if (!response.ok) {
+          const err = await response.json().catch(() => ({ detail: "Upload failed" }));
+          throw new Error(err.detail || `Upload failed for ${file.name}`);
+        }
+      }
+      setSuccess("Photos uploaded successfully!");
+      await fetchPhotos();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to upload photos");
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      uploadFiles(e.target.files);
+    }
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    setDragOver(false);
+    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+      uploadFiles(e.dataTransfer.files);
+    }
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    setDragOver(true);
+  };
+
+  const handleDragLeave = () => {
+    setDragOver(false);
+  };
+
+  const handleSetPassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSavingPassword(true);
+    setError("");
+    setSuccess("");
+
+    try {
+      await api.put(`/api/events/${eventId}/celebrant-password`, {
+        password,
+      });
+      setSuccess("Celebrant password updated!");
+      setPassword("");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to set password");
+    } finally {
+      setSavingPassword(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-20">
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-200 border-t-[#22C55E]" />
+      </div>
+    );
+  }
+
+  return (
+    <div className="mx-auto max-w-4xl">
+      <div className="mb-6">
+        <button
+          onClick={() => router.push(`/dashboard/events/${eventId}`)}
+          className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
+        >
+          &larr; Back to Event
+        </button>
+      </div>
+
+      <h1 className="text-2xl font-bold text-gray-900">Celebrant Photos</h1>
+      <p className="mt-1 text-sm text-gray-500">
+        Upload photos for the celebrant gallery. Guests will see these during the event.
+      </p>
+
+      {error && (
+        <div className="mt-4 rounded-lg bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-700">
+          {error}
+        </div>
+      )}
+      {success && (
+        <div className="mt-4 rounded-lg bg-green-50 border border-green-200 px-4 py-3 text-sm text-green-700">
+          {success}
+        </div>
+      )}
+
+      {/* Upload Area */}
+      <div className="mt-6 rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+        <h2 className="text-lg font-semibold text-gray-900">Upload Photos</h2>
+        <div
+          onDrop={handleDrop}
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
+          onClick={() => fileInputRef.current?.click()}
+          className={`mt-4 flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed p-10 transition-colors ${
+            dragOver
+              ? "border-[#22C55E] bg-[#22C55E]/5"
+              : "border-gray-300 hover:border-gray-400"
+          }`}
+        >
+          <svg
+            className="h-10 w-10 text-gray-400"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3.75 21h16.5a2.25 2.25 0 002.25-2.25V6.75a2.25 2.25 0 00-2.25-2.25H3.75A2.25 2.25 0 001.5 6.75v12a2.25 2.25 0 002.25 2.25z"
+            />
+          </svg>
+          {uploading ? (
+            <p className="mt-3 text-sm text-gray-500">Uploading...</p>
+          ) : (
+            <>
+              <p className="mt-3 text-sm font-medium text-gray-700">
+                Drag & drop photos here, or click to browse
+              </p>
+              <p className="mt-1 text-xs text-gray-400">PNG, JPG, WEBP up to 10MB each</p>
+            </>
+          )}
+        </div>
+        <input
+          ref={fileInputRef}
+          type="file"
+          multiple
+          accept="image/*"
+          onChange={handleFileChange}
+          className="hidden"
+        />
+      </div>
+
+      {/* Photo Grid */}
+      {photos.length > 0 && (
+        <div className="mt-6 rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+          <h2 className="text-lg font-semibold text-gray-900">
+            Uploaded Photos ({photos.length})
+          </h2>
+          <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+            {photos.map((photo) => (
+              <div
+                key={photo.id}
+                className="group relative aspect-square overflow-hidden rounded-lg border border-gray-200 bg-gray-50"
+              >
+                <img
+                  src={`${API_URL}${photo.url}`}
+                  alt={photo.filename || "Photo"}
+                  className="h-full w-full object-cover transition-transform group-hover:scale-105"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Celebrant Password */}
+      <div className="mt-6 rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+        <h2 className="text-lg font-semibold text-gray-900">Celebrant Password</h2>
+        <p className="mt-1 text-sm text-gray-500">
+          Set a password that the celebrant uses to access their photo gallery and controls.
+        </p>
+        <form onSubmit={handleSetPassword} className="mt-4 flex gap-3">
+          <input
+            type="text"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Min 6 characters"
+            required
+            minLength={6}
+            className="block flex-1 rounded-lg border border-gray-300 px-3 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:border-[#22C55E] focus:outline-none focus:ring-1 focus:ring-[#22C55E]"
+          />
+          <button
+            type="submit"
+            disabled={savingPassword}
+            className="rounded-lg bg-[#22C55E] px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#16A34A] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          >
+            {savingPassword ? "Saving..." : "Set Password"}
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+}
