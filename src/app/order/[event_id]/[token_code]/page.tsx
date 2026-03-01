@@ -40,6 +40,7 @@ interface BackendTokenData {
 interface MenuItem {
   id: string;
   name: string;
+  description?: string;
   image_url?: string;
   is_depleted: boolean;
 }
