@@ -167,7 +167,7 @@ export default function StaffConfirmPage() {
       <div className="flex min-h-screen flex-col items-center justify-center bg-white px-6">
         <div className="text-center">
           {/* Animated checkmark */}
-          <div className="mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-emerald-100">
+          <div className="mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-[#8BC34A]/10">
             <svg
               className="h-14 w-14 text-emerald-500"
               fill="none"
@@ -184,14 +184,14 @@ export default function StaffConfirmPage() {
             </svg>
           </div>
 
-          <h1 className="mb-2 text-3xl font-bold text-emerald-600">
+          <h1 className="mb-2 text-3xl font-bold text-[#7CB342]">
             Confirmed!
           </h1>
           <p className="mb-1 text-lg text-gray-800">
             Order #{result.order_number}
           </p>
           {result.table_number !== undefined && (
-            <p className="text-base text-gray-600">
+            <p className="text-base text-[#6B7366]">
               Table {result.table_number}
               {result.seat_number !== undefined ? `, Seat ${result.seat_number}` : ""}
             </p>
@@ -200,7 +200,7 @@ export default function StaffConfirmPage() {
 
         <button
           onClick={reset}
-          className="mt-8 min-h-[52px] w-full max-w-sm rounded-xl bg-emerald-500 px-6 py-3 text-lg font-bold text-white active:bg-emerald-600"
+          className="mt-8 min-h-[52px] w-full max-w-sm rounded-xl bg-[#8BC34A] px-6 py-3 text-lg font-bold text-white active:bg-emerald-600"
         >
           Confirm Another
         </button>
@@ -218,12 +218,12 @@ export default function StaffConfirmPage() {
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </div>
-          <h1 className="mb-2 text-2xl font-bold text-gray-900">Failed</h1>
-          <p className="text-lg text-gray-600">{errorMsg}</p>
+          <h1 className="mb-2 text-2xl font-bold text-[#1C1F1A]">Failed</h1>
+          <p className="text-lg text-[#6B7366]">{errorMsg}</p>
         </div>
         <button
           onClick={reset}
-          className="mt-8 min-h-[52px] w-full max-w-sm rounded-xl bg-emerald-500 px-6 py-3 text-lg font-bold text-white active:bg-emerald-600"
+          className="mt-8 min-h-[52px] w-full max-w-sm rounded-xl bg-[#8BC34A] px-6 py-3 text-lg font-bold text-white active:bg-emerald-600"
         >
           Try Again
         </button>
@@ -236,8 +236,8 @@ export default function StaffConfirmPage() {
     return (
       <div className="flex min-h-screen items-center justify-center bg-white">
         <div className="text-center">
-          <div className="mx-auto mb-4 h-10 w-10 animate-spin rounded-full border-4 border-gray-200 border-t-emerald-500" />
-          <p className="text-lg font-medium text-gray-700">Confirming...</p>
+          <div className="mx-auto mb-4 h-10 w-10 animate-spin rounded-full border-4 border-[#E3E8E1] border-t-emerald-500" />
+          <p className="text-lg font-medium text-[#3A3D37]">Confirming...</p>
         </div>
       </div>
     );
@@ -247,15 +247,15 @@ export default function StaffConfirmPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
-      <div className="border-b border-gray-200 px-4 py-4">
-        <h1 className="text-center text-xl font-bold text-gray-900">
+      <div className="border-b border-[#E3E8E1] px-4 py-4">
+        <h1 className="text-center text-xl font-bold text-[#1C1F1A]">
           Confirm Order
         </h1>
       </div>
 
       {/* Tabs */}
       <div className="mx-auto max-w-sm px-4 pt-4">
-        <div className="flex overflow-hidden rounded-xl border-2 border-gray-200">
+        <div className="flex overflow-hidden rounded-xl border-2 border-[#E3E8E1]">
           <button
             onClick={() => {
               setTab("scan");
@@ -263,8 +263,8 @@ export default function StaffConfirmPage() {
             }}
             className={`min-h-[48px] flex-1 py-3 text-base font-semibold transition-colors ${
               tab === "scan"
-                ? "bg-emerald-500 text-white"
-                : "bg-white text-gray-600"
+                ? "bg-[#8BC34A] text-white"
+                : "bg-white text-[#6B7366]"
             }`}
           >
             Scan Barcode
@@ -276,8 +276,8 @@ export default function StaffConfirmPage() {
             }}
             className={`min-h-[48px] flex-1 py-3 text-base font-semibold transition-colors ${
               tab === "code"
-                ? "bg-emerald-500 text-white"
-                : "bg-white text-gray-600"
+                ? "bg-[#8BC34A] text-white"
+                : "bg-white text-[#6B7366]"
             }`}
           >
             Enter Code
@@ -291,7 +291,7 @@ export default function StaffConfirmPage() {
           {cameraAvailable && !scanning && (
             <button
               onClick={startCamera}
-              className="min-h-[52px] w-full rounded-xl bg-emerald-500 px-6 py-3 text-lg font-bold text-white active:bg-emerald-600"
+              className="min-h-[52px] w-full rounded-xl bg-[#8BC34A] px-6 py-3 text-lg font-bold text-white active:bg-emerald-600"
             >
               Start Camera
             </button>
@@ -309,7 +309,7 @@ export default function StaffConfirmPage() {
           )}
 
           <div className="mt-6">
-            <p className="mb-2 text-base font-medium text-gray-700">
+            <p className="mb-2 text-base font-medium text-[#3A3D37]">
               {cameraAvailable === false
                 ? "Camera not available. Enter barcode manually:"
                 : "Or enter barcode manually:"}
@@ -320,12 +320,12 @@ export default function StaffConfirmPage() {
                 value={manualCode}
                 onChange={(e) => setManualCode(e.target.value)}
                 placeholder="Enter barcode"
-                className="min-h-[52px] flex-1 rounded-xl border-2 border-gray-300 px-4 py-3 text-lg text-gray-900 outline-none focus:border-emerald-500"
+                className="min-h-[52px] flex-1 rounded-xl border-2 border-[#E3E8E1] px-4 py-3 text-lg text-[#1C1F1A] outline-none focus:border-[#8BC34A]"
               />
               <button
                 onClick={() => submitBarcode(manualCode)}
                 disabled={!manualCode.trim()}
-                className="min-h-[52px] rounded-xl bg-emerald-500 px-6 py-3 text-lg font-bold text-white disabled:opacity-40"
+                className="min-h-[52px] rounded-xl bg-[#8BC34A] px-6 py-3 text-lg font-bold text-white disabled:opacity-40"
               >
                 Go
               </button>
@@ -337,7 +337,7 @@ export default function StaffConfirmPage() {
       {/* Code Tab */}
       {tab === "code" && (
         <div className="mx-auto max-w-sm px-4 py-6">
-          <p className="mb-6 text-center text-base text-gray-600">
+          <p className="mb-6 text-center text-base text-[#6B7366]">
             Enter the 4-digit order PIN
           </p>
 
@@ -354,7 +354,7 @@ export default function StaffConfirmPage() {
                 value={digit}
                 onChange={(e) => handlePinChange(i, e.target.value)}
                 onKeyDown={(e) => handlePinKeyDown(i, e)}
-                className="h-16 w-16 rounded-xl border-2 border-gray-300 text-center text-3xl font-bold text-gray-900 outline-none focus:border-emerald-500"
+                className="h-16 w-16 rounded-xl border-2 border-[#E3E8E1] text-center text-3xl font-bold text-[#1C1F1A] outline-none focus:border-[#8BC34A]"
               />
             ))}
           </div>
@@ -362,14 +362,14 @@ export default function StaffConfirmPage() {
           <button
             onClick={submitPin}
             disabled={pin.some((d) => d === "")}
-            className="min-h-[52px] w-full rounded-xl bg-emerald-500 px-6 py-3 text-lg font-bold text-white disabled:opacity-40 active:bg-emerald-600"
+            className="min-h-[52px] w-full rounded-xl bg-[#8BC34A] px-6 py-3 text-lg font-bold text-white disabled:opacity-40 active:bg-emerald-600"
           >
             Confirm
           </button>
         </div>
       )}
 
-      <p className="mt-8 text-center text-xs text-gray-400">
+      <p className="mt-8 text-center text-xs text-[#9CA396]">
         Powered by No Ojoro
       </p>
     </div>

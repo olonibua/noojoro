@@ -74,8 +74,8 @@ export default function CatererLiveDashboardPage() {
     return (
       <div className="flex min-h-screen items-center justify-center bg-white">
         <div className="text-center">
-          <div className="mx-auto mb-4 h-10 w-10 animate-spin rounded-full border-4 border-gray-200 border-t-emerald-500" />
-          <p className="text-lg font-medium text-gray-700">Loading dashboard...</p>
+          <div className="mx-auto mb-4 h-10 w-10 animate-spin rounded-full border-4 border-[#E3E8E1] border-t-emerald-500" />
+          <p className="text-lg font-medium text-[#3A3D37]">Loading dashboard...</p>
         </div>
       </div>
     );
@@ -88,7 +88,7 @@ export default function CatererLiveDashboardPage() {
           <p className="mb-4 text-lg text-red-600">{error}</p>
           <button
             onClick={fetchDashboard}
-            className="rounded-xl bg-emerald-500 px-8 py-3 text-lg font-semibold text-white"
+            className="rounded-xl bg-[#8BC34A] px-8 py-3 text-lg font-semibold text-white"
           >
             Retry
           </button>
@@ -100,19 +100,19 @@ export default function CatererLiveDashboardPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
-      <div className="border-b border-gray-200 px-4 py-4">
+      <div className="border-b border-[#E3E8E1] px-4 py-4">
         <div className="mx-auto max-w-2xl">
-          <h1 className="text-xl font-bold text-gray-900">
+          <h1 className="text-xl font-bold text-[#1C1F1A]">
             {data?.event_name || "Event"} - Live
           </h1>
-          <p className="text-sm text-gray-500">Auto-refreshing every 3 seconds</p>
+          <p className="text-sm text-[#6B7366]">Auto-refreshing every 3 seconds</p>
         </div>
       </div>
 
       <div className="mx-auto max-w-2xl px-4 py-6">
         {/* Token Progress Ring */}
         <div className="mb-8 flex flex-col items-center">
-          <h2 className="mb-4 text-lg font-bold text-gray-900">Token Usage</h2>
+          <h2 className="mb-4 text-lg font-bold text-[#1C1F1A]">Token Usage</h2>
           <div className="relative h-36 w-36">
             <svg className="h-36 w-36 -rotate-90" viewBox="0 0 140 140">
               <circle
@@ -128,7 +128,7 @@ export default function CatererLiveDashboardPage() {
                 cy="70"
                 r={radius}
                 fill="none"
-                stroke="#22C55E"
+                stroke="#8BC34A"
                 strokeWidth="10"
                 strokeLinecap="round"
                 strokeDasharray={circumference}
@@ -137,24 +137,24 @@ export default function CatererLiveDashboardPage() {
               />
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <span className="text-3xl font-bold text-gray-900">{tokenPercent}%</span>
-              <span className="text-xs text-gray-500">used</span>
+              <span className="text-3xl font-bold text-[#1C1F1A]">{tokenPercent}%</span>
+              <span className="text-xs text-[#6B7366]">used</span>
             </div>
           </div>
 
           {/* Token numbers */}
           <div className="mt-4 flex gap-6 text-center">
             <div>
-              <p className="text-2xl font-bold text-gray-900">{data?.tokens.total ?? 0}</p>
-              <p className="text-sm text-gray-500">Total</p>
+              <p className="text-2xl font-bold text-[#1C1F1A]">{data?.tokens.total ?? 0}</p>
+              <p className="text-sm text-[#6B7366]">Total</p>
             </div>
             <div>
-              <p className="text-2xl font-bold text-emerald-600">{used}</p>
-              <p className="text-sm text-gray-500">Used</p>
+              <p className="text-2xl font-bold text-[#7CB342]">{used}</p>
+              <p className="text-sm text-[#6B7366]">Used</p>
             </div>
             <div>
               <p className="text-2xl font-bold text-amber-600">{remaining}</p>
-              <p className="text-sm text-gray-500">Remaining</p>
+              <p className="text-sm text-[#6B7366]">Remaining</p>
             </div>
           </div>
         </div>
@@ -168,10 +168,10 @@ export default function CatererLiveDashboardPage() {
             <p className="text-sm font-medium text-amber-600">Waiting</p>
           </div>
           <div className="rounded-xl border-2 border-emerald-200 bg-emerald-50 p-4 text-center">
-            <p className="text-3xl font-bold text-emerald-700">
+            <p className="text-3xl font-bold text-[#7CB342]">
               {data?.orders.served ?? 0}
             </p>
-            <p className="text-sm font-medium text-emerald-600">Served</p>
+            <p className="text-sm font-medium text-[#7CB342]">Served</p>
           </div>
         </div>
 
@@ -188,9 +188,9 @@ export default function CatererLiveDashboardPage() {
         )}
 
         {data && data.pending_waiter_requests === 0 && (
-          <div className="mb-8 rounded-xl border-2 border-gray-200 p-4 text-center">
-            <p className="text-3xl font-bold text-gray-400">0</p>
-            <p className="text-sm font-medium text-gray-400">
+          <div className="mb-8 rounded-xl border-2 border-[#E3E8E1] p-4 text-center">
+            <p className="text-3xl font-bold text-[#9CA396]">0</p>
+            <p className="text-sm font-medium text-[#9CA396]">
               Pending Waiter Requests
             </p>
           </div>
@@ -200,20 +200,20 @@ export default function CatererLiveDashboardPage() {
         <div className="space-y-3">
           <Link
             href={`/dashboard/events/${eventId}/live/inventory`}
-            className="flex min-h-[52px] items-center justify-between rounded-xl border-2 border-gray-200 px-5 py-4 text-base font-semibold text-gray-900 active:bg-gray-50"
+            className="flex min-h-[52px] items-center justify-between rounded-xl border-2 border-[#E3E8E1] px-5 py-4 text-base font-semibold text-[#1C1F1A] active:bg-[#F4F6F3]"
           >
             <span>Inventory Monitor</span>
-            <svg className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <svg className="h-5 w-5 text-[#9CA396]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
             </svg>
           </Link>
 
           <Link
             href={`/dashboard/events/${eventId}/live/staff`}
-            className="flex min-h-[52px] items-center justify-between rounded-xl border-2 border-gray-200 px-5 py-4 text-base font-semibold text-gray-900 active:bg-gray-50"
+            className="flex min-h-[52px] items-center justify-between rounded-xl border-2 border-[#E3E8E1] px-5 py-4 text-base font-semibold text-[#1C1F1A] active:bg-[#F4F6F3]"
           >
             <span>Staff Performance</span>
-            <svg className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <svg className="h-5 w-5 text-[#9CA396]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
             </svg>
           </Link>
@@ -221,7 +221,7 @@ export default function CatererLiveDashboardPage() {
       </div>
 
       <div className="px-4 py-6 text-center">
-        <p className="text-xs text-gray-400">Powered by No Ojoro</p>
+        <p className="text-xs text-[#9CA396]">Powered by No Ojoro</p>
       </div>
     </div>
   );

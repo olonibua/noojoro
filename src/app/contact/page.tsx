@@ -25,9 +25,9 @@ export default function ContactPage() {
       <Navbar />
 
       {/* Hero */}
-      <section className="px-6 pb-16 pt-40 text-center">
-        <div className="mx-auto max-w-3xl">
-          <p className="mb-4 text-sm font-semibold uppercase tracking-widest t-text-muted">Get In Touch</p>
+      <section className="section-hero-eco px-6 pb-16 pt-40 text-center">
+        <div className="mx-auto max-w-3xl animate-slide-up">
+          <div className="badge-eco mb-4 inline-block">Get In Touch</div>
           <h1 className="text-4xl font-extrabold leading-tight sm:text-5xl">
             Let&rsquo;s Talk
           </h1>
@@ -43,10 +43,10 @@ export default function ContactPage() {
           {/* Info */}
           <div className="flex flex-col gap-6 lg:col-span-2">
             {contactInfo.map((info) => (
-              <div key={info.label} className="card-elevated rounded-2xl p-6">
+              <div key={info.label} className="card-elevated p-6">
                 <p className="mb-1 text-xs font-semibold uppercase tracking-wider t-text-faint">{info.label}</p>
                 {info.href ? (
-                  <a href={info.href} className="text-lg font-semibold t-text transition-colors hover:text-emerald-500">
+                  <a href={info.href} className="text-lg font-semibold t-text transition-colors hover:text-[#8BC34A]">
                     {info.value}
                   </a>
                 ) : (
@@ -57,11 +57,11 @@ export default function ContactPage() {
           </div>
 
           {/* Form */}
-          <div className="card-featured rounded-2xl p-8 sm:p-10 lg:col-span-3">
+          <div className="card-featured p-8 sm:p-10 lg:col-span-3">
             {submitted ? (
               <div className="flex flex-col items-center justify-center py-16 text-center">
-                <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-emerald-500/10">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <div className="t-icon-container mb-6 flex h-16 w-16 items-center justify-center rounded-full">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-[#8BC34A]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
@@ -69,7 +69,7 @@ export default function ContactPage() {
                 <p className="t-text-muted">We&rsquo;ll get back to you within 24 hours.</p>
                 <button
                   onClick={() => { setSubmitted(false); setFormData({ name: "", email: "", subject: "", message: "" }); }}
-                  className="mt-6 text-sm font-semibold text-emerald-500"
+                  className="mt-6 text-sm font-semibold text-[#8BC34A] hover:text-[#7CB342]"
                 >
                   Send Another Message
                 </button>
@@ -81,22 +81,22 @@ export default function ContactPage() {
                   <div className="grid gap-5 sm:grid-cols-2">
                     <div>
                       <label htmlFor="name" className="mb-1.5 block text-sm font-medium t-text-secondary">Full Name</label>
-                      <input id="name" type="text" required value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} className="w-full rounded-xl t-input px-4 py-3 text-sm outline-none" placeholder="Your name" />
+                      <input id="name" type="text" required value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} className="w-full t-input px-4 py-3 text-sm outline-none" placeholder="Your name" />
                     </div>
                     <div>
                       <label htmlFor="email" className="mb-1.5 block text-sm font-medium t-text-secondary">Email</label>
-                      <input id="email" type="email" required value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} className="w-full rounded-xl t-input px-4 py-3 text-sm outline-none" placeholder="you@example.com" />
+                      <input id="email" type="email" required value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} className="w-full t-input px-4 py-3 text-sm outline-none" placeholder="you@example.com" />
                     </div>
                   </div>
                   <div>
                     <label htmlFor="subject" className="mb-1.5 block text-sm font-medium t-text-secondary">Subject</label>
-                    <input id="subject" type="text" required value={formData.subject} onChange={(e) => setFormData({ ...formData, subject: e.target.value })} className="w-full rounded-xl t-input px-4 py-3 text-sm outline-none" placeholder="What is this about?" />
+                    <input id="subject" type="text" required value={formData.subject} onChange={(e) => setFormData({ ...formData, subject: e.target.value })} className="w-full t-input px-4 py-3 text-sm outline-none" placeholder="What is this about?" />
                   </div>
                   <div>
                     <label htmlFor="message" className="mb-1.5 block text-sm font-medium t-text-secondary">Message</label>
-                    <textarea id="message" required rows={5} value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })} className="w-full resize-none rounded-xl t-input px-4 py-3 text-sm outline-none" placeholder="Tell us how we can help..." />
+                    <textarea id="message" required rows={5} value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })} className="w-full resize-none t-input px-4 py-3 text-sm outline-none" placeholder="Tell us how we can help..." />
                   </div>
-                  <button type="submit" className="glow-green rounded-full bg-emerald-500 py-3.5 font-semibold text-white">
+                  <button type="submit" className="btn-primary rounded-full py-3.5 font-semibold">
                     Send Message
                   </button>
                 </form>
@@ -109,13 +109,13 @@ export default function ContactPage() {
       {/* CTA — dark */}
       <section className="section-dark px-6 py-20">
         <div className="mx-auto max-w-3xl text-center">
-          <h2 className="text-2xl font-bold text-white sm:text-3xl">Ready to Get Started?</h2>
-          <p className="mx-auto mt-4 max-w-xl text-neutral-400">
+          <h2 className="text-2xl font-bold text-[#F0F3EF] sm:text-3xl">Ready to Get Started?</h2>
+          <p className="mx-auto mt-4 max-w-xl text-[#9CA396]">
             Join hundreds of caterers and bar owners already using No Ojoro.
           </p>
           <Link
             href="?auth=register" scroll={false}
-            className="glow-green mt-8 inline-flex items-center gap-2 rounded-full bg-emerald-500 px-8 py-4 font-bold text-white"
+            className="glow-green mt-8 inline-flex items-center gap-2 rounded-full bg-[#8BC34A] px-8 py-4 font-bold text-white hover:bg-[#7CB342]"
           >
             Create Free Account
           </Link>

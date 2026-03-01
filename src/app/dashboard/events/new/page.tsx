@@ -20,7 +20,7 @@ export default function CreateEventPage() {
     venue_name: "",
     table_count: 10,
     guests_per_table: 10,
-    theme_color: "#22C55E",
+    theme_color: "#8BC34A",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -61,15 +61,15 @@ export default function CreateEventPage() {
       <div className="mb-6">
         <button
           onClick={() => router.back()}
-          className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
+          className="text-sm text-[#6B7366] hover:text-[#3A3D37] transition-colors"
         >
           &larr; Back
         </button>
       </div>
 
-      <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-        <h1 className="text-2xl font-bold text-gray-900">Create Event</h1>
-        <p className="mt-1 text-sm text-gray-500">
+      <div className="rounded-xl border border-[#E3E8E1] bg-white p-6 shadow-sm">
+        <h1 className="text-2xl font-bold text-[#1C1F1A]">Create Event</h1>
+        <p className="mt-1 text-sm text-[#6B7366]">
           Set up your event details. You can configure tables, menus, and staff later.
         </p>
 
@@ -82,7 +82,7 @@ export default function CreateEventPage() {
         <form onSubmit={handleSubmit} className="mt-6 space-y-5">
           {/* Event Name */}
           <div>
-            <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="name" className="block text-sm font-medium text-[#3A3D37]">
               Event Name
             </label>
             <input
@@ -93,14 +93,14 @@ export default function CreateEventPage() {
               value={form.name}
               onChange={handleChange}
               placeholder="e.g., Tunde & Adaeze's Wedding"
-              className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:border-[#22C55E] focus:outline-none focus:ring-1 focus:ring-[#22C55E]"
+              className="mt-1 block w-full rounded-lg border border-[#E3E8E1] px-3 py-2.5 text-sm text-[#1C1F1A] placeholder-[#9CA396] focus:border-[#8BC34A] focus:outline-none focus:ring-1 focus:ring-[#8BC34A]"
             />
           </div>
 
           {/* Date & Time */}
           <div className="grid gap-4 sm:grid-cols-2">
             <div>
-              <label htmlFor="date" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="date" className="block text-sm font-medium text-[#3A3D37]">
                 Event Date
               </label>
               <input
@@ -110,11 +110,11 @@ export default function CreateEventPage() {
                 required
                 value={form.date}
                 onChange={handleChange}
-                className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm text-gray-900 focus:border-[#22C55E] focus:outline-none focus:ring-1 focus:ring-[#22C55E]"
+                className="mt-1 block w-full rounded-lg border border-[#E3E8E1] px-3 py-2.5 text-sm text-[#1C1F1A] focus:border-[#8BC34A] focus:outline-none focus:ring-1 focus:ring-[#8BC34A]"
               />
             </div>
             <div>
-              <label htmlFor="time" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="time" className="block text-sm font-medium text-[#3A3D37]">
                 Event Time
               </label>
               <input
@@ -123,14 +123,14 @@ export default function CreateEventPage() {
                 type="time"
                 value={form.time}
                 onChange={handleChange}
-                className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm text-gray-900 focus:border-[#22C55E] focus:outline-none focus:ring-1 focus:ring-[#22C55E]"
+                className="mt-1 block w-full rounded-lg border border-[#E3E8E1] px-3 py-2.5 text-sm text-[#1C1F1A] focus:border-[#8BC34A] focus:outline-none focus:ring-1 focus:ring-[#8BC34A]"
               />
             </div>
           </div>
 
           {/* Venue Name */}
           <div>
-            <label htmlFor="venue_name" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="venue_name" className="block text-sm font-medium text-[#3A3D37]">
               Venue Name
             </label>
             <input
@@ -141,14 +141,14 @@ export default function CreateEventPage() {
               value={form.venue_name}
               onChange={handleChange}
               placeholder="e.g., Eko Hotels Convention Centre"
-              className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:border-[#22C55E] focus:outline-none focus:ring-1 focus:ring-[#22C55E]"
+              className="mt-1 block w-full rounded-lg border border-[#E3E8E1] px-3 py-2.5 text-sm text-[#1C1F1A] placeholder-[#9CA396] focus:border-[#8BC34A] focus:outline-none focus:ring-1 focus:ring-[#8BC34A]"
             />
           </div>
 
           {/* Table Count & Guests per Table */}
           <div className="grid gap-4 sm:grid-cols-2">
             <div>
-              <label htmlFor="table_count" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="table_count" className="block text-sm font-medium text-[#3A3D37]">
                 Number of Tables
               </label>
               <input
@@ -159,11 +159,11 @@ export default function CreateEventPage() {
                 required
                 value={form.table_count}
                 onChange={handleChange}
-                className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm text-gray-900 focus:border-[#22C55E] focus:outline-none focus:ring-1 focus:ring-[#22C55E]"
+                className="mt-1 block w-full rounded-lg border border-[#E3E8E1] px-3 py-2.5 text-sm text-[#1C1F1A] focus:border-[#8BC34A] focus:outline-none focus:ring-1 focus:ring-[#8BC34A]"
               />
             </div>
             <div>
-              <label htmlFor="guests_per_table" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="guests_per_table" className="block text-sm font-medium text-[#3A3D37]">
                 Guests per Table
               </label>
               <input
@@ -174,14 +174,14 @@ export default function CreateEventPage() {
                 required
                 value={form.guests_per_table}
                 onChange={handleChange}
-                className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm text-gray-900 focus:border-[#22C55E] focus:outline-none focus:ring-1 focus:ring-[#22C55E]"
+                className="mt-1 block w-full rounded-lg border border-[#E3E8E1] px-3 py-2.5 text-sm text-[#1C1F1A] focus:border-[#8BC34A] focus:outline-none focus:ring-1 focus:ring-[#8BC34A]"
               />
             </div>
           </div>
 
           {/* Theme Color */}
           <div>
-            <label htmlFor="theme_color" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="theme_color" className="block text-sm font-medium text-[#3A3D37]">
               Theme Color
             </label>
             <div className="mt-1 flex items-center gap-3">
@@ -191,18 +191,18 @@ export default function CreateEventPage() {
                 type="text"
                 value={form.theme_color}
                 onChange={handleChange}
-                placeholder="#22C55E"
+                placeholder="#8BC34A"
                 pattern="^#[0-9A-Fa-f]{6}$"
-                className="block w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:border-[#22C55E] focus:outline-none focus:ring-1 focus:ring-[#22C55E]"
+                className="block w-full rounded-lg border border-[#E3E8E1] px-3 py-2.5 text-sm text-[#1C1F1A] placeholder-[#9CA396] focus:border-[#8BC34A] focus:outline-none focus:ring-1 focus:ring-[#8BC34A]"
               />
               <input
                 type="color"
                 value={form.theme_color}
                 onChange={(e) => setForm((prev) => ({ ...prev, theme_color: e.target.value }))}
-                className="h-10 w-10 cursor-pointer rounded-lg border border-gray-300 p-0.5"
+                className="h-10 w-10 cursor-pointer rounded-lg border border-[#E3E8E1] p-0.5"
               />
               <div
-                className="h-10 w-10 rounded-lg border border-gray-200"
+                className="h-10 w-10 rounded-lg border border-[#E3E8E1]"
                 style={{ backgroundColor: form.theme_color }}
               />
             </div>
@@ -213,14 +213,14 @@ export default function CreateEventPage() {
             <button
               type="submit"
               disabled={loading}
-              className="rounded-lg bg-[#22C55E] px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#16A34A] disabled:opacity-50 disabled:cursor-not-allowed"
+              className="rounded-lg bg-[#8BC34A] px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#7CB342] disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? "Creating..." : "Create Event"}
             </button>
             <button
               type="button"
               onClick={() => router.back()}
-              className="rounded-lg border border-gray-300 px-6 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+              className="rounded-lg border border-[#E3E8E1] px-6 py-2.5 text-sm font-medium text-[#3A3D37] hover:bg-[#F4F6F3] transition-colors"
             >
               Cancel
             </button>

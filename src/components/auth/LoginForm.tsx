@@ -47,6 +47,10 @@ export default function LoginForm({ onNavigate, onClose }: LoginFormProps) {
         return;
       }
 
+      // Set a client-readable cookie so middleware knows we're logged in
+      // (the httpOnly access_token cookie lives on the API domain and can't be read by middleware)
+      document.cookie = `logged_in=true; path=/; max-age=${30 * 60}; secure; samesite=lax`;
+
       onClose();
       router.push("/dashboard");
     } catch (err) {
@@ -64,20 +68,20 @@ export default function LoginForm({ onNavigate, onClose }: LoginFormProps) {
       </p>
 
       {error && (
-        <div className="mb-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
+        <div className="mb-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
           {error}
         </div>
       )}
 
       {/* Mode Tabs */}
-      <div className="mb-6 flex overflow-hidden rounded-lg border t-border">
+      <div className="mb-6 flex overflow-hidden rounded-xl t-tab-bg p-1">
         <button
           type="button"
           onClick={() => setMode("email")}
-          className={`flex-1 py-2.5 text-sm font-medium transition-colors ${
+          className={`flex-1 rounded-lg py-2.5 text-sm font-medium transition-all ${
             mode === "email"
-              ? "bg-black text-white"
-              : "t-text-muted hover:opacity-80"
+              ? "bg-[#22C55E] text-white shadow-sm"
+              : "t-text-muted hover:text-[#22C55E]"
           }`}
         >
           Email
@@ -85,10 +89,10 @@ export default function LoginForm({ onNavigate, onClose }: LoginFormProps) {
         <button
           type="button"
           onClick={() => setMode("phone")}
-          className={`flex-1 py-2.5 text-sm font-medium transition-colors ${
+          className={`flex-1 rounded-lg py-2.5 text-sm font-medium transition-all ${
             mode === "phone"
-              ? "bg-black text-white"
-              : "t-text-muted hover:opacity-80"
+              ? "bg-[#22C55E] text-white shadow-sm"
+              : "t-text-muted hover:text-[#22C55E]"
           }`}
         >
           Phone
@@ -108,7 +112,7 @@ export default function LoginForm({ onNavigate, onClose }: LoginFormProps) {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@example.com"
-              className="w-full rounded-lg t-input px-4 py-3 outline-none transition-colors"
+              className="w-full t-input px-4 py-3 outline-none"
             />
           </div>
         ) : (
@@ -123,7 +127,7 @@ export default function LoginForm({ onNavigate, onClose }: LoginFormProps) {
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               placeholder="+234 801 234 5678"
-              className="w-full rounded-lg t-input px-4 py-3 outline-none transition-colors"
+              className="w-full t-input px-4 py-3 outline-none"
             />
           </div>
         )}
@@ -139,14 +143,14 @@ export default function LoginForm({ onNavigate, onClose }: LoginFormProps) {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Enter your password"
-            className="w-full rounded-lg t-input px-4 py-3 outline-none transition-colors"
+            className="w-full t-input px-4 py-3 outline-none"
           />
         </div>
 
         <button
           type="submit"
           disabled={loading}
-          className="w-full rounded-lg bg-black py-3 font-semibold text-white transition-all hover:opacity-80 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="btn-primary w-full py-3 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {loading ? "Signing In..." : "Sign In"}
         </button>
@@ -156,7 +160,7 @@ export default function LoginForm({ onNavigate, onClose }: LoginFormProps) {
         <button
           type="button"
           onClick={() => onNavigate("reset")}
-          className="font-medium t-text-secondary hover:t-text"
+          className="font-medium text-[#22C55E] hover:text-[#16A34A]"
         >
           Forgot your password?
         </button>
@@ -165,7 +169,7 @@ export default function LoginForm({ onNavigate, onClose }: LoginFormProps) {
           <button
             type="button"
             onClick={() => onNavigate("register")}
-            className="font-medium t-text-secondary hover:t-text"
+            className="font-medium text-[#22C55E] hover:text-[#16A34A]"
           >
             Create Account
           </button>

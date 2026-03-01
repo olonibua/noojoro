@@ -129,13 +129,13 @@ export default function ResetPasswordForm({ onNavigate }: ResetPasswordFormProps
       </p>
 
       {error && (
-        <div className="mb-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
+        <div className="mb-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
           {error}
         </div>
       )}
 
       {success && (
-        <div className="mb-4 rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-600">
+        <div className="mb-4 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-600">
           {success}
         </div>
       )}
@@ -143,14 +143,14 @@ export default function ResetPasswordForm({ onNavigate }: ResetPasswordFormProps
       {view === "request" && (
         <>
           {/* Mode Tabs */}
-          <div className="mb-6 flex overflow-hidden rounded-lg border t-border">
+          <div className="mb-6 flex overflow-hidden rounded-xl t-tab-bg p-1">
             <button
               type="button"
               onClick={() => setMode("email")}
-              className={`flex-1 py-2.5 text-sm font-medium transition-colors ${
+              className={`flex-1 rounded-lg py-2.5 text-sm font-medium transition-all ${
                 mode === "email"
-                  ? "bg-black text-white"
-                  : "t-text-muted hover:opacity-80"
+                  ? "bg-[#8BC34A] text-white shadow-sm"
+                  : "t-text-muted hover:text-[#8BC34A]"
               }`}
             >
               Email
@@ -158,10 +158,10 @@ export default function ResetPasswordForm({ onNavigate }: ResetPasswordFormProps
             <button
               type="button"
               onClick={() => setMode("phone")}
-              className={`flex-1 py-2.5 text-sm font-medium transition-colors ${
+              className={`flex-1 rounded-lg py-2.5 text-sm font-medium transition-all ${
                 mode === "phone"
-                  ? "bg-black text-white"
-                  : "t-text-muted hover:opacity-80"
+                  ? "bg-[#8BC34A] text-white shadow-sm"
+                  : "t-text-muted hover:text-[#8BC34A]"
               }`}
             >
               Phone
@@ -181,7 +181,7 @@ export default function ResetPasswordForm({ onNavigate }: ResetPasswordFormProps
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="you@example.com"
-                  className="w-full rounded-lg t-input px-4 py-3 outline-none transition-colors"
+                  className="w-full t-input px-4 py-3 outline-none"
                 />
               </div>
             ) : (
@@ -196,7 +196,7 @@ export default function ResetPasswordForm({ onNavigate }: ResetPasswordFormProps
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   placeholder="+234 801 234 5678"
-                  className="w-full rounded-lg t-input px-4 py-3 outline-none transition-colors"
+                  className="w-full t-input px-4 py-3 outline-none"
                 />
               </div>
             )}
@@ -204,7 +204,7 @@ export default function ResetPasswordForm({ onNavigate }: ResetPasswordFormProps
             <button
               type="submit"
               disabled={loading}
-              className="w-full rounded-lg bg-black py-3 font-semibold text-white transition-all hover:opacity-80 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="btn-primary w-full py-3 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? "Sending..." : "Send Reset Code"}
             </button>
@@ -228,14 +228,14 @@ export default function ResetPasswordForm({ onNavigate }: ResetPasswordFormProps
               value={token}
               onChange={(e) => setToken(e.target.value.replace(/\D/g, "").slice(0, 6))}
               placeholder="000000"
-              className="w-full rounded-lg t-input px-4 py-3 text-center text-2xl tracking-[0.5em] outline-none transition-colors"
+              className="w-full t-input px-4 py-3 text-center text-2xl tracking-[0.5em] outline-none"
             />
           </div>
 
           <button
             type="submit"
             disabled={loading || token.length !== 6}
-            className="w-full rounded-lg bg-black py-3 font-semibold text-white transition-all hover:opacity-80 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="btn-primary w-full py-3 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? "Verifying..." : "Verify Code"}
           </button>
@@ -248,7 +248,7 @@ export default function ResetPasswordForm({ onNavigate }: ResetPasswordFormProps
               setError("");
               setSuccess("");
             }}
-            className="w-full py-2 text-sm t-text-faint hover:opacity-80"
+            className="w-full py-2 text-sm t-text-faint hover:text-[#8BC34A]"
           >
             Back to request
           </button>
@@ -268,7 +268,7 @@ export default function ResetPasswordForm({ onNavigate }: ResetPasswordFormProps
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
               placeholder="Enter your new password"
-              className="w-full rounded-lg t-input px-4 py-3 outline-none transition-colors"
+              className="w-full t-input px-4 py-3 outline-none"
             />
           </div>
 
@@ -283,14 +283,14 @@ export default function ResetPasswordForm({ onNavigate }: ResetPasswordFormProps
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               placeholder="Confirm your new password"
-              className="w-full rounded-lg t-input px-4 py-3 outline-none transition-colors"
+              className="w-full t-input px-4 py-3 outline-none"
             />
           </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full rounded-lg bg-black py-3 font-semibold text-white transition-all hover:opacity-80 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="btn-primary w-full py-3 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? "Resetting..." : "Reset Password"}
           </button>
@@ -305,7 +305,7 @@ export default function ResetPasswordForm({ onNavigate }: ResetPasswordFormProps
               setError("");
               setSuccess("");
             }}
-            className="w-full py-2 text-sm t-text-faint hover:opacity-80"
+            className="w-full py-2 text-sm t-text-faint hover:text-[#8BC34A]"
           >
             Start over
           </button>
@@ -317,7 +317,7 @@ export default function ResetPasswordForm({ onNavigate }: ResetPasswordFormProps
         <button
           type="button"
           onClick={() => onNavigate("login")}
-          className="font-medium t-text-secondary hover:t-text"
+          className="font-medium text-[#8BC34A] hover:text-[#7CB342]"
         >
           Sign In
         </button>

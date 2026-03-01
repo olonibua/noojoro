@@ -43,19 +43,19 @@ export default function CreateVenuePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[#F4F6F3]">
       {/* Header */}
-      <header className="border-b border-gray-200 bg-white">
+      <header className="border-b border-[#E3E8E1] bg-white">
         <div className="mx-auto flex max-w-4xl items-center justify-between px-4 py-4 sm:px-6">
           <div className="flex items-center gap-3">
             <Link
               href="/dashboard"
-              className="text-sm font-medium text-gray-500 hover:text-gray-700"
+              className="text-sm font-medium text-[#6B7366] hover:text-[#3A3D37]"
             >
               Dashboard
             </Link>
-            <span className="text-gray-300">/</span>
-            <span className="text-sm font-semibold text-gray-900">
+            <span className="text-[#C5C9C2]">/</span>
+            <span className="text-sm font-semibold text-[#1C1F1A]">
               New Venue
             </span>
           </div>
@@ -64,10 +64,10 @@ export default function CreateVenuePage() {
 
       {/* Content */}
       <main className="mx-auto max-w-2xl px-4 py-10 sm:px-6">
-        <h1 className="mb-1 text-2xl font-bold text-gray-900">
+        <h1 className="mb-1 text-2xl font-bold text-[#1C1F1A]">
           Create a New Venue
         </h1>
-        <p className="mb-8 text-sm text-gray-500">
+        <p className="mb-8 text-sm text-[#6B7366]">
           Set up your bar or venue to start taking orders.
         </p>
 
@@ -82,7 +82,7 @@ export default function CreateVenuePage() {
           <div>
             <label
               htmlFor="name"
-              className="mb-1.5 block text-sm font-medium text-gray-700"
+              className="mb-1.5 block text-sm font-medium text-[#3A3D37]"
             >
               Venue Name
             </label>
@@ -93,7 +93,7 @@ export default function CreateVenuePage() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="e.g. The Velvet Lounge"
-              className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 outline-none transition-colors focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20"
+              className="w-full rounded-lg border border-[#E3E8E1] bg-white px-4 py-2.5 text-sm text-[#1C1F1A] placeholder-[#9CA396] outline-none transition-colors focus:border-[#8BC34A] focus:ring-2 focus:ring-emerald-500/20"
             />
           </div>
 
@@ -101,7 +101,7 @@ export default function CreateVenuePage() {
           <div>
             <label
               htmlFor="address"
-              className="mb-1.5 block text-sm font-medium text-gray-700"
+              className="mb-1.5 block text-sm font-medium text-[#3A3D37]"
             >
               Address
             </label>
@@ -112,7 +112,7 @@ export default function CreateVenuePage() {
               value={address}
               onChange={(e) => setAddress(e.target.value)}
               placeholder="e.g. 12 Admiralty Way, Lekki Phase 1, Lagos"
-              className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 outline-none transition-colors focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20"
+              className="w-full rounded-lg border border-[#E3E8E1] bg-white px-4 py-2.5 text-sm text-[#1C1F1A] placeholder-[#9CA396] outline-none transition-colors focus:border-[#8BC34A] focus:ring-2 focus:ring-emerald-500/20"
             />
           </div>
 
@@ -120,7 +120,7 @@ export default function CreateVenuePage() {
           <div>
             <label
               htmlFor="tableCount"
-              className="mb-1.5 block text-sm font-medium text-gray-700"
+              className="mb-1.5 block text-sm font-medium text-[#3A3D37]"
             >
               Number of Tables
             </label>
@@ -132,7 +132,7 @@ export default function CreateVenuePage() {
               max={500}
               value={tableCount}
               onChange={(e) => setTableCount(Number(e.target.value))}
-              className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 outline-none transition-colors focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20"
+              className="w-full rounded-lg border border-[#E3E8E1] bg-white px-4 py-2.5 text-sm text-[#1C1F1A] placeholder-[#9CA396] outline-none transition-colors focus:border-[#8BC34A] focus:ring-2 focus:ring-emerald-500/20"
             />
           </div>
 
@@ -140,7 +140,7 @@ export default function CreateVenuePage() {
           <div>
             <label
               htmlFor="logoUrl"
-              className="mb-1.5 block text-sm font-medium text-gray-700"
+              className="mb-1.5 block text-sm font-medium text-[#3A3D37]"
             >
               Logo URL
             </label>
@@ -150,9 +150,9 @@ export default function CreateVenuePage() {
               value={logoUrl}
               onChange={(e) => setLogoUrl(e.target.value)}
               placeholder="https://example.com/logo.png"
-              className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 outline-none transition-colors focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20"
+              className="w-full rounded-lg border border-[#E3E8E1] bg-white px-4 py-2.5 text-sm text-[#1C1F1A] placeholder-[#9CA396] outline-none transition-colors focus:border-[#8BC34A] focus:ring-2 focus:ring-emerald-500/20"
             />
-            <p className="mt-1 text-xs text-gray-400">Optional</p>
+            <p className="mt-1 text-xs text-[#9CA396]">Optional</p>
           </div>
 
           {/* Submit */}
@@ -160,13 +160,13 @@ export default function CreateVenuePage() {
             <button
               type="submit"
               disabled={loading}
-              className="rounded-lg bg-emerald-500 px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-emerald-600 disabled:cursor-not-allowed disabled:opacity-50"
+              className="rounded-lg bg-[#8BC34A] px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#7CB342] disabled:cursor-not-allowed disabled:opacity-50"
             >
               {loading ? "Creating..." : "Create Venue"}
             </button>
             <Link
               href="/dashboard"
-              className="rounded-lg px-6 py-2.5 text-sm font-medium text-gray-500 transition-colors hover:text-gray-700"
+              className="rounded-lg px-6 py-2.5 text-sm font-medium text-[#6B7366] transition-colors hover:text-[#3A3D37]"
             >
               Cancel
             </Link>

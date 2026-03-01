@@ -121,7 +121,7 @@ export default function TableConfigPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-200 border-t-[#22C55E]" />
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#E3E8E1] border-t-[#8BC34A]" />
       </div>
     );
   }
@@ -133,14 +133,14 @@ export default function TableConfigPage() {
       <div className="mb-6">
         <button
           onClick={() => router.push(`/dashboard/events/${eventId}`)}
-          className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
+          className="text-sm text-[#6B7366] hover:text-[#3A3D37] transition-colors"
         >
           &larr; Back to Event
         </button>
       </div>
 
-      <h1 className="text-2xl font-bold text-gray-900">Table Configuration</h1>
-      <p className="mt-1 text-sm text-gray-500">
+      <h1 className="text-2xl font-bold text-[#1C1F1A]">Table Configuration</h1>
+      <p className="mt-1 text-sm text-[#6B7366]">
         Set up the number of tables, seats per table, and designate VIP tables.
       </p>
 
@@ -150,18 +150,18 @@ export default function TableConfigPage() {
         </div>
       )}
       {success && (
-        <div className="mt-4 rounded-lg bg-green-50 border border-green-200 px-4 py-3 text-sm text-green-700">
+        <div className="mt-4 rounded-lg bg-[#F1F8E9] border border-[#C5E1A5] px-4 py-3 text-sm text-[#7CB342]">
           {success}
         </div>
       )}
 
       <form onSubmit={handleSubmit} className="mt-6 space-y-6">
         {/* Basic Config */}
-        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-          <h2 className="text-lg font-semibold text-gray-900">Basic Setup</h2>
+        <div className="rounded-xl border border-[#E3E8E1] bg-white p-6 shadow-sm">
+          <h2 className="text-lg font-semibold text-[#1C1F1A]">Basic Setup</h2>
           <div className="mt-4 grid gap-4 sm:grid-cols-2">
             <div>
-              <label htmlFor="table_count" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="table_count" className="block text-sm font-medium text-[#3A3D37]">
                 Number of Tables
               </label>
               <input
@@ -173,11 +173,11 @@ export default function TableConfigPage() {
                 onChange={(e) =>
                   setConfig((p) => ({ ...p, table_count: parseInt(e.target.value) || 1 }))
                 }
-                className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm text-gray-900 focus:border-[#22C55E] focus:outline-none focus:ring-1 focus:ring-[#22C55E]"
+                className="mt-1 block w-full rounded-lg border border-[#E3E8E1] px-3 py-2.5 text-sm text-[#1C1F1A] focus:border-[#8BC34A] focus:outline-none focus:ring-1 focus:ring-[#8BC34A]"
               />
             </div>
             <div>
-              <label htmlFor="guests_per_table" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="guests_per_table" className="block text-sm font-medium text-[#3A3D37]">
                 Guests per Table
               </label>
               <input
@@ -189,19 +189,19 @@ export default function TableConfigPage() {
                 onChange={(e) =>
                   setConfig((p) => ({ ...p, guests_per_table: parseInt(e.target.value) || 1 }))
                 }
-                className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm text-gray-900 focus:border-[#22C55E] focus:outline-none focus:ring-1 focus:ring-[#22C55E]"
+                className="mt-1 block w-full rounded-lg border border-[#E3E8E1] px-3 py-2.5 text-sm text-[#1C1F1A] focus:border-[#8BC34A] focus:outline-none focus:ring-1 focus:ring-[#8BC34A]"
               />
             </div>
           </div>
-          <p className="mt-3 text-sm text-gray-500">
+          <p className="mt-3 text-sm text-[#6B7366]">
             Total seats: {config.table_count * config.guests_per_table}
           </p>
         </div>
 
         {/* VIP Table Designation */}
-        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-          <h2 className="text-lg font-semibold text-gray-900">VIP Table Designation</h2>
-          <p className="mt-1 text-sm text-gray-500">
+        <div className="rounded-xl border border-[#E3E8E1] bg-white p-6 shadow-sm">
+          <h2 className="text-lg font-semibold text-[#1C1F1A]">VIP Table Designation</h2>
+          <p className="mt-1 text-sm text-[#6B7366]">
             Select which tables are VIP and choose the tier.
           </p>
 
@@ -214,8 +214,8 @@ export default function TableConfigPage() {
                   key={num}
                   className={`rounded-lg border p-3 transition-colors ${
                     isVip
-                      ? "border-[#22C55E] bg-[#22C55E]/5"
-                      : "border-gray-200 bg-white"
+                      ? "border-[#8BC34A] bg-[#8BC34A]/5"
+                      : "border-[#E3E8E1] bg-white"
                   }`}
                 >
                   <label className="flex items-center gap-2 cursor-pointer">
@@ -223,15 +223,15 @@ export default function TableConfigPage() {
                       type="checkbox"
                       checked={!!isVip}
                       onChange={() => toggleVip(num)}
-                      className="h-4 w-4 rounded border-gray-300 text-[#22C55E] focus:ring-[#22C55E]"
+                      className="h-4 w-4 rounded border-[#E3E8E1] text-[#8BC34A] focus:ring-[#8BC34A]"
                     />
-                    <span className="text-sm font-medium text-gray-900">Table {num}</span>
+                    <span className="text-sm font-medium text-[#1C1F1A]">Table {num}</span>
                   </label>
                   {isVip && (
                     <select
                       value={tier}
                       onChange={(e) => setVipTier(num, e.target.value)}
-                      className="mt-2 block w-full rounded border border-gray-300 px-2 py-1 text-xs text-gray-700 focus:border-[#22C55E] focus:outline-none"
+                      className="mt-2 block w-full rounded border border-[#E3E8E1] px-2 py-1 text-xs text-[#3A3D37] focus:border-[#8BC34A] focus:outline-none"
                     >
                       <option value="vip">VIP</option>
                       <option value="vvip">VVIP</option>
@@ -248,7 +248,7 @@ export default function TableConfigPage() {
           <button
             type="submit"
             disabled={saving}
-            className="rounded-lg bg-[#22C55E] px-6 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#16A34A] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="rounded-lg bg-[#8BC34A] px-6 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#7CB342] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
             {saving ? "Saving..." : "Save Table Configuration"}
           </button>
@@ -257,33 +257,33 @@ export default function TableConfigPage() {
 
       {/* Current Tables Display */}
       {tables.length > 0 && (
-        <div className="mt-8 rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-          <h2 className="text-lg font-semibold text-gray-900">Current Tables</h2>
+        <div className="mt-8 rounded-xl border border-[#E3E8E1] bg-white p-6 shadow-sm">
+          <h2 className="text-lg font-semibold text-[#1C1F1A]">Current Tables</h2>
           <div className="mt-4 overflow-x-auto">
             <table className="min-w-full text-sm">
               <thead>
-                <tr className="border-b border-gray-200">
-                  <th className="px-3 py-2 text-left font-medium text-gray-500">Table #</th>
-                  <th className="px-3 py-2 text-left font-medium text-gray-500">Seats</th>
-                  <th className="px-3 py-2 text-left font-medium text-gray-500">VIP</th>
-                  <th className="px-3 py-2 text-left font-medium text-gray-500">Tier</th>
+                <tr className="border-b border-[#E3E8E1]">
+                  <th className="px-3 py-2 text-left font-medium text-[#6B7366]">Table #</th>
+                  <th className="px-3 py-2 text-left font-medium text-[#6B7366]">Seats</th>
+                  <th className="px-3 py-2 text-left font-medium text-[#6B7366]">VIP</th>
+                  <th className="px-3 py-2 text-left font-medium text-[#6B7366]">Tier</th>
                 </tr>
               </thead>
               <tbody>
                 {tables.map((t) => (
-                  <tr key={t.table_number} className="border-b border-gray-100">
-                    <td className="px-3 py-2 text-gray-900">{t.table_number}</td>
-                    <td className="px-3 py-2 text-gray-600">{t.seat_count}</td>
+                  <tr key={t.table_number} className="border-b border-[#E3E8E1]/50">
+                    <td className="px-3 py-2 text-[#1C1F1A]">{t.table_number}</td>
+                    <td className="px-3 py-2 text-[#6B7366]">{t.seat_count}</td>
                     <td className="px-3 py-2">
                       {t.is_vip ? (
-                        <span className="inline-flex rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-800">
+                        <span className="inline-flex rounded-full bg-[#8BC34A]/10 px-2 py-0.5 text-xs font-medium text-[#7CB342]">
                           Yes
                         </span>
                       ) : (
-                        <span className="text-gray-400">-</span>
+                        <span className="text-[#9CA396]">-</span>
                       )}
                     </td>
-                    <td className="px-3 py-2 text-gray-600 uppercase text-xs">
+                    <td className="px-3 py-2 text-[#6B7366] uppercase text-xs">
                       {t.vip_tier || "-"}
                     </td>
                   </tr>

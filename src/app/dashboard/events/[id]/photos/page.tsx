@@ -126,7 +126,7 @@ export default function CelebrantPhotosPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-200 border-t-[#22C55E]" />
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#E3E8E1] border-t-[#8BC34A]" />
       </div>
     );
   }
@@ -136,14 +136,14 @@ export default function CelebrantPhotosPage() {
       <div className="mb-6">
         <button
           onClick={() => router.push(`/dashboard/events/${eventId}`)}
-          className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
+          className="text-sm text-[#6B7366] hover:text-[#3A3D37] transition-colors"
         >
           &larr; Back to Event
         </button>
       </div>
 
-      <h1 className="text-2xl font-bold text-gray-900">Celebrant Photos</h1>
-      <p className="mt-1 text-sm text-gray-500">
+      <h1 className="text-2xl font-bold text-[#1C1F1A]">Celebrant Photos</h1>
+      <p className="mt-1 text-sm text-[#6B7366]">
         Upload photos for the celebrant gallery. Guests will see these during the event.
       </p>
 
@@ -153,14 +153,14 @@ export default function CelebrantPhotosPage() {
         </div>
       )}
       {success && (
-        <div className="mt-4 rounded-lg bg-green-50 border border-green-200 px-4 py-3 text-sm text-green-700">
+        <div className="mt-4 rounded-lg bg-[#F1F8E9] border border-[#C5E1A5] px-4 py-3 text-sm text-[#7CB342]">
           {success}
         </div>
       )}
 
       {/* Upload Area */}
-      <div className="mt-6 rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-        <h2 className="text-lg font-semibold text-gray-900">Upload Photos</h2>
+      <div className="mt-6 rounded-xl border border-[#E3E8E1] bg-white p-6 shadow-sm">
+        <h2 className="text-lg font-semibold text-[#1C1F1A]">Upload Photos</h2>
         <div
           onDrop={handleDrop}
           onDragOver={handleDragOver}
@@ -168,12 +168,12 @@ export default function CelebrantPhotosPage() {
           onClick={() => fileInputRef.current?.click()}
           className={`mt-4 flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed p-10 transition-colors ${
             dragOver
-              ? "border-[#22C55E] bg-[#22C55E]/5"
-              : "border-gray-300 hover:border-gray-400"
+              ? "border-[#8BC34A] bg-[#8BC34A]/5"
+              : "border-[#E3E8E1] hover:border-gray-400"
           }`}
         >
           <svg
-            className="h-10 w-10 text-gray-400"
+            className="h-10 w-10 text-[#9CA396]"
             fill="none"
             viewBox="0 0 24 24"
             strokeWidth={1.5}
@@ -186,13 +186,13 @@ export default function CelebrantPhotosPage() {
             />
           </svg>
           {uploading ? (
-            <p className="mt-3 text-sm text-gray-500">Uploading...</p>
+            <p className="mt-3 text-sm text-[#6B7366]">Uploading...</p>
           ) : (
             <>
-              <p className="mt-3 text-sm font-medium text-gray-700">
+              <p className="mt-3 text-sm font-medium text-[#3A3D37]">
                 Drag & drop photos here, or click to browse
               </p>
-              <p className="mt-1 text-xs text-gray-400">PNG, JPG, WEBP up to 10MB each</p>
+              <p className="mt-1 text-xs text-[#9CA396]">PNG, JPG, WEBP up to 10MB each</p>
             </>
           )}
         </div>
@@ -208,15 +208,15 @@ export default function CelebrantPhotosPage() {
 
       {/* Photo Grid */}
       {photos.length > 0 && (
-        <div className="mt-6 rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-          <h2 className="text-lg font-semibold text-gray-900">
+        <div className="mt-6 rounded-xl border border-[#E3E8E1] bg-white p-6 shadow-sm">
+          <h2 className="text-lg font-semibold text-[#1C1F1A]">
             Uploaded Photos ({photos.length})
           </h2>
           <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
             {photos.map((photo) => (
               <div
                 key={photo.id}
-                className="group relative aspect-square overflow-hidden rounded-lg border border-gray-200 bg-gray-50"
+                className="group relative aspect-square overflow-hidden rounded-lg border border-[#E3E8E1] bg-[#F4F6F3]"
               >
                 <img
                   src={`${API_URL}${photo.url}`}
@@ -230,9 +230,9 @@ export default function CelebrantPhotosPage() {
       )}
 
       {/* Celebrant Password */}
-      <div className="mt-6 rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-        <h2 className="text-lg font-semibold text-gray-900">Celebrant Password</h2>
-        <p className="mt-1 text-sm text-gray-500">
+      <div className="mt-6 rounded-xl border border-[#E3E8E1] bg-white p-6 shadow-sm">
+        <h2 className="text-lg font-semibold text-[#1C1F1A]">Celebrant Password</h2>
+        <p className="mt-1 text-sm text-[#6B7366]">
           Set a password that the celebrant uses to access their photo gallery and controls.
         </p>
         <form onSubmit={handleSetPassword} className="mt-4 flex gap-3">
@@ -243,12 +243,12 @@ export default function CelebrantPhotosPage() {
             placeholder="Min 6 characters"
             required
             minLength={6}
-            className="block flex-1 rounded-lg border border-gray-300 px-3 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:border-[#22C55E] focus:outline-none focus:ring-1 focus:ring-[#22C55E]"
+            className="block flex-1 rounded-lg border border-[#E3E8E1] px-3 py-2.5 text-sm text-[#1C1F1A] placeholder-[#9CA396] focus:border-[#8BC34A] focus:outline-none focus:ring-1 focus:ring-[#8BC34A]"
           />
           <button
             type="submit"
             disabled={savingPassword}
-            className="rounded-lg bg-[#22C55E] px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#16A34A] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="rounded-lg bg-[#8BC34A] px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#7CB342] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
             {savingPassword ? "Saving..." : "Set Password"}
           </button>

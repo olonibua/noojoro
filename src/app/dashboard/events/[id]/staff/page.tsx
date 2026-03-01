@@ -132,7 +132,7 @@ export default function StaffManagementPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-200 border-t-[#22C55E]" />
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#E3E8E1] border-t-[#8BC34A]" />
       </div>
     );
   }
@@ -142,7 +142,7 @@ export default function StaffManagementPage() {
       <div className="mb-6">
         <button
           onClick={() => router.push(`/dashboard/events/${eventId}`)}
-          className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
+          className="text-sm text-[#6B7366] hover:text-[#3A3D37] transition-colors"
         >
           &larr; Back to Event
         </button>
@@ -150,15 +150,15 @@ export default function StaffManagementPage() {
 
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Staff Management</h1>
-          <p className="mt-1 text-sm text-gray-500">
+          <h1 className="text-2xl font-bold text-[#1C1F1A]">Staff Management</h1>
+          <p className="mt-1 text-sm text-[#6B7366]">
             Add and manage staff members for this event.
           </p>
         </div>
         {eventInfo?.event_code && (
-          <div className="rounded-lg border border-gray-200 bg-gray-50 px-4 py-2">
-            <p className="text-xs text-gray-500">Event Code (share with staff)</p>
-            <p className="font-mono text-lg font-bold text-gray-900">{eventInfo.event_code}</p>
+          <div className="rounded-lg border border-[#E3E8E1] bg-[#F4F6F3] px-4 py-2">
+            <p className="text-xs text-[#6B7366]">Event Code (share with staff)</p>
+            <p className="font-mono text-lg font-bold text-[#1C1F1A]">{eventInfo.event_code}</p>
           </div>
         )}
       </div>
@@ -169,43 +169,43 @@ export default function StaffManagementPage() {
         </div>
       )}
       {success && (
-        <div className="mt-4 rounded-lg bg-green-50 border border-green-200 px-4 py-3 text-sm text-green-700">
+        <div className="mt-4 rounded-lg bg-[#F1F8E9] border border-[#C5E1A5] px-4 py-3 text-sm text-[#7CB342]">
           {success}
         </div>
       )}
 
       {/* Add Staff Form */}
-      <div className="mt-6 rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-        <h2 className="text-lg font-semibold text-gray-900">Add Staff Member</h2>
+      <div className="mt-6 rounded-xl border border-[#E3E8E1] bg-white p-6 shadow-sm">
+        <h2 className="text-lg font-semibold text-[#1C1F1A]">Add Staff Member</h2>
         <form onSubmit={handleAdd} className="mt-4 space-y-4">
           <div className="grid gap-4 sm:grid-cols-2">
             <div>
-              <label className="block text-sm font-medium text-gray-700">Name</label>
+              <label className="block text-sm font-medium text-[#3A3D37]">Name</label>
               <input
                 required
                 value={addForm.name}
                 onChange={(e) => setAddForm((p) => ({ ...p, name: e.target.value }))}
                 placeholder="Staff name"
-                className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:border-[#22C55E] focus:outline-none focus:ring-1 focus:ring-[#22C55E]"
+                className="mt-1 block w-full rounded-lg border border-[#E3E8E1] px-3 py-2.5 text-sm text-[#1C1F1A] placeholder-[#9CA396] focus:border-[#8BC34A] focus:outline-none focus:ring-1 focus:ring-[#8BC34A]"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700">
-                PIN <span className="text-gray-400">(optional)</span>
+              <label className="block text-sm font-medium text-[#3A3D37]">
+                PIN <span className="text-[#9CA396]">(optional)</span>
               </label>
               <input
                 value={addForm.pin}
                 onChange={(e) => setAddForm((p) => ({ ...p, pin: e.target.value }))}
                 placeholder="4-digit PIN"
                 maxLength={4}
-                className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:border-[#22C55E] focus:outline-none focus:ring-1 focus:ring-[#22C55E]"
+                className="mt-1 block w-full rounded-lg border border-[#E3E8E1] px-3 py-2.5 text-sm text-[#1C1F1A] placeholder-[#9CA396] focus:border-[#8BC34A] focus:outline-none focus:ring-1 focus:ring-[#8BC34A]"
               />
             </div>
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
             <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Table Range Start <span className="text-gray-400">(optional)</span>
+              <label className="block text-sm font-medium text-[#3A3D37]">
+                Table Range Start <span className="text-[#9CA396]">(optional)</span>
               </label>
               <input
                 type="number"
@@ -213,12 +213,12 @@ export default function StaffManagementPage() {
                 value={addForm.table_range_start}
                 onChange={(e) => setAddForm((p) => ({ ...p, table_range_start: e.target.value }))}
                 placeholder="1"
-                className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:border-[#22C55E] focus:outline-none focus:ring-1 focus:ring-[#22C55E]"
+                className="mt-1 block w-full rounded-lg border border-[#E3E8E1] px-3 py-2.5 text-sm text-[#1C1F1A] placeholder-[#9CA396] focus:border-[#8BC34A] focus:outline-none focus:ring-1 focus:ring-[#8BC34A]"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Table Range End <span className="text-gray-400">(optional)</span>
+              <label className="block text-sm font-medium text-[#3A3D37]">
+                Table Range End <span className="text-[#9CA396]">(optional)</span>
               </label>
               <input
                 type="number"
@@ -226,14 +226,14 @@ export default function StaffManagementPage() {
                 value={addForm.table_range_end}
                 onChange={(e) => setAddForm((p) => ({ ...p, table_range_end: e.target.value }))}
                 placeholder="10"
-                className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:border-[#22C55E] focus:outline-none focus:ring-1 focus:ring-[#22C55E]"
+                className="mt-1 block w-full rounded-lg border border-[#E3E8E1] px-3 py-2.5 text-sm text-[#1C1F1A] placeholder-[#9CA396] focus:border-[#8BC34A] focus:outline-none focus:ring-1 focus:ring-[#8BC34A]"
               />
             </div>
           </div>
           <button
             type="submit"
             disabled={adding}
-            className="rounded-lg bg-[#22C55E] px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#16A34A] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="rounded-lg bg-[#8BC34A] px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#7CB342] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
             {adding ? "Adding..." : "Add Staff"}
           </button>
@@ -241,15 +241,15 @@ export default function StaffManagementPage() {
       </div>
 
       {/* Staff List */}
-      <div className="mt-6 rounded-xl border border-gray-200 bg-white shadow-sm">
-        <div className="border-b border-gray-200 px-6 py-4">
-          <h2 className="text-lg font-semibold text-gray-900">
+      <div className="mt-6 rounded-xl border border-[#E3E8E1] bg-white shadow-sm">
+        <div className="border-b border-[#E3E8E1] px-6 py-4">
+          <h2 className="text-lg font-semibold text-[#1C1F1A]">
             Current Staff ({staffList.length})
           </h2>
         </div>
 
         {staffList.length === 0 ? (
-          <div className="px-6 py-12 text-center text-sm text-gray-500">
+          <div className="px-6 py-12 text-center text-sm text-[#6B7366]">
             No staff members added yet. Use the form above to add staff.
           </div>
         ) : (
@@ -263,13 +263,13 @@ export default function StaffManagementPage() {
                         value={editForm.name}
                         onChange={(e) => setEditForm((p) => ({ ...p, name: e.target.value }))}
                         placeholder="Name"
-                        className="block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-[#22C55E] focus:outline-none focus:ring-1 focus:ring-[#22C55E]"
+                        className="block w-full rounded-lg border border-[#E3E8E1] px-3 py-2 text-sm focus:border-[#8BC34A] focus:outline-none focus:ring-1 focus:ring-[#8BC34A]"
                       />
                       <input
                         value={editForm.pin}
                         onChange={(e) => setEditForm((p) => ({ ...p, pin: e.target.value }))}
                         placeholder="PIN (optional)"
-                        className="block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-[#22C55E] focus:outline-none focus:ring-1 focus:ring-[#22C55E]"
+                        className="block w-full rounded-lg border border-[#E3E8E1] px-3 py-2 text-sm focus:border-[#8BC34A] focus:outline-none focus:ring-1 focus:ring-[#8BC34A]"
                       />
                     </div>
                     <div className="grid gap-3 sm:grid-cols-2">
@@ -278,26 +278,26 @@ export default function StaffManagementPage() {
                         value={editForm.table_range_start}
                         onChange={(e) => setEditForm((p) => ({ ...p, table_range_start: e.target.value }))}
                         placeholder="Table start"
-                        className="block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-[#22C55E] focus:outline-none focus:ring-1 focus:ring-[#22C55E]"
+                        className="block w-full rounded-lg border border-[#E3E8E1] px-3 py-2 text-sm focus:border-[#8BC34A] focus:outline-none focus:ring-1 focus:ring-[#8BC34A]"
                       />
                       <input
                         type="number"
                         value={editForm.table_range_end}
                         onChange={(e) => setEditForm((p) => ({ ...p, table_range_end: e.target.value }))}
                         placeholder="Table end"
-                        className="block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-[#22C55E] focus:outline-none focus:ring-1 focus:ring-[#22C55E]"
+                        className="block w-full rounded-lg border border-[#E3E8E1] px-3 py-2 text-sm focus:border-[#8BC34A] focus:outline-none focus:ring-1 focus:ring-[#8BC34A]"
                       />
                     </div>
                     <div className="flex gap-2">
                       <button
                         onClick={() => handleEdit(s.id)}
-                        className="rounded-lg bg-[#22C55E] px-3 py-1.5 text-sm font-medium text-white hover:bg-[#16A34A]"
+                        className="rounded-lg bg-[#8BC34A] px-3 py-1.5 text-sm font-medium text-white hover:bg-[#7CB342]"
                       >
                         Save
                       </button>
                       <button
                         onClick={() => setEditingId(null)}
-                        className="rounded-lg border border-gray-300 px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-50"
+                        className="rounded-lg border border-[#E3E8E1] px-3 py-1.5 text-sm font-medium text-[#3A3D37] hover:bg-[#F4F6F3]"
                       >
                         Cancel
                       </button>
@@ -306,8 +306,8 @@ export default function StaffManagementPage() {
                 ) : (
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="font-medium text-gray-900">{s.name}</p>
-                      <div className="mt-1 flex flex-wrap gap-3 text-xs text-gray-500">
+                      <p className="font-medium text-[#1C1F1A]">{s.name}</p>
+                      <div className="mt-1 flex flex-wrap gap-3 text-xs text-[#6B7366]">
                         {s.pin && <span>PIN: {s.pin}</span>}
                         {s.table_range_start != null && s.table_range_end != null && (
                           <span>
@@ -320,7 +320,7 @@ export default function StaffManagementPage() {
                     <div className="flex items-center gap-2">
                       <button
                         onClick={() => startEdit(s)}
-                        className="rounded px-2 py-1 text-xs font-medium text-gray-600 hover:bg-gray-100 transition-colors"
+                        className="rounded px-2 py-1 text-xs font-medium text-[#6B7366] hover:bg-[#F0F3EF] transition-colors"
                       >
                         Edit
                       </button>

@@ -19,8 +19,8 @@ interface EventDetail {
 
 const statusColors: Record<string, string> = {
   draft: "bg-yellow-100 text-yellow-800",
-  active: "bg-green-100 text-green-800",
-  completed: "bg-gray-100 text-gray-600",
+  active: "bg-[#8BC34A]/10 text-[#7CB342]",
+  completed: "bg-[#F0F3EF] text-[#6B7366]",
 };
 
 export default function EventDetailPage() {
@@ -50,7 +50,7 @@ export default function EventDetailPage() {
         date: data.date || "",
         time: data.time || "",
         venue_name: data.venue_name,
-        theme_color: data.theme_color || "#22C55E",
+        theme_color: data.theme_color || "#8BC34A",
       });
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to load event");
@@ -89,7 +89,7 @@ export default function EventDetailPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-200 border-t-[#22C55E]" />
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#E3E8E1] border-t-[#8BC34A]" />
       </div>
     );
   }
@@ -100,7 +100,7 @@ export default function EventDetailPage() {
         <p className="text-red-600">{error || "Event not found"}</p>
         <button
           onClick={() => router.push("/dashboard/events")}
-          className="mt-4 text-sm text-[#22C55E] hover:underline"
+          className="mt-4 text-sm text-[#8BC34A] hover:underline"
         >
           Back to Events
         </button>
@@ -113,7 +113,7 @@ export default function EventDetailPage() {
       <div className="mb-6">
         <button
           onClick={() => router.push("/dashboard/events")}
-          className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
+          className="text-sm text-[#6B7366] hover:text-[#3A3D37] transition-colors"
         >
           &larr; All Events
         </button>
@@ -126,60 +126,60 @@ export default function EventDetailPage() {
       )}
 
       {/* Event Header Card */}
-      <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+      <div className="rounded-xl border border-[#E3E8E1] bg-white p-6 shadow-sm">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div className="flex-1">
             {editing ? (
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">Event Name</label>
+                  <label className="block text-sm font-medium text-[#3A3D37]">Event Name</label>
                   <input
                     value={editForm.name}
                     onChange={(e) => setEditForm((p) => ({ ...p, name: e.target.value }))}
-                    className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-[#22C55E] focus:outline-none focus:ring-1 focus:ring-[#22C55E]"
+                    className="mt-1 block w-full rounded-lg border border-[#E3E8E1] px-3 py-2 text-sm focus:border-[#8BC34A] focus:outline-none focus:ring-1 focus:ring-[#8BC34A]"
                   />
                 </div>
                 <div className="grid gap-4 sm:grid-cols-3">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700">Date</label>
+                    <label className="block text-sm font-medium text-[#3A3D37]">Date</label>
                     <input
                       type="date"
                       value={editForm.date}
                       onChange={(e) => setEditForm((p) => ({ ...p, date: e.target.value }))}
-                      className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-[#22C55E] focus:outline-none focus:ring-1 focus:ring-[#22C55E]"
+                      className="mt-1 block w-full rounded-lg border border-[#E3E8E1] px-3 py-2 text-sm focus:border-[#8BC34A] focus:outline-none focus:ring-1 focus:ring-[#8BC34A]"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700">Time</label>
+                    <label className="block text-sm font-medium text-[#3A3D37]">Time</label>
                     <input
                       type="time"
                       value={editForm.time}
                       onChange={(e) => setEditForm((p) => ({ ...p, time: e.target.value }))}
-                      className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-[#22C55E] focus:outline-none focus:ring-1 focus:ring-[#22C55E]"
+                      className="mt-1 block w-full rounded-lg border border-[#E3E8E1] px-3 py-2 text-sm focus:border-[#8BC34A] focus:outline-none focus:ring-1 focus:ring-[#8BC34A]"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700">Venue</label>
+                    <label className="block text-sm font-medium text-[#3A3D37]">Venue</label>
                     <input
                       value={editForm.venue_name}
                       onChange={(e) => setEditForm((p) => ({ ...p, venue_name: e.target.value }))}
-                      className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-[#22C55E] focus:outline-none focus:ring-1 focus:ring-[#22C55E]"
+                      className="mt-1 block w-full rounded-lg border border-[#E3E8E1] px-3 py-2 text-sm focus:border-[#8BC34A] focus:outline-none focus:ring-1 focus:ring-[#8BC34A]"
                     />
                   </div>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">Theme Color</label>
+                  <label className="block text-sm font-medium text-[#3A3D37]">Theme Color</label>
                   <div className="mt-1 flex items-center gap-2">
                     <input
                       value={editForm.theme_color}
                       onChange={(e) => setEditForm((p) => ({ ...p, theme_color: e.target.value }))}
-                      className="block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-[#22C55E] focus:outline-none focus:ring-1 focus:ring-[#22C55E]"
+                      className="block w-full rounded-lg border border-[#E3E8E1] px-3 py-2 text-sm focus:border-[#8BC34A] focus:outline-none focus:ring-1 focus:ring-[#8BC34A]"
                     />
                     <input
                       type="color"
                       value={editForm.theme_color}
                       onChange={(e) => setEditForm((p) => ({ ...p, theme_color: e.target.value }))}
-                      className="h-9 w-9 rounded border border-gray-300 p-0.5 cursor-pointer"
+                      className="h-9 w-9 rounded border border-[#E3E8E1] p-0.5 cursor-pointer"
                     />
                   </div>
                 </div>
@@ -187,13 +187,13 @@ export default function EventDetailPage() {
                   <button
                     onClick={handleSave}
                     disabled={saving}
-                    className="rounded-lg bg-[#22C55E] px-4 py-2 text-sm font-semibold text-white hover:bg-[#16A34A] disabled:opacity-50"
+                    className="rounded-lg bg-[#8BC34A] px-4 py-2 text-sm font-semibold text-white hover:bg-[#7CB342] disabled:opacity-50"
                   >
                     {saving ? "Saving..." : "Save Changes"}
                   </button>
                   <button
                     onClick={() => setEditing(false)}
-                    className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+                    className="rounded-lg border border-[#E3E8E1] px-4 py-2 text-sm font-medium text-[#3A3D37] hover:bg-[#F4F6F3]"
                   >
                     Cancel
                   </button>
@@ -202,16 +202,16 @@ export default function EventDetailPage() {
             ) : (
               <>
                 <div className="flex items-center gap-3">
-                  <h1 className="text-2xl font-bold text-gray-900">{event.name}</h1>
+                  <h1 className="text-2xl font-bold text-[#1C1F1A]">{event.name}</h1>
                   <span
                     className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-medium capitalize ${
-                      statusColors[event.status] || "bg-gray-100 text-gray-600"
+                      statusColors[event.status] || "bg-[#F0F3EF] text-[#6B7366]"
                     }`}
                   >
                     {event.status}
                   </span>
                 </div>
-                <div className="mt-3 flex flex-wrap gap-x-6 gap-y-2 text-sm text-gray-500">
+                <div className="mt-3 flex flex-wrap gap-x-6 gap-y-2 text-sm text-[#6B7366]">
                   <span>
                     {new Date(event.date).toLocaleDateString("en-NG", {
                       weekday: "long",
@@ -223,7 +223,7 @@ export default function EventDetailPage() {
                   </span>
                   <span>{event.venue_name}</span>
                 </div>
-                <div className="mt-3 flex flex-wrap gap-x-6 gap-y-2 text-sm text-gray-500">
+                <div className="mt-3 flex flex-wrap gap-x-6 gap-y-2 text-sm text-[#6B7366]">
                   <span>{event.table_count} tables</span>
                   <span>{event.guests_per_table} guests/table</span>
                   <span>{event.total_tokens} total tokens</span>
@@ -235,13 +235,13 @@ export default function EventDetailPage() {
           {!editing && (
             <div className="flex items-center gap-2">
               <div
-                className="h-6 w-6 rounded-full border border-gray-200"
-                style={{ backgroundColor: event.theme_color || "#22C55E" }}
+                className="h-6 w-6 rounded-full border border-[#E3E8E1]"
+                style={{ backgroundColor: event.theme_color || "#8BC34A" }}
                 title={event.theme_color}
               />
               <button
                 onClick={() => setEditing(true)}
-                className="rounded-lg border border-gray-300 px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+                className="rounded-lg border border-[#E3E8E1] px-3 py-1.5 text-sm font-medium text-[#3A3D37] hover:bg-[#F4F6F3] transition-colors"
               >
                 Edit
               </button>
@@ -256,16 +256,16 @@ export default function EventDetailPage() {
           <button
             key={link.href}
             onClick={() => router.push(link.href)}
-            className="flex items-center gap-3 rounded-xl border border-gray-200 bg-white p-4 text-left shadow-sm transition-all hover:border-[#22C55E]/40 hover:shadow-md"
+            className="flex items-center gap-3 rounded-xl border border-[#E3E8E1] bg-white p-4 text-left shadow-sm transition-all hover:border-[#8BC34A]/40 hover:shadow-md"
           >
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#22C55E]/10">
-              <span className="text-sm font-bold text-[#22C55E]">
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#8BC34A]/10">
+              <span className="text-sm font-bold text-[#8BC34A]">
                 {link.label.charAt(0)}
               </span>
             </div>
             <div>
-              <p className="text-sm font-semibold text-gray-900">{link.label}</p>
-              <p className="text-xs text-gray-500">Manage {link.label.toLowerCase()}</p>
+              <p className="text-sm font-semibold text-[#1C1F1A]">{link.label}</p>
+              <p className="text-xs text-[#6B7366]">Manage {link.label.toLowerCase()}</p>
             </div>
           </button>
         ))}

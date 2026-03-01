@@ -3,11 +3,12 @@ import { NextRequest, NextResponse } from "next/server";
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Dashboard routes require the access_token cookie (set by httpOnly login)
+  // Dashboard routes require authentication
   if (pathname.startsWith("/dashboard")) {
-    const token = request.cookies.get("access_token");
-    if (!token) {
-      const loginUrl = new URL("/login", request.url);
+    const loggedIn = request.cookies.get("logged_in");
+    if (!loggedIn) {
+      const loginUrl = new URL("/", request.url);
+      loginUrl.searchParams.set("auth", "login");
       loginUrl.searchParams.set("redirect", pathname);
       return NextResponse.redirect(loginUrl);
     }

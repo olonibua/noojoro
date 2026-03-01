@@ -85,14 +85,14 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   if (loading) {
     return (
-      <div className="flex h-screen items-center justify-center bg-gray-50">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-200 border-t-[#22C55E]" />
+      <div className="flex h-screen items-center justify-center bg-[#F4F6F3]">
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#E3E8E1] border-t-[#8BC34A]" />
       </div>
     );
   }
 
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className="flex h-screen bg-[#F4F6F3]">
       {/* Mobile overlay */}
       {sidebarOpen && (
         <div
@@ -103,17 +103,22 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
       {/* Sidebar */}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 flex w-64 flex-col bg-white border-r border-gray-200 transition-transform lg:static lg:translate-x-0 ${
+        className={`fixed inset-y-0 left-0 z-50 flex w-64 flex-col bg-white border-r border-[#E3E8E1] transition-transform lg:static lg:translate-x-0 ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <div className="flex h-16 items-center gap-2 border-b border-gray-200 px-6">
-          <span className="text-xl font-bold text-gray-900">No Ojoro</span>
+        <div className="flex h-16 items-center gap-2 border-b border-[#E3E8E1] px-6">
+          <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#8BC34A] shadow-sm shadow-[#8BC34A]/20">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                </svg>
+              </div>
+              <span className="text-xl font-bold text-[#1C1F1A]">No <span className="text-[#8BC34A]">Ojoro</span></span>
           <button
             className="ml-auto lg:hidden"
             onClick={() => setSidebarOpen(false)}
           >
-            <CloseIcon className="h-5 w-5 text-gray-500" />
+            <CloseIcon className="h-5 w-5 text-[#6B7366]" />
           </button>
         </div>
 
@@ -129,10 +134,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                   router.push(item.href);
                   setSidebarOpen(false);
                 }}
-                className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
+                className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors ${
                   active
-                    ? "bg-[#22C55E]/10 text-[#22C55E]"
-                    : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+                    ? "bg-[#8BC34A]/10 text-[#8BC34A]"
+                    : "text-[#6B7366] hover:bg-[#F0F3EF] hover:text-[#1C1F1A]"
                 }`}
               >
                 <item.icon className="h-5 w-5" />
@@ -142,10 +147,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           })}
         </nav>
 
-        <div className="border-t border-gray-200 p-3">
+        <div className="border-t border-[#E3E8E1] p-3">
           <button
             onClick={handleLogout}
-            className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-gray-600 hover:bg-red-50 hover:text-red-600 transition-colors"
+            className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-[#6B7366] hover:bg-red-50 hover:text-red-600 transition-colors"
           >
             <LogoutIcon className="h-5 w-5" />
             Logout
@@ -156,12 +161,12 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       {/* Main area */}
       <div className="flex flex-1 flex-col overflow-hidden">
         {/* Top bar */}
-        <header className="flex h-16 items-center gap-4 border-b border-gray-200 bg-white px-4 lg:px-8">
+        <header className="flex h-16 items-center gap-4 border-b border-[#E3E8E1] bg-white px-4 lg:px-8">
           <button
             className="lg:hidden"
             onClick={() => setSidebarOpen(true)}
           >
-            <MenuIcon className="h-6 w-6 text-gray-600" />
+            <MenuIcon className="h-6 w-6 text-[#6B7366]" />
           </button>
 
           <div className="flex-1" />
@@ -169,10 +174,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           {user && (
             <div className="flex items-center gap-3">
               <div className="text-right hidden sm:block">
-                <p className="text-sm font-semibold text-gray-900">{user.email || user.phone}</p>
-                <p className="text-xs text-gray-500 capitalize">{user.role?.replace("_", " ")}</p>
+                <p className="text-sm font-semibold text-[#1C1F1A]">{user.email || user.phone}</p>
+                <p className="text-xs text-[#6B7366] capitalize">{user.role?.replace("_", " ")}</p>
               </div>
-              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#22C55E] text-white text-sm font-bold">
+              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#8BC34A] text-white text-sm font-bold">
                 {(user.email || user.phone || "U").charAt(0).toUpperCase()}
               </div>
             </div>

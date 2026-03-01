@@ -7,13 +7,15 @@ export default function Footer() {
         <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
           <div className="sm:col-span-2 lg:col-span-1">
-            <div className="mb-4 flex items-center gap-2">
-              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-black text-white">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+            <div className="mb-4 flex items-center gap-2.5">
+              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#8BC34A] shadow-md shadow-[#8BC34A]/20">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                 </svg>
               </div>
-              <span className="text-xl font-bold t-text">No Ojoro</span>
+              <span className="text-xl font-bold t-text">
+                No <span className="text-[#8BC34A]">Ojoro</span>
+              </span>
             </div>
             <p className="max-w-xs text-sm leading-relaxed t-text-muted">
               Token-controlled event and hospitality operations platform built for Nigeria.
@@ -31,7 +33,7 @@ export default function Footer() {
                 { href: "/about", label: "About" },
               ].map((item) => (
                 <li key={item.label}>
-                  <Link href={item.href} className="text-sm t-text-muted transition-colors hover:t-text">{item.label}</Link>
+                  <Link href={item.href} className="text-sm t-text-muted transition-colors hover:text-[#8BC34A]">{item.label}</Link>
                 </li>
               ))}
             </ul>
@@ -48,7 +50,7 @@ export default function Footer() {
                 { href: "/staff", label: "For Staff" },
               ].map((item) => (
                 <li key={item.label}>
-                  <Link href={item.href} className="text-sm t-text-muted transition-colors hover:t-text">{item.label}</Link>
+                  <Link href={item.href} className="text-sm t-text-muted transition-colors hover:text-[#8BC34A]">{item.label}</Link>
                 </li>
               ))}
             </ul>
@@ -65,7 +67,7 @@ export default function Footer() {
                 { href: "/contact", label: "Terms of Service" },
               ].map((item) => (
                 <li key={item.label}>
-                  <Link href={item.href} className="text-sm t-text-muted transition-colors hover:t-text">{item.label}</Link>
+                  <Link href={item.href} className="text-sm t-text-muted transition-colors hover:text-[#8BC34A]">{item.label}</Link>
                 </li>
               ))}
             </ul>

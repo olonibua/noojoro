@@ -86,14 +86,14 @@ export default function InventoryMonitorPage() {
     const pct = getPercent(item);
     if (pct === 0) return "bg-red-500";
     if (pct < 20) return "bg-amber-500";
-    return "bg-emerald-500";
+    return "bg-[#8BC34A]";
   }
 
   function getBorderColor(item: InventoryItem): string {
     const pct = getPercent(item);
     if (pct === 0) return "border-red-300 bg-red-50";
     if (pct < 20) return "border-amber-300 bg-amber-50";
-    return "border-gray-200 bg-white";
+    return "border-[#E3E8E1] bg-white";
   }
 
   /* ========== Render ========== */
@@ -102,8 +102,8 @@ export default function InventoryMonitorPage() {
     return (
       <div className="flex min-h-screen items-center justify-center bg-white">
         <div className="text-center">
-          <div className="mx-auto mb-4 h-10 w-10 animate-spin rounded-full border-4 border-gray-200 border-t-emerald-500" />
-          <p className="text-lg font-medium text-gray-700">Loading inventory...</p>
+          <div className="mx-auto mb-4 h-10 w-10 animate-spin rounded-full border-4 border-[#E3E8E1] border-t-emerald-500" />
+          <p className="text-lg font-medium text-[#3A3D37]">Loading inventory...</p>
         </div>
       </div>
     );
@@ -116,7 +116,7 @@ export default function InventoryMonitorPage() {
           <p className="mb-4 text-lg text-red-600">{error}</p>
           <button
             onClick={fetchInventory}
-            className="rounded-xl bg-emerald-500 px-8 py-3 text-lg font-semibold text-white"
+            className="rounded-xl bg-[#8BC34A] px-8 py-3 text-lg font-semibold text-white"
           >
             Retry
           </button>
@@ -128,18 +128,18 @@ export default function InventoryMonitorPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
-      <div className="border-b border-gray-200 px-4 py-4">
+      <div className="border-b border-[#E3E8E1] px-4 py-4">
         <div className="mx-auto max-w-2xl">
           <Link
             href={`/dashboard/events/${eventId}/live`}
-            className="mb-2 inline-flex items-center gap-1 text-sm font-medium text-emerald-600"
+            className="mb-2 inline-flex items-center gap-1 text-sm font-medium text-[#7CB342]"
           >
             <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
             </svg>
             Back to Dashboard
           </Link>
-          <h1 className="text-xl font-bold text-gray-900">
+          <h1 className="text-xl font-bold text-[#1C1F1A]">
             Inventory Monitor
           </h1>
         </div>
@@ -149,16 +149,16 @@ export default function InventoryMonitorPage() {
       <div className="mx-auto max-w-2xl px-4 py-3">
         <div className="flex flex-wrap gap-4 text-sm">
           <div className="flex items-center gap-2">
-            <div className="h-3 w-6 rounded bg-emerald-500" />
-            <span className="text-gray-600">Healthy</span>
+            <div className="h-3 w-6 rounded bg-[#8BC34A]" />
+            <span className="text-[#6B7366]">Healthy</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="h-3 w-6 rounded bg-amber-500" />
-            <span className="text-gray-600">&lt; 20% left</span>
+            <span className="text-[#6B7366]">&lt; 20% left</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="h-3 w-6 rounded bg-red-500" />
-            <span className="text-gray-600">Depleted</span>
+            <span className="text-[#6B7366]">Depleted</span>
           </div>
         </div>
       </div>
@@ -167,7 +167,7 @@ export default function InventoryMonitorPage() {
       <div className="mx-auto max-w-2xl px-4 py-2">
         {Object.entries(categories).map(([category, items]) => (
           <div key={category} className="mb-6">
-            <h2 className="mb-3 text-lg font-bold text-gray-900">{category}</h2>
+            <h2 className="mb-3 text-lg font-bold text-[#1C1F1A]">{category}</h2>
             <div className="space-y-3">
               {items.map((item) => {
                 const pct = getPercent(item);
@@ -177,10 +177,10 @@ export default function InventoryMonitorPage() {
                     className={`rounded-xl border-2 p-4 ${getBorderColor(item)}`}
                   >
                     <div className="mb-2 flex items-center justify-between">
-                      <span className="text-base font-semibold text-gray-900">
+                      <span className="text-base font-semibold text-[#1C1F1A]">
                         {item.name}
                       </span>
-                      <span className="text-sm font-medium text-gray-600">
+                      <span className="text-sm font-medium text-[#6B7366]">
                         {item.remaining}/{item.total}
                       </span>
                     </div>
@@ -194,7 +194,7 @@ export default function InventoryMonitorPage() {
                     </div>
 
                     <div className="mt-1 flex items-center justify-between text-sm">
-                      <span className="text-gray-500">
+                      <span className="text-[#6B7366]">
                         {item.served} served
                       </span>
                       <span
@@ -203,7 +203,7 @@ export default function InventoryMonitorPage() {
                             ? "text-red-600"
                             : pct < 20
                             ? "text-amber-600"
-                            : "text-emerald-600"
+                            : "text-[#7CB342]"
                         }`}
                       >
                         {pct === 0
@@ -222,7 +222,7 @@ export default function InventoryMonitorPage() {
       </div>
 
       <div className="px-4 py-6 text-center">
-        <p className="text-xs text-gray-400">Powered by No Ojoro</p>
+        <p className="text-xs text-[#9CA396]">Powered by No Ojoro</p>
       </div>
     </div>
   );

@@ -58,20 +58,20 @@ export default function RegisterForm({ onNavigate }: RegisterFormProps) {
       </p>
 
       {error && (
-        <div className="mb-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
+        <div className="mb-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
           {error}
         </div>
       )}
 
       {/* Mode Tabs */}
-      <div className="mb-6 flex overflow-hidden rounded-lg border t-border">
+      <div className="mb-6 flex overflow-hidden rounded-xl t-tab-bg p-1">
         <button
           type="button"
           onClick={() => setMode("email")}
-          className={`flex-1 py-2.5 text-sm font-medium transition-colors ${
+          className={`flex-1 rounded-lg py-2.5 text-sm font-medium transition-all ${
             mode === "email"
-              ? "bg-black text-white"
-              : "t-text-muted hover:opacity-80"
+              ? "bg-[#8BC34A] text-white shadow-sm"
+              : "t-text-muted hover:text-[#8BC34A]"
           }`}
         >
           Email
@@ -79,10 +79,10 @@ export default function RegisterForm({ onNavigate }: RegisterFormProps) {
         <button
           type="button"
           onClick={() => setMode("phone")}
-          className={`flex-1 py-2.5 text-sm font-medium transition-colors ${
+          className={`flex-1 rounded-lg py-2.5 text-sm font-medium transition-all ${
             mode === "phone"
-              ? "bg-black text-white"
-              : "t-text-muted hover:opacity-80"
+              ? "bg-[#8BC34A] text-white shadow-sm"
+              : "t-text-muted hover:text-[#8BC34A]"
           }`}
         >
           Phone
@@ -102,7 +102,7 @@ export default function RegisterForm({ onNavigate }: RegisterFormProps) {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@example.com"
-              className="w-full rounded-lg t-input px-4 py-3 outline-none transition-colors"
+              className="w-full t-input px-4 py-3 outline-none"
             />
           </div>
         ) : (
@@ -117,7 +117,7 @@ export default function RegisterForm({ onNavigate }: RegisterFormProps) {
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               placeholder="+234 801 234 5678"
-              className="w-full rounded-lg t-input px-4 py-3 outline-none transition-colors"
+              className="w-full t-input px-4 py-3 outline-none"
             />
           </div>
         )}
@@ -133,7 +133,7 @@ export default function RegisterForm({ onNavigate }: RegisterFormProps) {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Create a strong password"
-            className="w-full rounded-lg t-input px-4 py-3 outline-none transition-colors"
+            className="w-full t-input px-4 py-3 outline-none"
           />
         </div>
 
@@ -145,7 +145,7 @@ export default function RegisterForm({ onNavigate }: RegisterFormProps) {
             id="reg-role"
             value={role}
             onChange={(e) => setRole(e.target.value)}
-            className="w-full rounded-lg t-input px-4 py-3 outline-none transition-colors"
+            className="w-full t-input px-4 py-3 outline-none"
           >
             <option value="caterer" className="t-select-option">Caterer</option>
             <option value="bar_owner" className="t-select-option">Bar Owner</option>
@@ -155,7 +155,7 @@ export default function RegisterForm({ onNavigate }: RegisterFormProps) {
         <button
           type="submit"
           disabled={loading}
-          className="w-full rounded-lg bg-black py-3 font-semibold text-white transition-all hover:opacity-80 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="btn-primary w-full py-3 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {loading ? "Creating Account..." : "Create Account"}
         </button>
@@ -166,7 +166,7 @@ export default function RegisterForm({ onNavigate }: RegisterFormProps) {
         <button
           type="button"
           onClick={() => onNavigate("login")}
-          className="font-medium t-text-secondary hover:t-text"
+          className="font-medium text-[#8BC34A] hover:text-[#7CB342]"
         >
           Sign In
         </button>

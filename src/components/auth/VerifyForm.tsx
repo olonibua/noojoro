@@ -102,10 +102,10 @@ export default function VerifyForm({ onClose }: VerifyFormProps) {
   return (
     <>
       <div className="mb-6 flex justify-center">
-        <div className="flex h-16 w-16 items-center justify-center rounded-full border-2 t-border">
+        <div className="t-icon-container flex h-16 w-16 items-center justify-center rounded-full">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-8 w-8 t-text-muted"
+            className="h-8 w-8 text-[#8BC34A]"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -126,13 +126,13 @@ export default function VerifyForm({ onClose }: VerifyFormProps) {
       </p>
 
       {error && (
-        <div className="mb-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
+        <div className="mb-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
           {error}
         </div>
       )}
 
       {resendMsg && (
-        <div className="mb-4 rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-600">
+        <div className="mb-4 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-600">
           {resendMsg}
         </div>
       )}
@@ -151,7 +151,7 @@ export default function VerifyForm({ onClose }: VerifyFormProps) {
               value={digit}
               onChange={(e) => handleChange(i, e.target.value)}
               onKeyDown={(e) => handleKeyDown(i, e)}
-              className="h-14 w-12 rounded-lg t-input text-center text-2xl font-bold outline-none transition-colors sm:h-16 sm:w-14"
+              className="h-14 w-12 t-input text-center text-2xl font-bold outline-none sm:h-16 sm:w-14"
             />
           ))}
         </div>
@@ -159,7 +159,7 @@ export default function VerifyForm({ onClose }: VerifyFormProps) {
         <button
           type="submit"
           disabled={loading || code.join("").length !== 6}
-          className="w-full rounded-lg bg-black py-3 font-semibold text-white transition-all hover:opacity-80 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="btn-primary w-full py-3 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {loading ? "Verifying..." : "Verify Account"}
         </button>
@@ -170,7 +170,7 @@ export default function VerifyForm({ onClose }: VerifyFormProps) {
         <button
           type="button"
           disabled={resending}
-          className="font-medium t-text-secondary hover:t-text disabled:opacity-50"
+          className="font-medium text-[#8BC34A] hover:text-[#7CB342] disabled:opacity-50"
           onClick={async () => {
             const verifyEmail = localStorage.getItem("verify_email");
             const verifyPhone = localStorage.getItem("verify_phone");

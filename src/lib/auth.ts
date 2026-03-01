@@ -23,6 +23,6 @@ export function clearAuthTokens(): void {
   localStorage.removeItem("staff_token");
   localStorage.removeItem("bar_staff_token");
   localStorage.removeItem("celebrant_token");
-  // httpOnly cookies (access_token, refresh_token) can only be cleared by the server
-  // but we can expire client-readable cookies if any exist
+  // Clear the logged_in indicator cookie
+  document.cookie = "logged_in=; path=/; max-age=0";
 }
