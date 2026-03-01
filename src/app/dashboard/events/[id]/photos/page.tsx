@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useCallback, useRef } from "react";
 import { useRouter, useParams } from "next/navigation";
-import { api } from "@/lib/api";
+import { api, getBearerToken } from "@/lib/api";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
@@ -29,6 +29,7 @@ export default function CelebrantPhotosPage() {
   // Celebrant password
   const [password, setPassword] = useState("");
   const [savingPassword, setSavingPassword] = useState(false);
+  const [linkCopied, setLinkCopied] = useState(false);
 
   const fetchPhotos = useCallback(async () => {
     try {
@@ -113,10 +114,14 @@ export default function CelebrantPhotosPage() {
         const formData = new FormData();
         formData.append("file", compressed);
 
+        const uploadHeaders: Record<string, string> = {};
+        const token = getBearerToken();
+        if (token) uploadHeaders["Authorization"] = `Bearer ${token}`;
         const response = await fetch(`${API_URL}/api/events/${eventId}/photos`, {
           method: "POST",
           body: formData,
           credentials: "include",
+          headers: uploadHeaders,
         });
 
         if (!response.ok) {
@@ -281,13 +286,21 @@ export default function CelebrantPhotosPage() {
         </div>
       )}
 
-      {/* Celebrant Password */}
+      {/* Celebrant Access */}
       <div className="mt-6 rounded-xl border t-border t-bg-card p-6 shadow-sm">
-        <h2 className="text-lg font-semibold t-text">Celebrant Password</h2>
+        <h2 className="text-lg font-semibold t-text">Celebrant Access</h2>
         <p className="mt-1 text-sm t-text-muted">
-          Set a password that the celebrant uses to access their photo gallery and controls.
+          Give your celebrant real-time access to monitor serving progress on their phone.
         </p>
-        <form onSubmit={handleSetPassword} className="mt-4 flex gap-3">
+
+        <ol className="mt-4 list-decimal list-inside space-y-1.5 text-sm t-text-muted">
+          <li>Set a password below for the celebrant</li>
+          <li>Copy the celebrant link using the button</li>
+          <li>Share the link and password with your event host/celebrant</li>
+          <li>They&apos;ll use it to monitor serving progress live on their phone</li>
+        </ol>
+
+        <form onSubmit={handleSetPassword} className="mt-5 flex gap-3">
           <input
             type="text"
             value={password}
@@ -305,6 +318,23 @@ export default function CelebrantPhotosPage() {
             {savingPassword ? "Saving..." : "Set Password"}
           </button>
         </form>
+
+        <div className="mt-4">
+          <button
+            type="button"
+            onClick={() => {
+              navigator.clipboard.writeText(`https://noojoro.vercel.app/celebrant?event=${eventId}`);
+              setLinkCopied(true);
+              setTimeout(() => setLinkCopied(false), 2000);
+            }}
+            className="rounded-lg border t-border px-4 py-2.5 text-sm font-semibold t-text-secondary hover:t-bg transition-colors"
+          >
+            {linkCopied ? "Copied!" : "Copy Celebrant Link"}
+          </button>
+          <p className="mt-2 text-xs t-text-faint">
+            Share this link along with the password you set
+          </p>
+        </div>
       </div>
     </div>
   );

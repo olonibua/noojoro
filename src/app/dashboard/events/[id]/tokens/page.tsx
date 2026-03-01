@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { useRouter, useParams } from "next/navigation";
-import { api } from "@/lib/api";
+import { api, getBearerToken } from "@/lib/api";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
@@ -87,8 +87,12 @@ export default function TokenManagementPage() {
     setDownloading(true);
     setError("");
     try {
+      const headers: Record<string, string> = {};
+      const token = getBearerToken();
+      if (token) headers["Authorization"] = `Bearer ${token}`;
       const response = await fetch(`${API_URL}/api/events/${eventId}/tokens/pdf`, {
         credentials: "include",
+        headers,
       });
       if (!response.ok) {
         const err = await response.json().catch(() => ({ detail: "Download failed" }));

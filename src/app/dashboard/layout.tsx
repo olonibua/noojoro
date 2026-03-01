@@ -299,10 +299,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         <div className={`flex flex-col gap-2 shrink-0 ${sidebarExpanded ? "" : "items-center"}`}>
           {sidebarExpanded ? (
             <>
-              <button className="sidebar-nav-btn">
+              {/* <button className="sidebar-nav-btn">
                 <SettingsIcon className="h-5 w-5 shrink-0" />
                 Settings
-              </button>
+              </button> */}
               <button
                 onClick={handleLogout}
                 className="sidebar-nav-btn hover:!bg-red-50 hover:!text-red-600"
@@ -322,9 +322,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             </>
           ) : (
             <>
-              <button className="sidebar-icon-btn" title="Settings">
+              {/* <button className="sidebar-icon-btn" title="Settings">
                 <SettingsIcon className="h-5 w-5" />
-              </button>
+              </button> */}
               <button
                 onClick={handleLogout}
                 className="sidebar-icon-btn hover:!bg-red-50 hover:!text-red-600"

@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
-import { api } from "@/lib/api";
+import { api, getBearerToken } from "@/lib/api";
 
 interface Table {
   id: string;
@@ -69,9 +69,12 @@ export default function TableConfigPage() {
     setError("");
 
     try {
+      const headers: Record<string, string> = {};
+      const token = getBearerToken();
+      if (token) headers["Authorization"] = `Bearer ${token}`;
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"}/api/venues/${venueId}/tables/qr-pdf`,
-        { credentials: "include" }
+        { credentials: "include", headers }
       );
 
       if (!response.ok) {

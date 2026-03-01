@@ -23,7 +23,7 @@ function getCookie(name: string): string | null {
   return match ? decodeURIComponent(match[1]) : null;
 }
 
-function getBearerToken(): string | null {
+export function getBearerToken(): string | null {
   if (typeof window === "undefined") return null;
   const token =
     getCookie("noojoro_token") ||
