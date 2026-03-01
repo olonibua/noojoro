@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef, useCallback } from "react";
+import { Suspense, useEffect, useState, useRef, useCallback } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { api } from "@/lib/api";
 
@@ -10,7 +10,7 @@ interface VerifyResponse {
   message?: string;
 }
 
-export default function PaystackCallbackPage() {
+function PaystackCallbackInner() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const reference = searchParams.get("reference") || searchParams.get("trxref") || "";
@@ -106,104 +106,120 @@ export default function PaystackCallbackPage() {
   }, [status, eventId, router]);
 
   return (
+    <div className="w-full max-w-md rounded-xl border border-gray-200 bg-white p-8 text-center shadow-sm">
+      {status === "loading" && (
+        <>
+          <div className="mx-auto h-12 w-12 animate-spin rounded-full border-4 border-gray-200 border-t-[#22C55E]" />
+          <h1 className="mt-6 text-xl font-bold text-gray-900">Verifying Payment</h1>
+          <p className="mt-2 text-sm text-gray-500">
+            Please wait while we confirm your payment...
+          </p>
+          {reference && (
+            <p className="mt-3 text-xs text-gray-400">
+              Reference: <span className="font-mono">{reference}</span>
+            </p>
+          )}
+        </>
+      )}
+
+      {status === "success" && (
+        <>
+          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
+            <svg
+              className="h-8 w-8 text-[#22C55E]"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={2}
+              stroke="currentColor"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+            </svg>
+          </div>
+          <h1 className="mt-6 text-xl font-bold text-gray-900">Payment Successful!</h1>
+          <p className="mt-2 text-sm text-gray-500">{message}</p>
+          <p className="mt-2 text-xs text-gray-400">
+            Redirecting in {countdown}s...
+          </p>
+          {reference && (
+            <p className="mt-1 text-xs text-gray-400">
+              Reference: <span className="font-mono">{reference}</span>
+            </p>
+          )}
+          <div className="mt-6 flex flex-col gap-3">
+            {eventId && (
+              <button
+                onClick={() => router.push(`/dashboard/events/${eventId}/tokens`)}
+                className="w-full rounded-lg bg-[#22C55E] px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#16A34A] transition-colors"
+              >
+                Back to Tokens
+              </button>
+            )}
+            <button
+              onClick={() => router.push("/dashboard/events")}
+              className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+            >
+              Go to Dashboard
+            </button>
+          </div>
+        </>
+      )}
+
+      {status === "failed" && (
+        <>
+          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-red-100">
+            <svg
+              className="h-8 w-8 text-red-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={2}
+              stroke="currentColor"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </div>
+          <h1 className="mt-6 text-xl font-bold text-gray-900">Payment Failed</h1>
+          <p className="mt-2 text-sm text-gray-500">{message}</p>
+          {reference && (
+            <p className="mt-3 text-xs text-gray-400">
+              Reference: <span className="font-mono">{reference}</span>
+            </p>
+          )}
+          <div className="mt-6 flex flex-col gap-3">
+            {eventId && (
+              <button
+                onClick={() => router.push(`/dashboard/events/${eventId}/tokens`)}
+                className="w-full rounded-lg bg-[#22C55E] px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#16A34A] transition-colors"
+              >
+                Try Again
+              </button>
+            )}
+            <button
+              onClick={() => router.push("/dashboard/events")}
+              className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+            >
+              Go to Dashboard
+            </button>
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
+
+export default function PaystackCallbackPage() {
+  return (
     <div className="flex min-h-screen items-center justify-center bg-gray-50 p-4">
-      <div className="w-full max-w-md rounded-xl border border-gray-200 bg-white p-8 text-center shadow-sm">
-        {status === "loading" && (
-          <>
+      <Suspense
+        fallback={
+          <div className="w-full max-w-md rounded-xl border border-gray-200 bg-white p-8 text-center shadow-sm">
             <div className="mx-auto h-12 w-12 animate-spin rounded-full border-4 border-gray-200 border-t-[#22C55E]" />
             <h1 className="mt-6 text-xl font-bold text-gray-900">Verifying Payment</h1>
-            <p className="mt-2 text-sm text-gray-500">
-              Please wait while we confirm your payment...
-            </p>
-            {reference && (
-              <p className="mt-3 text-xs text-gray-400">
-                Reference: <span className="font-mono">{reference}</span>
-              </p>
-            )}
-          </>
-        )}
-
-        {status === "success" && (
-          <>
-            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
-              <svg
-                className="h-8 w-8 text-[#22C55E]"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={2}
-                stroke="currentColor"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-              </svg>
-            </div>
-            <h1 className="mt-6 text-xl font-bold text-gray-900">Payment Successful!</h1>
-            <p className="mt-2 text-sm text-gray-500">{message}</p>
-            <p className="mt-2 text-xs text-gray-400">
-              Redirecting in {countdown}s...
-            </p>
-            {reference && (
-              <p className="mt-1 text-xs text-gray-400">
-                Reference: <span className="font-mono">{reference}</span>
-              </p>
-            )}
-            <div className="mt-6 flex flex-col gap-3">
-              {eventId && (
-                <button
-                  onClick={() => router.push(`/dashboard/events/${eventId}/tokens`)}
-                  className="w-full rounded-lg bg-[#22C55E] px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#16A34A] transition-colors"
-                >
-                  Back to Tokens
-                </button>
-              )}
-              <button
-                onClick={() => router.push("/dashboard/events")}
-                className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
-              >
-                Go to Dashboard
-              </button>
-            </div>
-          </>
-        )}
-
-        {status === "failed" && (
-          <>
-            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-red-100">
-              <svg
-                className="h-8 w-8 text-red-500"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={2}
-                stroke="currentColor"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </div>
-            <h1 className="mt-6 text-xl font-bold text-gray-900">Payment Failed</h1>
-            <p className="mt-2 text-sm text-gray-500">{message}</p>
-            {reference && (
-              <p className="mt-3 text-xs text-gray-400">
-                Reference: <span className="font-mono">{reference}</span>
-              </p>
-            )}
-            <div className="mt-6 flex flex-col gap-3">
-              {eventId && (
-                <button
-                  onClick={() => router.push(`/dashboard/events/${eventId}/tokens`)}
-                  className="w-full rounded-lg bg-[#22C55E] px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#16A34A] transition-colors"
-                >
-                  Try Again
-                </button>
-              )}
-              <button
-                onClick={() => router.push("/dashboard/events")}
-                className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
-              >
-                Go to Dashboard
-              </button>
-            </div>
-          </>
-        )}
-      </div>
+            <p className="mt-2 text-sm text-gray-500">Please wait...</p>
+          </div>
+        }
+      >
+        <PaystackCallbackInner />
+      </Suspense>
     </div>
   );
 }
