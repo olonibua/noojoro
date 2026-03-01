@@ -58,19 +58,19 @@ export default function RegisterForm({ onNavigate }: RegisterFormProps) {
       </p>
 
       {error && (
-        <div className="mb-4 rounded-lg bg-red-500/20 px-4 py-3 text-sm text-red-300">
+        <div className="mb-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
           {error}
         </div>
       )}
 
       {/* Mode Tabs */}
-      <div className="mb-6 flex overflow-hidden rounded-lg t-tab-bg">
+      <div className="mb-6 flex overflow-hidden rounded-lg border t-border">
         <button
           type="button"
           onClick={() => setMode("email")}
           className={`flex-1 py-2.5 text-sm font-medium transition-colors ${
             mode === "email"
-              ? "bg-emerald-500 text-white"
+              ? "bg-black text-white"
               : "t-text-muted hover:opacity-80"
           }`}
         >
@@ -81,7 +81,7 @@ export default function RegisterForm({ onNavigate }: RegisterFormProps) {
           onClick={() => setMode("phone")}
           className={`flex-1 py-2.5 text-sm font-medium transition-colors ${
             mode === "phone"
-              ? "bg-emerald-500 text-white"
+              ? "bg-black text-white"
               : "t-text-muted hover:opacity-80"
           }`}
         >
@@ -155,7 +155,7 @@ export default function RegisterForm({ onNavigate }: RegisterFormProps) {
         <button
           type="submit"
           disabled={loading}
-          className="glow-green w-full rounded-lg bg-emerald-500 py-3 font-semibold text-white transition-all hover:bg-emerald-400 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full rounded-lg bg-black py-3 font-semibold text-white transition-all hover:opacity-80 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {loading ? "Creating Account..." : "Create Account"}
         </button>
@@ -166,7 +166,7 @@ export default function RegisterForm({ onNavigate }: RegisterFormProps) {
         <button
           type="button"
           onClick={() => onNavigate("login")}
-          className="font-medium text-emerald-400 hover:text-emerald-300"
+          className="font-medium t-text-secondary hover:t-text"
         >
           Sign In
         </button>

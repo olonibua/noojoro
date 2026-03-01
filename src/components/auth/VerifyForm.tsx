@@ -102,10 +102,10 @@ export default function VerifyForm({ onClose }: VerifyFormProps) {
   return (
     <>
       <div className="mb-6 flex justify-center">
-        <div className="flex h-16 w-16 items-center justify-center rounded-full bg-emerald-500/20">
+        <div className="flex h-16 w-16 items-center justify-center rounded-full border-2 t-border">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-8 w-8 text-emerald-400"
+            className="h-8 w-8 t-text-muted"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -126,13 +126,13 @@ export default function VerifyForm({ onClose }: VerifyFormProps) {
       </p>
 
       {error && (
-        <div className="mb-4 rounded-lg bg-red-500/20 px-4 py-3 text-sm text-red-300">
+        <div className="mb-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
           {error}
         </div>
       )}
 
       {resendMsg && (
-        <div className="mb-4 rounded-lg bg-emerald-500/20 px-4 py-3 text-sm text-emerald-300">
+        <div className="mb-4 rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-600">
           {resendMsg}
         </div>
       )}
@@ -159,7 +159,7 @@ export default function VerifyForm({ onClose }: VerifyFormProps) {
         <button
           type="submit"
           disabled={loading || code.join("").length !== 6}
-          className="glow-green w-full rounded-lg bg-emerald-500 py-3 font-semibold text-white transition-all hover:bg-emerald-400 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full rounded-lg bg-black py-3 font-semibold text-white transition-all hover:opacity-80 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {loading ? "Verifying..." : "Verify Account"}
         </button>
@@ -170,7 +170,7 @@ export default function VerifyForm({ onClose }: VerifyFormProps) {
         <button
           type="button"
           disabled={resending}
-          className="font-medium text-emerald-400 hover:text-emerald-300 disabled:opacity-50"
+          className="font-medium t-text-secondary hover:t-text disabled:opacity-50"
           onClick={async () => {
             const verifyEmail = localStorage.getItem("verify_email");
             const verifyPhone = localStorage.getItem("verify_phone");

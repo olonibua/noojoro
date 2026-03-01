@@ -18,7 +18,6 @@ function AuthModalInner() {
   const isOpen = authView === "login" || authView === "register" || authView === "verify" || authView === "reset";
 
   const close = useCallback(() => {
-    // Remove ?auth= param, keep other params if any
     const params = new URLSearchParams(searchParams.toString());
     params.delete("auth");
     const remaining = params.toString();
@@ -34,7 +33,6 @@ function AuthModalInner() {
     [searchParams, router, pathname],
   );
 
-  // Escape key closes modal
   useEffect(() => {
     if (!isOpen) return;
     function onKey(e: KeyboardEvent) {
@@ -44,7 +42,6 @@ function AuthModalInner() {
     return () => window.removeEventListener("keydown", onKey);
   }, [isOpen, close]);
 
-  // Lock body scroll when open
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
@@ -68,12 +65,12 @@ function AuthModalInner() {
 
       {/* Modal card */}
       <div className="relative w-full max-w-md mx-4 animate-modal-in">
-        <div className="glass rounded-2xl p-8 t-text max-h-[90vh] overflow-y-auto">
+        <div className="card-elevated rounded-2xl p-8 t-text max-h-[90vh] overflow-y-auto">
           {/* Close button */}
           <button
             type="button"
             onClick={close}
-            className="absolute top-4 right-4 flex h-8 w-8 items-center justify-center rounded-lg t-text-faint transition-colors hover:text-emerald-500 hover:bg-emerald-500/10"
+            className="absolute top-4 right-4 flex h-8 w-8 items-center justify-center rounded-lg t-text-faint transition-colors hover:t-text"
             aria-label="Close"
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
