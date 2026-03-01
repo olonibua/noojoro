@@ -3,6 +3,7 @@
 import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { api } from "@/lib/api";
+import { setAuthTokens } from "@/lib/auth";
 
 interface VerifyFormProps {
   onClose: () => void;
@@ -84,9 +85,10 @@ export default function VerifyForm({ onClose }: VerifyFormProps) {
       if (verifyPhone) loginBody.phone = verifyPhone;
 
       if (loginBody.password) {
-        await api.post("/api/auth/login", loginBody);
-        // Set indicator cookie so middleware knows we're logged in
-        document.cookie = `logged_in=true; path=/; max-age=${30 * 60}; secure; samesite=lax`;
+        const loginResult = await api.post<{ access_token?: string }>("/api/auth/login", loginBody);
+        if (loginResult.access_token) {
+          setAuthTokens(loginResult.access_token);
+        }
       }
 
       localStorage.removeItem("verify_email");

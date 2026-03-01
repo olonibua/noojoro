@@ -17,9 +17,16 @@ export class ApiError extends Error {
   }
 }
 
+function getCookie(name: string): string | null {
+  if (typeof document === "undefined") return null;
+  const match = document.cookie.match(new RegExp(`(?:^|; )${name}=([^;]*)`));
+  return match ? decodeURIComponent(match[1]) : null;
+}
+
 function getBearerToken(): string | null {
   if (typeof window === "undefined") return null;
   const token =
+    getCookie("noojoro_token") ||
     localStorage.getItem("staff_token") ||
     localStorage.getItem("bar_staff_token") ||
     localStorage.getItem("celebrant_token") ||

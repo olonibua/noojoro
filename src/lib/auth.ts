@@ -23,6 +23,14 @@ export function clearAuthTokens(): void {
   localStorage.removeItem("staff_token");
   localStorage.removeItem("bar_staff_token");
   localStorage.removeItem("celebrant_token");
-  // Clear the logged_in indicator cookie
+  // Clear auth cookies
   document.cookie = "logged_in=; path=/; max-age=0";
+  document.cookie = "noojoro_token=; path=/; max-age=0";
+}
+
+export function setAuthTokens(accessToken: string): void {
+  if (typeof window === "undefined") return;
+  // Store access token as a first-party cookie (avoids cross-domain cookie blocking)
+  document.cookie = `noojoro_token=${encodeURIComponent(accessToken)}; path=/; max-age=${30 * 60}; samesite=lax`;
+  document.cookie = `logged_in=true; path=/; max-age=${30 * 60}; samesite=lax`;
 }
