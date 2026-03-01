@@ -115,24 +115,24 @@ export default function LandingPage() {
       </section>
 
       {/* ═══ BEFORE / AFTER ═══ */}
-      <section className="section-alt px-6 py-20">
+      <section className="section-dark px-6 py-20">
         <div className="mx-auto max-w-3xl text-center">
-          <h2 className="text-3xl font-bold sm:text-4xl">The Problem We Solve</h2>
-          <p className="mt-4 text-lg t-text-muted">
+          <h2 className="text-3xl font-bold text-[#F0F3EF] sm:text-4xl">The Problem We Solve</h2>
+          <p className="mt-4 text-lg text-[#9CA396]">
             At every Nigerian event the same story repeats. We built the system to fix it.
           </p>
         </div>
         <div className="mx-auto mt-12 grid max-w-5xl gap-8 sm:grid-cols-2">
-          <div className="card-elevated overflow-hidden">
+          <div className="rounded-[20px] border border-white/8 bg-[#252622] overflow-hidden">
             <Image src="/illustrations/before-chaos.png" alt="Before: Chaotic event service" width={600} height={400} className="w-full h-auto" />
-            <div className="bg-red-50 p-4 text-center">
-              <p className="text-sm font-bold text-red-600">Before: Chaos &amp; Double-Serving</p>
+            <div className="bg-red-900/30 p-4 text-center">
+              <p className="text-sm font-bold text-red-400">Before: Chaos &amp; Double-Serving</p>
             </div>
           </div>
-          <div className="card-elevated overflow-hidden">
+          <div className="rounded-[20px] border border-white/8 bg-[#252622] overflow-hidden">
             <Image src="/illustrations/after-noojoro.png" alt="After: Organized with No Ojoro" width={600} height={400} className="w-full h-auto" />
-            <div className="p-4 text-center" style={{ background: "rgba(34, 197, 94, 0.08)" }}>
-              <p className="text-sm font-bold text-eco-dark">After: Organized &amp; Fraud-Proof</p>
+            <div className="p-4 text-center" style={{ background: "rgba(34, 197, 94, 0.1)" }}>
+              <p className="text-sm font-bold text-eco-light">After: Organized &amp; Fraud-Proof</p>
             </div>
           </div>
         </div>
@@ -198,21 +198,21 @@ export default function LandingPage() {
       </section>
 
       {/* ═══ FEATURES ═══ */}
-      <section id="features" className="section-alt px-6 py-24">
+      <section id="features" className="section-dark px-6 py-24">
         <div className="mx-auto max-w-6xl">
           <div className="grid gap-16 lg:grid-cols-2 lg:items-center">
             <div>
-              <h2 className="text-3xl font-bold sm:text-4xl">
+              <h2 className="text-3xl font-bold text-[#F0F3EF] sm:text-4xl">
                 Everything You Need to Eliminate Ojoro
               </h2>
-              <p className="mt-4 text-lg t-text-muted">
+              <p className="mt-4 text-lg text-[#9CA396]">
                 Built for Nigerian events — poor internet, large crowds, and high-pressure serving windows.
               </p>
               <div className="mt-10 grid gap-4 sm:grid-cols-2">
                 {features.map((feature) => (
-                  <div key={feature.title} className="card-elevated p-5">
-                    <h3 className="mb-1 text-sm font-bold">{feature.title}</h3>
-                    <p className="text-xs leading-relaxed t-text-muted">{feature.description}</p>
+                  <div key={feature.title} className="rounded-[20px] border border-white/8 bg-[#252622] p-5">
+                    <h3 className="mb-1 text-sm font-bold text-[#F0F3EF]">{feature.title}</h3>
+                    <p className="text-xs leading-relaxed text-[#9CA396]">{feature.description}</p>
                   </div>
                 ))}
               </div>
