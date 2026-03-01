@@ -85,6 +85,8 @@ export default function VerifyForm({ onClose }: VerifyFormProps) {
 
       if (loginBody.password) {
         await api.post("/api/auth/login", loginBody);
+        // Set indicator cookie so middleware knows we're logged in
+        document.cookie = `logged_in=true; path=/; max-age=${30 * 60}; secure; samesite=lax`;
       }
 
       localStorage.removeItem("verify_email");
@@ -105,7 +107,7 @@ export default function VerifyForm({ onClose }: VerifyFormProps) {
         <div className="t-icon-container flex h-16 w-16 items-center justify-center rounded-full">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-8 w-8 text-[#8BC34A]"
+            className="h-8 w-8 text-[#22C55E]"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -170,7 +172,7 @@ export default function VerifyForm({ onClose }: VerifyFormProps) {
         <button
           type="button"
           disabled={resending}
-          className="font-medium text-[#8BC34A] hover:text-[#7CB342] disabled:opacity-50"
+          className="font-medium text-[#22C55E] hover:text-[#16A34A] disabled:opacity-50"
           onClick={async () => {
             const verifyEmail = localStorage.getItem("verify_email");
             const verifyPhone = localStorage.getItem("verify_phone");
