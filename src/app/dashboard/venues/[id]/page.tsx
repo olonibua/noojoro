@@ -121,21 +121,21 @@ export default function VenueDetailPage() {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[#F4F6F3]">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-eco border-t-transparent" />
+      <div className="flex min-h-screen items-center justify-center t-bg">
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-neutral-300 border-t-transparent" />
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="flex min-h-screen flex-col items-center justify-center bg-[#F4F6F3] px-4">
+      <div className="flex min-h-screen flex-col items-center justify-center t-bg px-4">
         <div className="rounded-lg border border-red-200 bg-red-50 px-6 py-4 text-sm text-red-700">
           {error}
         </div>
         <Link
           href="/dashboard"
-          className="mt-4 text-sm font-medium text-eco-dark hover:text-eco-dark"
+          className="mt-4 text-sm font-medium text-neutral-700 hover:text-neutral-700"
         >
           Back to Dashboard
         </Link>
@@ -146,26 +146,26 @@ export default function VenueDetailPage() {
   if (!venue) return null;
 
   return (
-    <div className="min-h-screen bg-[#F4F6F3]">
+    <div className="min-h-screen t-bg">
       {/* Header */}
-      <header className="border-b border-[#E3E8E1] bg-white">
+      <header className="border-b t-border t-bg-card">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-4 sm:px-6">
           <div className="flex items-center gap-3">
             <Link
               href="/dashboard"
-              className="text-sm font-medium text-[#6B7366] hover:text-[#3A3D37]"
+              className="text-sm font-medium t-text-muted hover:t-text-secondary"
             >
               Dashboard
             </Link>
-            <span className="text-[#C5C9C2]">/</span>
-            <span className="text-sm font-semibold text-[#1C1F1A]">
+            <span className="t-text-faint">/</span>
+            <span className="text-sm font-semibold t-text">
               {venue.name}
             </span>
           </div>
           {!editing && (
             <button
               onClick={startEditing}
-              className="rounded-lg border border-[#E3E8E1] bg-white px-4 py-2 text-sm font-medium text-[#3A3D37] transition-colors hover:bg-[#F4F6F3]"
+              className="rounded-lg border t-border t-bg-card px-4 py-2 text-sm font-medium t-text-secondary transition-colors hover:t-bg"
             >
               Edit Venue
             </button>
@@ -178,9 +178,9 @@ export default function VenueDetailPage() {
         {editing ? (
           <form
             onSubmit={handleSave}
-            className="mb-10 rounded-xl border border-[#E3E8E1] bg-white p-6"
+            className="mb-10 rounded-xl border t-border t-bg-card p-6"
           >
-            <h2 className="mb-4 text-lg font-semibold text-[#1C1F1A]">
+            <h2 className="mb-4 text-lg font-semibold t-text">
               Edit Venue
             </h2>
 
@@ -192,7 +192,7 @@ export default function VenueDetailPage() {
 
             <div className="grid gap-4 sm:grid-cols-2">
               <div>
-                <label className="mb-1.5 block text-sm font-medium text-[#3A3D37]">
+                <label className="mb-1.5 block text-sm font-medium t-text-secondary">
                   Venue Name
                 </label>
                 <input
@@ -200,11 +200,11 @@ export default function VenueDetailPage() {
                   required
                   value={editName}
                   onChange={(e) => setEditName(e.target.value)}
-                  className="w-full rounded-lg border border-[#E3E8E1] bg-white px-4 py-2.5 text-sm text-[#1C1F1A] outline-none focus:border-eco focus:ring-2 focus:ring-emerald-500/20"
+                  className="w-full rounded-lg border t-border t-bg-card px-4 py-2.5 text-sm t-text outline-none focus:border-eco focus:ring-2 focus:ring-emerald-500/20"
                 />
               </div>
               <div>
-                <label className="mb-1.5 block text-sm font-medium text-[#3A3D37]">
+                <label className="mb-1.5 block text-sm font-medium t-text-secondary">
                   Address
                 </label>
                 <input
@@ -212,11 +212,11 @@ export default function VenueDetailPage() {
                   required
                   value={editAddress}
                   onChange={(e) => setEditAddress(e.target.value)}
-                  className="w-full rounded-lg border border-[#E3E8E1] bg-white px-4 py-2.5 text-sm text-[#1C1F1A] outline-none focus:border-eco focus:ring-2 focus:ring-emerald-500/20"
+                  className="w-full rounded-lg border t-border t-bg-card px-4 py-2.5 text-sm t-text outline-none focus:border-eco focus:ring-2 focus:ring-emerald-500/20"
                 />
               </div>
               <div>
-                <label className="mb-1.5 block text-sm font-medium text-[#3A3D37]">
+                <label className="mb-1.5 block text-sm font-medium t-text-secondary">
                   Table Count
                 </label>
                 <input
@@ -226,11 +226,11 @@ export default function VenueDetailPage() {
                   max={500}
                   value={editTableCount}
                   onChange={(e) => setEditTableCount(Number(e.target.value))}
-                  className="w-full rounded-lg border border-[#E3E8E1] bg-white px-4 py-2.5 text-sm text-[#1C1F1A] outline-none focus:border-eco focus:ring-2 focus:ring-emerald-500/20"
+                  className="w-full rounded-lg border t-border t-bg-card px-4 py-2.5 text-sm t-text outline-none focus:border-eco focus:ring-2 focus:ring-emerald-500/20"
                 />
               </div>
               <div>
-                <label className="mb-1.5 block text-sm font-medium text-[#3A3D37]">
+                <label className="mb-1.5 block text-sm font-medium t-text-secondary">
                   Logo URL
                 </label>
                 <input
@@ -238,7 +238,7 @@ export default function VenueDetailPage() {
                   value={editLogoUrl}
                   onChange={(e) => setEditLogoUrl(e.target.value)}
                   placeholder="https://example.com/logo.png"
-                  className="w-full rounded-lg border border-[#E3E8E1] bg-white px-4 py-2.5 text-sm text-[#1C1F1A] placeholder-[#9CA396] outline-none focus:border-eco focus:ring-2 focus:ring-emerald-500/20"
+                  className="w-full rounded-lg border t-border t-bg-card px-4 py-2.5 text-sm t-text placeholder-[#9C9C9C] outline-none focus:border-eco focus:ring-2 focus:ring-emerald-500/20"
                 />
               </div>
             </div>
@@ -254,14 +254,14 @@ export default function VenueDetailPage() {
               <button
                 type="button"
                 onClick={() => setEditing(false)}
-                className="rounded-lg px-5 py-2.5 text-sm font-medium text-[#6B7366] hover:text-[#3A3D37]"
+                className="rounded-lg px-5 py-2.5 text-sm font-medium t-text-muted hover:t-text-secondary"
               >
                 Cancel
               </button>
             </div>
           </form>
         ) : (
-          <div className="mb-10 rounded-xl border border-[#E3E8E1] bg-white p-6">
+          <div className="mb-10 rounded-xl border t-border t-bg-card p-6">
             <div className="flex items-start gap-5">
               {venue.logo_url && (
                 <img
@@ -271,12 +271,12 @@ export default function VenueDetailPage() {
                 />
               )}
               <div className="flex-1">
-                <h1 className="text-2xl font-bold text-[#1C1F1A]">
+                <h1 className="text-2xl font-bold t-text">
                   {venue.name}
                 </h1>
-                <p className="mt-1 text-sm text-[#6B7366]">{venue.address}</p>
+                <p className="mt-1 text-sm t-text-muted">{venue.address}</p>
                 <div className="mt-3 flex flex-wrap gap-3">
-                  <span className="inline-flex items-center rounded-full bg-emerald-50 px-3 py-1 text-xs font-medium text-eco-dark">
+                  <span className="inline-flex items-center rounded-full bg-neutral-100 px-3 py-1 text-xs font-medium text-neutral-700">
                     {venue.table_count} {venue.table_count === 1 ? "table" : "tables"}
                   </span>
                 </div>
@@ -286,21 +286,21 @@ export default function VenueDetailPage() {
         )}
 
         {/* Navigation Cards */}
-        <h2 className="mb-4 text-lg font-semibold text-[#1C1F1A]">Manage</h2>
+        <h2 className="mb-4 text-lg font-semibold t-text">Manage</h2>
         <div className="grid gap-4 sm:grid-cols-2">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="group rounded-xl border border-[#E3E8E1] bg-white p-5 transition-all hover:border-eco/40 hover:shadow-md"
+              className="group rounded-xl border t-border t-bg-card p-5 transition-all hover:border-neutral-300/40 hover:shadow-md"
             >
               <div className="flex items-start gap-4">
-                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-emerald-50 text-eco-dark transition-colors group-hover:bg-eco/10">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-neutral-100 text-neutral-700 transition-colors group-hover:bg-neutral-100">
                   {link.icon}
                 </div>
                 <div>
-                  <h3 className="font-semibold text-[#1C1F1A]">{link.label}</h3>
-                  <p className="mt-0.5 text-sm text-[#6B7366]">
+                  <h3 className="font-semibold t-text">{link.label}</h3>
+                  <p className="mt-0.5 text-sm t-text-muted">
                     {link.description}
                   </p>
                 </div>

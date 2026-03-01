@@ -104,40 +104,40 @@ export default function LiveDashboardPage() {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[#F4F6F3]">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-eco border-t-transparent" />
+      <div className="flex min-h-screen items-center justify-center t-bg">
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-neutral-300 border-t-transparent" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#F4F6F3]">
+    <div className="min-h-screen t-bg">
       {/* Header */}
-      <header className="border-b border-[#E3E8E1] bg-white">
+      <header className="border-b t-border t-bg-card">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
           <div className="flex items-center gap-3">
             <Link
               href="/dashboard"
-              className="text-sm font-medium text-[#6B7366] hover:text-[#3A3D37]"
+              className="text-sm font-medium t-text-muted hover:t-text-secondary"
             >
               Dashboard
             </Link>
-            <span className="text-[#C5C9C2]">/</span>
+            <span className="t-text-faint">/</span>
             <Link
               href={`/dashboard/venues/${venueId}`}
-              className="text-sm font-medium text-[#6B7366] hover:text-[#3A3D37]"
+              className="text-sm font-medium t-text-muted hover:t-text-secondary"
             >
               Venue
             </Link>
-            <span className="text-[#C5C9C2]">/</span>
-            <span className="text-sm font-semibold text-[#1C1F1A]">Live</span>
+            <span className="t-text-faint">/</span>
+            <span className="text-sm font-semibold t-text">Live</span>
           </div>
           <div className="flex items-center gap-2">
             <span className="relative flex h-2.5 w-2.5">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
               <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-eco" />
             </span>
-            <span className="text-xs text-[#6B7366]">
+            <span className="text-xs t-text-muted">
               {lastUpdated
                 ? `Updated ${lastUpdated.toLocaleTimeString()}`
                 : "Connecting..."}
@@ -147,10 +147,10 @@ export default function LiveDashboardPage() {
       </header>
 
       <main className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
-        <h1 className="mb-1 text-2xl font-bold text-[#1C1F1A]">
+        <h1 className="mb-1 text-2xl font-bold t-text">
           Live Dashboard
         </h1>
-        <p className="mb-8 text-sm text-[#6B7366]">
+        <p className="mb-8 text-sm t-text-muted">
           Real-time orders, revenue, and inventory. Auto-refreshes every 3
           seconds.
         </p>
@@ -200,14 +200,14 @@ export default function LiveDashboardPage() {
         {dashboard && (
           <div className="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {/* Placed */}
-            <div className="rounded-xl border border-[#E3E8E1] bg-white p-5">
-              <p className="text-sm font-medium text-[#6B7366]">
+            <div className="rounded-xl border t-border t-bg-card p-5">
+              <p className="text-sm font-medium t-text-muted">
                 Orders Placed
               </p>
-              <p className="mt-2 text-3xl font-bold text-[#1C1F1A]">
+              <p className="mt-2 text-3xl font-bold t-text">
                 {dashboard.orders_placed}
               </p>
-              <div className="mt-2 h-1 w-full rounded-full bg-[#F0F3EF]">
+              <div className="mt-2 h-1 w-full rounded-full t-bg-secondary">
                 <div
                   className="h-1 rounded-full bg-blue-500"
                   style={{
@@ -229,12 +229,12 @@ export default function LiveDashboardPage() {
             </div>
 
             {/* Preparing */}
-            <div className="rounded-xl border border-[#E3E8E1] bg-white p-5">
-              <p className="text-sm font-medium text-[#6B7366]">Preparing</p>
+            <div className="rounded-xl border t-border t-bg-card p-5">
+              <p className="text-sm font-medium t-text-muted">Preparing</p>
               <p className="mt-2 text-3xl font-bold text-amber-600">
                 {dashboard.orders_preparing}
               </p>
-              <div className="mt-2 h-1 w-full rounded-full bg-[#F0F3EF]">
+              <div className="mt-2 h-1 w-full rounded-full t-bg-secondary">
                 <div
                   className="h-1 rounded-full bg-amber-500"
                   style={{
@@ -256,12 +256,12 @@ export default function LiveDashboardPage() {
             </div>
 
             {/* Fulfilled */}
-            <div className="rounded-xl border border-[#E3E8E1] bg-white p-5">
-              <p className="text-sm font-medium text-[#6B7366]">Fulfilled</p>
-              <p className="mt-2 text-3xl font-bold text-eco-dark">
+            <div className="rounded-xl border t-border t-bg-card p-5">
+              <p className="text-sm font-medium t-text-muted">Fulfilled</p>
+              <p className="mt-2 text-3xl font-bold text-neutral-700">
                 {dashboard.orders_fulfilled}
               </p>
-              <div className="mt-2 h-1 w-full rounded-full bg-[#F0F3EF]">
+              <div className="mt-2 h-1 w-full rounded-full t-bg-secondary">
                 <div
                   className="h-1 rounded-full bg-eco"
                   style={{
@@ -283,41 +283,41 @@ export default function LiveDashboardPage() {
             </div>
 
             {/* Revenue */}
-            <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-5">
-              <p className="text-sm font-medium text-eco-dark">
+            <div className="rounded-xl border border-neutral-200 bg-neutral-100 p-5">
+              <p className="text-sm font-medium text-neutral-700">
                 Total Revenue
               </p>
-              <p className="mt-2 text-3xl font-bold text-eco-dark">
+              <p className="mt-2 text-3xl font-bold text-neutral-700">
                 {"\u20A6"}{formatCurrency(dashboard.total_revenue)}
               </p>
-              <p className="mt-2 text-xs text-eco-dark">Live total</p>
+              <p className="mt-2 text-xs text-neutral-700">Live total</p>
             </div>
           </div>
         )}
 
         {/* Inventory */}
-        <h2 className="mb-4 text-lg font-semibold text-[#1C1F1A]">
+        <h2 className="mb-4 text-lg font-semibold t-text">
           Inventory Levels
         </h2>
 
         {inventory.length === 0 ? (
-          <div className="rounded-xl border border-dashed border-[#E3E8E1] bg-white px-6 py-12 text-center">
-            <p className="text-sm text-[#6B7366]">
+          <div className="rounded-xl border border-dashed t-border t-bg-card px-6 py-12 text-center">
+            <p className="text-sm t-text-muted">
               No inventory items found. Add items to your menu first.
             </p>
           </div>
         ) : (
-          <div className="overflow-hidden rounded-xl border border-[#E3E8E1] bg-white">
+          <div className="overflow-hidden rounded-xl border t-border t-bg-card">
             <table className="w-full">
               <thead>
-                <tr className="border-b border-[#E3E8E1]/50 bg-[#F4F6F3]">
-                  <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-[#6B7366]">
+                <tr className="border-b t-border/50 t-bg">
+                  <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider t-text-muted">
                     Item
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-[#6B7366]">
+                  <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider t-text-muted">
                     Stock
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-[#6B7366]">
+                  <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider t-text-muted">
                     Status
                   </th>
                 </tr>
@@ -329,8 +329,8 @@ export default function LiveDashboardPage() {
                   const isLow = !isOut && pct < 20;
 
                   return (
-                    <tr key={item.name} className="hover:bg-[#F4F6F3]">
-                      <td className="px-6 py-3.5 text-sm font-medium text-[#1C1F1A]">
+                    <tr key={item.name} className="hover:t-bg">
+                      <td className="px-6 py-3.5 text-sm font-medium t-text">
                         {item.name}
                       </td>
                       <td className="px-6 py-3.5">
@@ -341,12 +341,12 @@ export default function LiveDashboardPage() {
                                 ? "text-red-600"
                                 : isLow
                                 ? "text-amber-600"
-                                : "text-[#1C1F1A]"
+                                : "t-text"
                             }`}
                           >
                             {item.remaining}/{item.total}
                           </span>
-                          <div className="h-2 w-24 rounded-full bg-[#F0F3EF]">
+                          <div className="h-2 w-24 rounded-full t-bg-secondary">
                             <div
                               className={`h-2 rounded-full transition-all ${
                                 isOut
@@ -362,7 +362,7 @@ export default function LiveDashboardPage() {
                       </td>
                       <td className="px-6 py-3.5">
                         {!item.is_available ? (
-                          <span className="inline-flex rounded-full bg-[#F0F3EF] px-2.5 py-0.5 text-xs font-medium text-[#6B7366]">
+                          <span className="inline-flex rounded-full t-bg-secondary px-2.5 py-0.5 text-xs font-medium t-text-muted">
                             Unavailable
                           </span>
                         ) : isOut ? (
@@ -374,7 +374,7 @@ export default function LiveDashboardPage() {
                             Low Stock
                           </span>
                         ) : (
-                          <span className="inline-flex rounded-full bg-eco/10 px-2.5 py-0.5 text-xs font-medium text-eco-dark">
+                          <span className="inline-flex rounded-full bg-neutral-100 px-2.5 py-0.5 text-xs font-medium text-neutral-700">
                             In Stock
                           </span>
                         )}

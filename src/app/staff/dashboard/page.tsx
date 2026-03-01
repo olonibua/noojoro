@@ -103,7 +103,7 @@ export default function StaffDashboardPage() {
       case "served":
         return "bg-emerald-400 border-eco text-emerald-900";
       default:
-        return "bg-gray-200 border-[#E3E8E1] text-[#6B7366]";
+        return "bg-gray-200 t-border t-text-muted";
     }
   }
 
@@ -113,8 +113,8 @@ export default function StaffDashboardPage() {
     return (
       <div className="flex min-h-screen items-center justify-center bg-white">
         <div className="text-center">
-          <div className="mx-auto mb-4 h-10 w-10 animate-spin rounded-full border-4 border-[#E3E8E1] border-t-emerald-500" />
-          <p className="text-lg font-medium text-[#3A3D37]">Loading tables...</p>
+          <div className="mx-auto mb-4 h-10 w-10 animate-spin rounded-full border-4 t-border border-t-emerald-500" />
+          <p className="text-lg font-medium t-text-secondary">Loading tables...</p>
         </div>
       </div>
     );
@@ -139,12 +139,12 @@ export default function StaffDashboardPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
-      <div className="sticky top-0 z-10 border-b border-[#E3E8E1] bg-white px-4 py-4">
+      <div className="sticky top-0 z-10 border-b t-border bg-white px-4 py-4">
         <div className="mx-auto max-w-2xl">
-          <h1 className="text-xl font-bold text-[#1C1F1A]">
+          <h1 className="text-xl font-bold t-text">
             My Tables
           </h1>
-          <p className="text-sm text-[#6B7366]">
+          <p className="text-sm t-text-muted">
             {tables.length} table{tables.length !== 1 ? "s" : ""} assigned
           </p>
         </div>
@@ -154,16 +154,16 @@ export default function StaffDashboardPage() {
       <div className="mx-auto max-w-2xl px-4 py-3">
         <div className="flex flex-wrap gap-4 text-sm">
           <div className="flex items-center gap-2">
-            <div className="h-4 w-4 rounded-full bg-gray-200 border border-[#E3E8E1]" />
-            <span className="text-[#6B7366]">No order</span>
+            <div className="h-4 w-4 rounded-full bg-gray-200 border t-border" />
+            <span className="t-text-muted">No order</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="h-4 w-4 rounded-full bg-amber-400 border border-amber-500" />
-            <span className="text-[#6B7366]">Waiting</span>
+            <span className="t-text-muted">Waiting</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="h-4 w-4 rounded-full bg-emerald-400 border border-eco" />
-            <span className="text-[#6B7366]">Served</span>
+            <span className="t-text-muted">Served</span>
           </div>
         </div>
       </div>
@@ -173,10 +173,10 @@ export default function StaffDashboardPage() {
         {tables.map((table) => (
           <div
             key={table.table_number}
-            className="rounded-xl border-2 border-[#E3E8E1] bg-white p-4"
+            className="rounded-xl border-2 t-border bg-white p-4"
           >
             <div className="mb-3 flex items-center justify-between">
-              <h2 className="text-lg font-bold text-[#1C1F1A]">
+              <h2 className="text-lg font-bold t-text">
                 Table {table.table_number}
               </h2>
             </div>
@@ -214,19 +214,19 @@ export default function StaffDashboardPage() {
         <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/40 sm:items-center">
           <div className="w-full max-w-md rounded-t-2xl bg-white p-6 sm:rounded-2xl">
             <div className="mb-4 flex items-center justify-between">
-              <h2 className="text-xl font-bold text-[#1C1F1A]">
+              <h2 className="text-xl font-bold t-text">
                 Table {selectedSeat.table}, Seat {selectedSeat.seat.seat_number}
               </h2>
               <button
                 onClick={() => setSelectedSeat(null)}
-                className="flex h-11 w-11 items-center justify-center rounded-lg text-2xl text-[#6B7366]"
+                className="flex h-11 w-11 items-center justify-center rounded-lg text-2xl t-text-muted"
               >
                 &times;
               </button>
             </div>
 
             {selectedSeat.seat.order_number && (
-              <p className="mb-2 text-base text-[#6B7366]">
+              <p className="mb-2 text-base t-text-muted">
                 Order: #{selectedSeat.seat.order_number}
               </p>
             )}
@@ -239,7 +239,7 @@ export default function StaffDashboardPage() {
                     ? "text-amber-600"
                     : selectedSeat.seat.status === "served"
                     ? "text-eco-dark"
-                    : "text-[#6B7366]"
+                    : "t-text-muted"
                 }`}
               >
                 {selectedSeat.seat.status.toUpperCase()}
@@ -247,14 +247,14 @@ export default function StaffDashboardPage() {
             </p>
 
             {selectedSeat.seat.wait_minutes !== undefined && (
-              <p className="mb-2 text-base text-[#6B7366]">
+              <p className="mb-2 text-base t-text-muted">
                 Waiting: {selectedSeat.seat.wait_minutes} min
               </p>
             )}
 
             <button
               onClick={() => setSelectedSeat(null)}
-              className="mt-6 min-h-[48px] w-full rounded-xl bg-[#F0F3EF] px-6 py-3 text-base font-semibold text-[#3A3D37] active:bg-gray-200"
+              className="mt-6 min-h-[48px] w-full rounded-xl t-bg-secondary px-6 py-3 text-base font-semibold t-text-secondary active:bg-gray-200"
             >
               Close
             </button>
@@ -264,7 +264,7 @@ export default function StaffDashboardPage() {
 
       {/* Footer */}
       <div className="px-4 py-6 text-center">
-        <p className="text-xs text-[#9CA396]">Powered by No Ojoro</p>
+        <p className="text-xs t-text-faint">Powered by No Ojoro</p>
       </div>
     </div>
   );

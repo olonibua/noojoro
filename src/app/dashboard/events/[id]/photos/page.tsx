@@ -51,6 +51,57 @@ export default function CelebrantPhotosPage() {
     fetchPhotos();
   }, [fetchPhotos]);
 
+  const compressImage = (file: File, maxSizeMB = 4, maxDim = 2048): Promise<File> => {
+    return new Promise((resolve, reject) => {
+      if (file.size <= maxSizeMB * 1024 * 1024) {
+        resolve(file);
+        return;
+      }
+
+      const img = new Image();
+      const url = URL.createObjectURL(file);
+      img.onload = () => {
+        URL.revokeObjectURL(url);
+        let { width, height } = img;
+
+        // Scale down if larger than maxDim
+        if (width > maxDim || height > maxDim) {
+          const ratio = Math.min(maxDim / width, maxDim / height);
+          width = Math.round(width * ratio);
+          height = Math.round(height * ratio);
+        }
+
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext("2d");
+        if (!ctx) { reject(new Error("Canvas not supported")); return; }
+        ctx.drawImage(img, 0, 0, width, height);
+
+        // Try decreasing quality until under limit
+        let quality = 0.8;
+        const tryCompress = () => {
+          canvas.toBlob(
+            (blob) => {
+              if (!blob) { reject(new Error("Compression failed")); return; }
+              if (blob.size <= maxSizeMB * 1024 * 1024 || quality <= 0.3) {
+                resolve(new File([blob], file.name, { type: "image/jpeg" }));
+              } else {
+                quality -= 0.1;
+                tryCompress();
+              }
+            },
+            "image/jpeg",
+            quality,
+          );
+        };
+        tryCompress();
+      };
+      img.onerror = () => { URL.revokeObjectURL(url); reject(new Error("Failed to load image")); };
+      img.src = url;
+    });
+  };
+
   const uploadFiles = async (files: FileList | File[]) => {
     setUploading(true);
     setError("");
@@ -58,8 +109,9 @@ export default function CelebrantPhotosPage() {
 
     try {
       for (const file of Array.from(files)) {
+        const compressed = await compressImage(file);
         const formData = new FormData();
-        formData.append("file", file);
+        formData.append("file", compressed);
 
         const response = await fetch(`${API_URL}/api/events/${eventId}/photos`, {
           method: "POST",
@@ -126,7 +178,7 @@ export default function CelebrantPhotosPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#E3E8E1] border-t-eco" />
+        <div className="h-8 w-8 animate-spin rounded-full border-4 t-border border-t-eco" />
       </div>
     );
   }
@@ -136,14 +188,14 @@ export default function CelebrantPhotosPage() {
       <div className="mb-6">
         <button
           onClick={() => router.push(`/dashboard/events/${eventId}`)}
-          className="text-sm text-[#6B7366] hover:text-[#3A3D37] transition-colors"
+          className="text-sm t-text-muted hover:t-text-secondary transition-colors"
         >
           &larr; Back to Event
         </button>
       </div>
 
-      <h1 className="text-2xl font-bold text-[#1C1F1A]">Celebrant Photos</h1>
-      <p className="mt-1 text-sm text-[#6B7366]">
+      <h1 className="text-2xl font-bold t-text">Celebrant Photos</h1>
+      <p className="mt-1 text-sm t-text-muted">
         Upload photos for the celebrant gallery. Guests will see these during the event.
       </p>
 
@@ -153,14 +205,14 @@ export default function CelebrantPhotosPage() {
         </div>
       )}
       {success && (
-        <div className="mt-4 rounded-lg bg-[#F1F8E9] border border-[#C5E1A5] px-4 py-3 text-sm text-eco-dark">
+        <div className="mt-4 rounded-lg bg-emerald-50 border border-emerald-200 px-4 py-3 text-sm text-neutral-700">
           {success}
         </div>
       )}
 
       {/* Upload Area */}
-      <div className="mt-6 rounded-xl border border-[#E3E8E1] bg-white p-6 shadow-sm">
-        <h2 className="text-lg font-semibold text-[#1C1F1A]">Upload Photos</h2>
+      <div className="mt-6 rounded-xl border t-border t-bg-card p-6 shadow-sm">
+        <h2 className="text-lg font-semibold t-text">Upload Photos</h2>
         <div
           onDrop={handleDrop}
           onDragOver={handleDragOver}
@@ -168,12 +220,12 @@ export default function CelebrantPhotosPage() {
           onClick={() => fileInputRef.current?.click()}
           className={`mt-4 flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed p-10 transition-colors ${
             dragOver
-              ? "border-eco bg-eco/5"
-              : "border-[#E3E8E1] hover:border-gray-400"
+              ? "border-neutral-300 bg-neutral-50"
+              : "t-border hover:border-gray-400"
           }`}
         >
           <svg
-            className="h-10 w-10 text-[#9CA396]"
+            className="h-10 w-10 t-text-faint"
             fill="none"
             viewBox="0 0 24 24"
             strokeWidth={1.5}
@@ -186,13 +238,13 @@ export default function CelebrantPhotosPage() {
             />
           </svg>
           {uploading ? (
-            <p className="mt-3 text-sm text-[#6B7366]">Uploading...</p>
+            <p className="mt-3 text-sm t-text-muted">Uploading...</p>
           ) : (
             <>
-              <p className="mt-3 text-sm font-medium text-[#3A3D37]">
+              <p className="mt-3 text-sm font-medium t-text-secondary">
                 Drag & drop photos here, or click to browse
               </p>
-              <p className="mt-1 text-xs text-[#9CA396]">PNG, JPG, WEBP up to 10MB each</p>
+              <p className="mt-1 text-xs t-text-faint">PNG, JPG, WEBP up to 10MB each</p>
             </>
           )}
         </div>
@@ -208,15 +260,15 @@ export default function CelebrantPhotosPage() {
 
       {/* Photo Grid */}
       {photos.length > 0 && (
-        <div className="mt-6 rounded-xl border border-[#E3E8E1] bg-white p-6 shadow-sm">
-          <h2 className="text-lg font-semibold text-[#1C1F1A]">
+        <div className="mt-6 rounded-xl border t-border t-bg-card p-6 shadow-sm">
+          <h2 className="text-lg font-semibold t-text">
             Uploaded Photos ({photos.length})
           </h2>
           <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
             {photos.map((photo) => (
               <div
                 key={photo.id}
-                className="group relative aspect-square overflow-hidden rounded-lg border border-[#E3E8E1] bg-[#F4F6F3]"
+                className="group relative aspect-square overflow-hidden rounded-lg border t-border t-bg"
               >
                 <img
                   src={`${API_URL}${photo.url}`}
@@ -230,9 +282,9 @@ export default function CelebrantPhotosPage() {
       )}
 
       {/* Celebrant Password */}
-      <div className="mt-6 rounded-xl border border-[#E3E8E1] bg-white p-6 shadow-sm">
-        <h2 className="text-lg font-semibold text-[#1C1F1A]">Celebrant Password</h2>
-        <p className="mt-1 text-sm text-[#6B7366]">
+      <div className="mt-6 rounded-xl border t-border t-bg-card p-6 shadow-sm">
+        <h2 className="text-lg font-semibold t-text">Celebrant Password</h2>
+        <p className="mt-1 text-sm t-text-muted">
           Set a password that the celebrant uses to access their photo gallery and controls.
         </p>
         <form onSubmit={handleSetPassword} className="mt-4 flex gap-3">
@@ -243,7 +295,7 @@ export default function CelebrantPhotosPage() {
             placeholder="Min 6 characters"
             required
             minLength={6}
-            className="block flex-1 rounded-lg border border-[#E3E8E1] px-3 py-2.5 text-sm text-[#1C1F1A] placeholder-[#9CA396] focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
+            className="block flex-1 rounded-lg border t-border px-3 py-2.5 text-sm t-text placeholder-[#9C9C9C] focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
           />
           <button
             type="submit"

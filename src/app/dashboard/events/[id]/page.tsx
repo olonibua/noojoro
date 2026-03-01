@@ -19,8 +19,8 @@ interface EventDetail {
 
 const statusColors: Record<string, string> = {
   draft: "bg-yellow-100 text-yellow-800",
-  active: "bg-eco/10 text-eco-dark",
-  completed: "bg-[#F0F3EF] text-[#6B7366]",
+  active: "bg-neutral-100 text-neutral-700",
+  completed: "t-bg-secondary t-text-muted",
 };
 
 export default function EventDetailPage() {
@@ -89,7 +89,7 @@ export default function EventDetailPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#E3E8E1] border-t-eco" />
+        <div className="h-8 w-8 animate-spin rounded-full border-4 t-border border-t-eco" />
       </div>
     );
   }
@@ -100,7 +100,7 @@ export default function EventDetailPage() {
         <p className="text-red-600">{error || "Event not found"}</p>
         <button
           onClick={() => router.push("/dashboard/events")}
-          className="mt-4 text-sm text-eco hover:underline"
+          className="mt-4 text-sm text-neutral-600 hover:underline"
         >
           Back to Events
         </button>
@@ -113,7 +113,7 @@ export default function EventDetailPage() {
       <div className="mb-6">
         <button
           onClick={() => router.push("/dashboard/events")}
-          className="text-sm text-[#6B7366] hover:text-[#3A3D37] transition-colors"
+          className="text-sm t-text-muted hover:t-text-secondary transition-colors"
         >
           &larr; All Events
         </button>
@@ -126,60 +126,60 @@ export default function EventDetailPage() {
       )}
 
       {/* Event Header Card */}
-      <div className="rounded-xl border border-[#E3E8E1] bg-white p-6 shadow-sm">
+      <div className="rounded-xl border t-border t-bg-card p-6 shadow-sm">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div className="flex-1">
             {editing ? (
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-[#3A3D37]">Event Name</label>
+                  <label className="block text-sm font-medium t-text-secondary">Event Name</label>
                   <input
                     value={editForm.name}
                     onChange={(e) => setEditForm((p) => ({ ...p, name: e.target.value }))}
-                    className="mt-1 block w-full rounded-lg border border-[#E3E8E1] px-3 py-2 text-sm focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
+                    className="mt-1 block w-full rounded-lg border t-border px-3 py-2 text-sm focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
                   />
                 </div>
                 <div className="grid gap-4 sm:grid-cols-3">
                   <div>
-                    <label className="block text-sm font-medium text-[#3A3D37]">Date</label>
+                    <label className="block text-sm font-medium t-text-secondary">Date</label>
                     <input
                       type="date"
                       value={editForm.date}
                       onChange={(e) => setEditForm((p) => ({ ...p, date: e.target.value }))}
-                      className="mt-1 block w-full rounded-lg border border-[#E3E8E1] px-3 py-2 text-sm focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
+                      className="mt-1 block w-full rounded-lg border t-border px-3 py-2 text-sm focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-[#3A3D37]">Time</label>
+                    <label className="block text-sm font-medium t-text-secondary">Time</label>
                     <input
                       type="time"
                       value={editForm.time}
                       onChange={(e) => setEditForm((p) => ({ ...p, time: e.target.value }))}
-                      className="mt-1 block w-full rounded-lg border border-[#E3E8E1] px-3 py-2 text-sm focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
+                      className="mt-1 block w-full rounded-lg border t-border px-3 py-2 text-sm focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-[#3A3D37]">Venue</label>
+                    <label className="block text-sm font-medium t-text-secondary">Venue</label>
                     <input
                       value={editForm.venue_name}
                       onChange={(e) => setEditForm((p) => ({ ...p, venue_name: e.target.value }))}
-                      className="mt-1 block w-full rounded-lg border border-[#E3E8E1] px-3 py-2 text-sm focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
+                      className="mt-1 block w-full rounded-lg border t-border px-3 py-2 text-sm focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
                     />
                   </div>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-[#3A3D37]">Theme Color</label>
+                  <label className="block text-sm font-medium t-text-secondary">Theme Color</label>
                   <div className="mt-1 flex items-center gap-2">
                     <input
                       value={editForm.theme_color}
                       onChange={(e) => setEditForm((p) => ({ ...p, theme_color: e.target.value }))}
-                      className="block w-full rounded-lg border border-[#E3E8E1] px-3 py-2 text-sm focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
+                      className="block w-full rounded-lg border t-border px-3 py-2 text-sm focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
                     />
                     <input
                       type="color"
                       value={editForm.theme_color}
                       onChange={(e) => setEditForm((p) => ({ ...p, theme_color: e.target.value }))}
-                      className="h-9 w-9 rounded border border-[#E3E8E1] p-0.5 cursor-pointer"
+                      className="h-9 w-9 rounded border t-border p-0.5 cursor-pointer"
                     />
                   </div>
                 </div>
@@ -193,7 +193,7 @@ export default function EventDetailPage() {
                   </button>
                   <button
                     onClick={() => setEditing(false)}
-                    className="rounded-lg border border-[#E3E8E1] px-4 py-2 text-sm font-medium text-[#3A3D37] hover:bg-[#F4F6F3]"
+                    className="rounded-lg border t-border px-4 py-2 text-sm font-medium t-text-secondary hover:t-bg"
                   >
                     Cancel
                   </button>
@@ -202,16 +202,16 @@ export default function EventDetailPage() {
             ) : (
               <>
                 <div className="flex items-center gap-3">
-                  <h1 className="text-2xl font-bold text-[#1C1F1A]">{event.name}</h1>
+                  <h1 className="text-2xl font-bold t-text">{event.name}</h1>
                   <span
                     className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-medium capitalize ${
-                      statusColors[event.status] || "bg-[#F0F3EF] text-[#6B7366]"
+                      statusColors[event.status] || "t-bg-secondary t-text-muted"
                     }`}
                   >
                     {event.status}
                   </span>
                 </div>
-                <div className="mt-3 flex flex-wrap gap-x-6 gap-y-2 text-sm text-[#6B7366]">
+                <div className="mt-3 flex flex-wrap gap-x-6 gap-y-2 text-sm t-text-muted">
                   <span>
                     {new Date(event.date).toLocaleDateString("en-NG", {
                       weekday: "long",
@@ -223,7 +223,7 @@ export default function EventDetailPage() {
                   </span>
                   <span>{event.venue_name}</span>
                 </div>
-                <div className="mt-3 flex flex-wrap gap-x-6 gap-y-2 text-sm text-[#6B7366]">
+                <div className="mt-3 flex flex-wrap gap-x-6 gap-y-2 text-sm t-text-muted">
                   <span>{event.table_count} tables</span>
                   <span>{event.guests_per_table} guests/table</span>
                   <span>{event.total_tokens} total tokens</span>
@@ -235,13 +235,13 @@ export default function EventDetailPage() {
           {!editing && (
             <div className="flex items-center gap-2">
               <div
-                className="h-6 w-6 rounded-full border border-[#E3E8E1]"
+                className="h-6 w-6 rounded-full border t-border"
                 style={{ backgroundColor: event.theme_color || "#22C55E" }}
                 title={event.theme_color}
               />
               <button
                 onClick={() => setEditing(true)}
-                className="rounded-lg border border-[#E3E8E1] px-3 py-1.5 text-sm font-medium text-[#3A3D37] hover:bg-[#F4F6F3] transition-colors"
+                className="rounded-lg border t-border px-3 py-1.5 text-sm font-medium t-text-secondary hover:t-bg transition-colors"
               >
                 Edit
               </button>
@@ -256,16 +256,16 @@ export default function EventDetailPage() {
           <button
             key={link.href}
             onClick={() => router.push(link.href)}
-            className="flex items-center gap-3 rounded-xl border border-[#E3E8E1] bg-white p-4 text-left shadow-sm transition-all hover:border-eco/40 hover:shadow-md"
+            className="flex items-center gap-3 rounded-xl border t-border t-bg-card p-4 text-left shadow-sm transition-all hover:border-neutral-300/40 hover:shadow-md"
           >
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-eco/10">
-              <span className="text-sm font-bold text-eco">
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-neutral-100">
+              <span className="text-sm font-bold text-neutral-600">
                 {link.label.charAt(0)}
               </span>
             </div>
             <div>
-              <p className="text-sm font-semibold text-[#1C1F1A]">{link.label}</p>
-              <p className="text-xs text-[#6B7366]">Manage {link.label.toLowerCase()}</p>
+              <p className="text-sm font-semibold t-text">{link.label}</p>
+              <p className="text-xs t-text-muted">Manage {link.label.toLowerCase()}</p>
             </div>
           </button>
         ))}

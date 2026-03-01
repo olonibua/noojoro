@@ -29,7 +29,7 @@ export default function VenuesListPage() {
   return (
     <div>
       <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-[#1C1F1A]">My Venues</h1>
+        <h1 className="text-2xl font-bold t-text">My Venues</h1>
         <button
           onClick={() => router.push("/dashboard/venues/new")}
           className="rounded-lg bg-eco px-4 py-2 text-sm font-semibold text-white hover:bg-eco-dark"
@@ -40,12 +40,12 @@ export default function VenuesListPage() {
 
       {loading ? (
         <div className="flex justify-center py-12">
-          <div className="h-8 w-8 animate-spin rounded-full border-4 border-eco border-t-transparent" />
+          <div className="h-8 w-8 animate-spin rounded-full border-4 border-neutral-300 border-t-transparent" />
         </div>
       ) : venues.length === 0 ? (
-        <div className="rounded-xl border border-dashed border-[#E3E8E1] bg-white px-6 py-16 text-center">
-          <p className="mb-2 text-lg font-medium text-[#3A3D37]">No venues yet</p>
-          <p className="mb-6 text-sm text-[#6B7366]">
+        <div className="rounded-xl border border-dashed t-border t-bg-card px-6 py-16 text-center">
+          <p className="mb-2 text-lg font-medium t-text-secondary">No venues yet</p>
+          <p className="mb-6 text-sm t-text-muted">
             Create your first venue to start taking orders.
           </p>
           <button
@@ -61,26 +61,26 @@ export default function VenuesListPage() {
             <Link
               key={venue.id}
               href={`/dashboard/venues/${venue.id}`}
-              className="group rounded-xl border border-[#E3E8E1] bg-white p-5 transition hover:border-eco/40 hover:shadow-md"
+              className="group rounded-xl border t-border t-bg-card p-5 transition hover:border-neutral-300/40 hover:shadow-md"
             >
               <div className="mb-3 flex items-start justify-between">
-                <h3 className="text-lg font-semibold text-[#1C1F1A] group-hover:text-eco-dark">
+                <h3 className="text-lg font-semibold t-text group-hover:text-neutral-700">
                   {venue.name}
                 </h3>
                 <span
                   className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${
                     venue.status === "active"
-                      ? "bg-eco/10 text-eco-dark"
-                      : "bg-[#F0F3EF] text-[#3A3D37]"
+                      ? "bg-neutral-100 text-neutral-700"
+                      : "t-bg-secondary t-text-secondary"
                   }`}
                 >
                   {venue.status}
                 </span>
               </div>
               {venue.address && (
-                <p className="text-sm text-[#6B7366]">{venue.address}</p>
+                <p className="text-sm t-text-muted">{venue.address}</p>
               )}
-              <div className="mt-3 text-xs text-[#9CA396]">
+              <div className="mt-3 text-xs t-text-faint">
                 {venue.table_count} tables
               </div>
             </Link>

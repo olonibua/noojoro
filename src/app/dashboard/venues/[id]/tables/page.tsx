@@ -98,33 +98,33 @@ export default function TableConfigPage() {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[#F4F6F3]">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-eco border-t-transparent" />
+      <div className="flex min-h-screen items-center justify-center t-bg">
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-neutral-300 border-t-transparent" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#F4F6F3]">
+    <div className="min-h-screen t-bg">
       {/* Header */}
-      <header className="border-b border-[#E3E8E1] bg-white">
+      <header className="border-b t-border t-bg-card">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-4 sm:px-6">
           <div className="flex items-center gap-3">
             <Link
               href="/dashboard"
-              className="text-sm font-medium text-[#6B7366] hover:text-[#3A3D37]"
+              className="text-sm font-medium t-text-muted hover:t-text-secondary"
             >
               Dashboard
             </Link>
-            <span className="text-[#C5C9C2]">/</span>
+            <span className="t-text-faint">/</span>
             <Link
               href={`/dashboard/venues/${venueId}`}
-              className="text-sm font-medium text-[#6B7366] hover:text-[#3A3D37]"
+              className="text-sm font-medium t-text-muted hover:t-text-secondary"
             >
               Venue
             </Link>
-            <span className="text-[#C5C9C2]">/</span>
-            <span className="text-sm font-semibold text-[#1C1F1A]">Tables</span>
+            <span className="t-text-faint">/</span>
+            <span className="text-sm font-semibold t-text">Tables</span>
           </div>
         </div>
       </header>
@@ -132,10 +132,10 @@ export default function TableConfigPage() {
       <main className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
         <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-[#1C1F1A]">
+            <h1 className="text-2xl font-bold t-text">
               Tables & QR Codes
             </h1>
-            <p className="mt-1 text-sm text-[#6B7366]">
+            <p className="mt-1 text-sm t-text-muted">
               Configure table count and manage QR codes for each table.
             </p>
           </div>
@@ -169,14 +169,14 @@ export default function TableConfigPage() {
         )}
 
         {successMsg && (
-          <div className="mb-6 rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-eco-dark">
+          <div className="mb-6 rounded-lg border border-neutral-200 bg-neutral-100 px-4 py-3 text-sm text-neutral-700">
             {successMsg}
           </div>
         )}
 
         {/* Table Count Config */}
-        <div className="mb-8 rounded-xl border border-[#E3E8E1] bg-white p-6">
-          <h2 className="mb-4 text-lg font-semibold text-[#1C1F1A]">
+        <div className="mb-8 rounded-xl border t-border t-bg-card p-6">
+          <h2 className="mb-4 text-lg font-semibold t-text">
             Table Count
           </h2>
           <form
@@ -184,7 +184,7 @@ export default function TableConfigPage() {
             className="flex flex-col gap-4 sm:flex-row sm:items-end"
           >
             <div className="flex-1">
-              <label className="mb-1.5 block text-sm font-medium text-[#3A3D37]">
+              <label className="mb-1.5 block text-sm font-medium t-text-secondary">
                 Current: {currentCount} {currentCount === 1 ? "table" : "tables"}
               </label>
               <input
@@ -193,7 +193,7 @@ export default function TableConfigPage() {
                 max={500}
                 value={newCount}
                 onChange={(e) => setNewCount(Number(e.target.value))}
-                className="w-full rounded-lg border border-[#E3E8E1] bg-white px-4 py-2.5 text-sm text-[#1C1F1A] outline-none focus:border-eco focus:ring-2 focus:ring-emerald-500/20"
+                className="w-full rounded-lg border t-border t-bg-card px-4 py-2.5 text-sm t-text outline-none focus:border-eco focus:ring-2 focus:ring-emerald-500/20"
               />
             </div>
             <button
@@ -207,13 +207,13 @@ export default function TableConfigPage() {
         </div>
 
         {/* Tables Grid */}
-        <h2 className="mb-4 text-lg font-semibold text-[#1C1F1A]">
+        <h2 className="mb-4 text-lg font-semibold t-text">
           Tables ({tables.length})
         </h2>
 
         {tables.length === 0 ? (
-          <div className="rounded-xl border border-dashed border-[#E3E8E1] bg-white px-6 py-12 text-center">
-            <p className="text-sm text-[#6B7366]">
+          <div className="rounded-xl border border-dashed t-border t-bg-card px-6 py-12 text-center">
+            <p className="text-sm t-text-muted">
               No tables configured yet. Set a table count above to get started.
             </p>
           </div>
@@ -222,12 +222,12 @@ export default function TableConfigPage() {
             {tables.map((table) => (
               <div
                 key={table.id}
-                className="rounded-xl border border-[#E3E8E1] bg-white p-4 text-center"
+                className="rounded-xl border t-border t-bg-card p-4 text-center"
               >
-                <div className="mb-3 flex h-24 w-full items-center justify-center rounded-lg bg-[#F4F6F3]">
+                <div className="mb-3 flex h-24 w-full items-center justify-center rounded-lg t-bg">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-12 w-12 text-[#C5C9C2]"
+                    className="h-12 w-12 t-text-faint"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -240,10 +240,10 @@ export default function TableConfigPage() {
                     />
                   </svg>
                 </div>
-                <p className="text-sm font-semibold text-[#1C1F1A]">
+                <p className="text-sm font-semibold t-text">
                   Table {table.table_number}
                 </p>
-                <p className="mt-0.5 text-xs text-[#9CA396]">
+                <p className="mt-0.5 text-xs t-text-faint">
                   table-{table.table_number}
                 </p>
               </div>

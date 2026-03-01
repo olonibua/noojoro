@@ -81,14 +81,39 @@ export default function TokenManagementPage() {
     }
   };
 
-  const handleDownloadPdf = () => {
-    window.open(`${API_URL}/api/events/${eventId}/tokens/pdf`, "_blank");
+  const [downloading, setDownloading] = useState(false);
+
+  const handleDownloadPdf = async () => {
+    setDownloading(true);
+    setError("");
+    try {
+      const response = await fetch(`${API_URL}/api/events/${eventId}/tokens/pdf`, {
+        credentials: "include",
+      });
+      if (!response.ok) {
+        const err = await response.json().catch(() => ({ detail: "Download failed" }));
+        throw new Error(err.detail || "Download failed");
+      }
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `tokens-${eventId}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to download PDF");
+    } finally {
+      setDownloading(false);
+    }
   };
 
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#E3E8E1] border-t-eco" />
+        <div className="h-8 w-8 animate-spin rounded-full border-4 t-border border-t-eco" />
       </div>
     );
   }
@@ -98,14 +123,14 @@ export default function TokenManagementPage() {
       <div className="mb-6">
         <button
           onClick={() => router.push(`/dashboard/events/${eventId}`)}
-          className="text-sm text-[#6B7366] hover:text-[#3A3D37] transition-colors"
+          className="text-sm t-text-muted hover:t-text-secondary transition-colors"
         >
           &larr; Back to Event
         </button>
       </div>
 
-      <h1 className="text-2xl font-bold text-[#1C1F1A]">Token Management</h1>
-      <p className="mt-1 text-sm text-[#6B7366]">
+      <h1 className="text-2xl font-bold t-text">Token Management</h1>
+      <p className="mt-1 text-sm t-text-muted">
         Generate, activate, and manage tokens for this event.
       </p>
 
@@ -115,7 +140,7 @@ export default function TokenManagementPage() {
         </div>
       )}
       {success && (
-        <div className="mt-4 rounded-lg bg-[#F1F8E9] border border-[#C5E1A5] px-4 py-3 text-sm text-eco-dark">
+        <div className="mt-4 rounded-lg bg-emerald-50 border border-emerald-200 px-4 py-3 text-sm text-neutral-700">
           {success}
         </div>
       )}
@@ -123,26 +148,26 @@ export default function TokenManagementPage() {
       {/* Token Stats */}
       {stats && (
         <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <div className="rounded-xl border border-[#E3E8E1] bg-white p-5 shadow-sm">
-            <p className="text-xs font-medium uppercase tracking-wide text-[#6B7366]">
+          <div className="rounded-xl border t-border t-bg-card p-5 shadow-sm">
+            <p className="text-xs font-medium uppercase tracking-wide t-text-muted">
               Total Tokens
             </p>
-            <p className="mt-2 text-3xl font-bold text-[#1C1F1A]">{stats.total}</p>
+            <p className="mt-2 text-3xl font-bold t-text">{stats.total}</p>
           </div>
-          <div className="rounded-xl border border-[#E3E8E1] bg-white p-5 shadow-sm">
-            <p className="text-xs font-medium uppercase tracking-wide text-[#6B7366]">
+          <div className="rounded-xl border t-border t-bg-card p-5 shadow-sm">
+            <p className="text-xs font-medium uppercase tracking-wide t-text-muted">
               Activated
             </p>
-            <p className="mt-2 text-3xl font-bold text-eco">{stats.active}</p>
+            <p className="mt-2 text-3xl font-bold text-neutral-600">{stats.active}</p>
           </div>
-          <div className="rounded-xl border border-[#E3E8E1] bg-white p-5 shadow-sm">
-            <p className="text-xs font-medium uppercase tracking-wide text-[#6B7366]">
+          <div className="rounded-xl border t-border t-bg-card p-5 shadow-sm">
+            <p className="text-xs font-medium uppercase tracking-wide t-text-muted">
               Used
             </p>
-            <p className="mt-2 text-3xl font-bold text-[#1C1F1A]">{stats.burned + stats.served}</p>
+            <p className="mt-2 text-3xl font-bold t-text">{stats.burned + stats.served}</p>
           </div>
-          <div className="rounded-xl border border-[#E3E8E1] bg-white p-5 shadow-sm">
-            <p className="text-xs font-medium uppercase tracking-wide text-[#6B7366]">
+          <div className="rounded-xl border t-border t-bg-card p-5 shadow-sm">
+            <p className="text-xs font-medium uppercase tracking-wide t-text-muted">
               Pending
             </p>
             <p className="mt-2 text-3xl font-bold text-amber-600">{stats.inactive}</p>
@@ -151,8 +176,8 @@ export default function TokenManagementPage() {
       )}
 
       {/* Actions */}
-      <div className="mt-6 rounded-xl border border-[#E3E8E1] bg-white p-6 shadow-sm">
-        <h2 className="text-lg font-semibold text-[#1C1F1A]">Actions</h2>
+      <div className="mt-6 rounded-xl border t-border t-bg-card p-6 shadow-sm">
+        <h2 className="text-lg font-semibold t-text">Actions</h2>
         <div className="mt-4 flex flex-wrap gap-4">
           {/* Generate Tokens — only show when no tokens exist yet */}
           {(!stats || stats.total === 0) && (
@@ -173,7 +198,7 @@ export default function TokenManagementPage() {
             <button
               onClick={handleActivate}
               disabled={activating}
-              className="flex items-center gap-2 rounded-lg border-2 border-eco px-5 py-3 text-sm font-semibold text-eco transition-colors hover:bg-eco/5 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex items-center gap-2 rounded-lg border-2 border-neutral-300 px-5 py-3 text-sm font-semibold text-neutral-600 transition-colors hover:bg-neutral-50 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z" />
@@ -184,7 +209,7 @@ export default function TokenManagementPage() {
 
           {/* Tokens activated badge */}
           {stats && stats.inactive === 0 && stats.active > 0 && (
-            <div className="flex items-center gap-2 rounded-lg bg-[#F1F8E9] border border-[#C5E1A5] px-5 py-3 text-sm font-semibold text-eco-dark">
+            <div className="flex items-center gap-2 rounded-lg bg-emerald-50 border border-emerald-200 px-5 py-3 text-sm font-semibold text-neutral-700">
               <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
@@ -196,12 +221,13 @@ export default function TokenManagementPage() {
           {stats && stats.total > 0 && (
             <button
               onClick={handleDownloadPdf}
-              className="flex items-center gap-2 rounded-lg border border-[#E3E8E1] px-5 py-3 text-sm font-semibold text-[#3A3D37] transition-colors hover:bg-[#F4F6F3]"
+              disabled={downloading}
+              className="flex items-center gap-2 rounded-lg border t-border px-5 py-3 text-sm font-semibold t-text-secondary transition-colors hover:t-bg disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
               </svg>
-              Download PDF
+              {downloading ? "Downloading..." : "Download PDF"}
             </button>
           )}
         </div>

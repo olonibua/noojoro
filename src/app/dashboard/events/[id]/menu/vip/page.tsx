@@ -181,7 +181,7 @@ export default function VipMenuPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#E3E8E1] border-t-eco" />
+        <div className="h-8 w-8 animate-spin rounded-full border-4 t-border border-t-eco" />
       </div>
     );
   }
@@ -191,19 +191,19 @@ export default function VipMenuPage() {
       <div className="mb-6 flex items-center justify-between">
         <button
           onClick={() => router.push(`/dashboard/events/${eventId}/menu`)}
-          className="text-sm text-[#6B7366] hover:text-[#3A3D37] transition-colors"
+          className="text-sm t-text-muted hover:t-text-secondary transition-colors"
         >
           &larr; Regular Menu
         </button>
       </div>
 
       <div className="flex items-center gap-3">
-        <h1 className="text-2xl font-bold text-[#1C1F1A]">VIP Menu Builder</h1>
+        <h1 className="text-2xl font-bold t-text">VIP Menu Builder</h1>
         <span className="rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-semibold text-amber-800">
           VIP
         </span>
       </div>
-      <p className="mt-1 text-sm text-[#6B7366]">
+      <p className="mt-1 text-sm t-text-muted">
         Create the VIP menu with categories and items. No prices -- catering mode.
       </p>
 
@@ -213,28 +213,28 @@ export default function VipMenuPage() {
         </div>
       )}
       {success && (
-        <div className="mt-4 rounded-lg bg-[#F1F8E9] border border-[#C5E1A5] px-4 py-3 text-sm text-eco-dark">
+        <div className="mt-4 rounded-lg bg-emerald-50 border border-emerald-200 px-4 py-3 text-sm text-neutral-700">
           {success}
         </div>
       )}
 
       {/* Add Category */}
       <div className="mt-6 rounded-xl border border-amber-200 bg-amber-50/30 p-6 shadow-sm">
-        <h2 className="text-lg font-semibold text-[#1C1F1A]">Add VIP Category</h2>
+        <h2 className="text-lg font-semibold t-text">Add VIP Category</h2>
         <form onSubmit={handleAddCategory} className="mt-3 flex flex-wrap gap-3">
           <input
             required
             value={newCatName}
             onChange={(e) => setNewCatName(e.target.value)}
             placeholder="Category name (e.g. Premium Drinks)"
-            className="flex-1 min-w-[200px] rounded-lg border border-[#E3E8E1] bg-white px-3 py-2.5 text-sm text-[#1C1F1A] placeholder-[#9CA396] focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
+            className="flex-1 min-w-[200px] rounded-lg border t-border t-bg-card px-3 py-2.5 text-sm t-text placeholder-[#9C9C9C] focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
           />
           <input
             type="number"
             value={newCatOrder}
             onChange={(e) => setNewCatOrder(e.target.value)}
             placeholder="Order"
-            className="w-24 rounded-lg border border-[#E3E8E1] bg-white px-3 py-2.5 text-sm text-[#1C1F1A] focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
+            className="w-24 rounded-lg border t-border t-bg-card px-3 py-2.5 text-sm t-text focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
           />
           <button
             type="submit"
@@ -249,7 +249,7 @@ export default function VipMenuPage() {
       {/* Categories & Items */}
       <div className="mt-6 space-y-6">
         {categories.length === 0 && (
-          <div className="rounded-xl border border-[#E3E8E1] bg-white py-12 text-center text-sm text-[#6B7366]">
+          <div className="rounded-xl border t-border t-bg-card py-12 text-center text-sm t-text-muted">
             No VIP categories yet. Add one above to get started.
           </div>
         )}
@@ -259,22 +259,22 @@ export default function VipMenuPage() {
           .map((cat) => (
             <div
               key={cat.id}
-              className="rounded-xl border border-[#E3E8E1] bg-white shadow-sm"
+              className="rounded-xl border t-border t-bg-card shadow-sm"
             >
               {/* Category Header */}
-              <div className="flex items-center justify-between border-b border-[#E3E8E1]/50 px-6 py-4">
+              <div className="flex items-center justify-between border-b t-border/50 px-6 py-4">
                 {editingCatId === cat.id ? (
                   <div className="flex flex-1 flex-wrap gap-2">
                     <input
                       value={editCatName}
                       onChange={(e) => setEditCatName(e.target.value)}
-                      className="flex-1 min-w-[150px] rounded-lg border border-[#E3E8E1] px-3 py-1.5 text-sm focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
+                      className="flex-1 min-w-[150px] rounded-lg border t-border px-3 py-1.5 text-sm focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
                     />
                     <input
                       type="number"
                       value={editCatOrder}
                       onChange={(e) => setEditCatOrder(e.target.value)}
-                      className="w-20 rounded-lg border border-[#E3E8E1] px-3 py-1.5 text-sm focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
+                      className="w-20 rounded-lg border t-border px-3 py-1.5 text-sm focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
                       title="Display order"
                     />
                     <button
@@ -285,7 +285,7 @@ export default function VipMenuPage() {
                     </button>
                     <button
                       onClick={() => setEditingCatId(null)}
-                      className="rounded-lg border border-[#E3E8E1] px-3 py-1.5 text-sm font-medium text-[#3A3D37] hover:bg-[#F4F6F3]"
+                      className="rounded-lg border t-border px-3 py-1.5 text-sm font-medium t-text-secondary hover:t-bg"
                     >
                       Cancel
                     </button>
@@ -294,12 +294,12 @@ export default function VipMenuPage() {
                   <>
                     <div>
                       <div className="flex items-center gap-2">
-                        <h3 className="text-base font-semibold text-[#1C1F1A]">{cat.name}</h3>
+                        <h3 className="text-base font-semibold t-text">{cat.name}</h3>
                         <span className="rounded bg-amber-100 px-1.5 py-0.5 text-[10px] font-semibold text-amber-700">
                           VIP
                         </span>
                       </div>
-                      <p className="text-xs text-[#9CA396]">
+                      <p className="text-xs t-text-faint">
                         Order: {cat.display_order} &middot; {cat.items?.length || 0} items
                       </p>
                     </div>
@@ -310,7 +310,7 @@ export default function VipMenuPage() {
                           setEditCatName(cat.name);
                           setEditCatOrder(String(cat.display_order));
                         }}
-                        className="rounded px-2 py-1 text-xs font-medium text-[#6B7366] hover:bg-[#F0F3EF]"
+                        className="rounded px-2 py-1 text-xs font-medium t-text-muted hover:t-bg-secondary"
                       >
                         Edit
                       </button>
@@ -335,14 +335,14 @@ export default function VipMenuPage() {
                             value={editItemName}
                             onChange={(e) => setEditItemName(e.target.value)}
                             placeholder="Item name"
-                            className="flex-1 min-w-[150px] rounded-lg border border-[#E3E8E1] px-3 py-1.5 text-sm focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
+                            className="flex-1 min-w-[150px] rounded-lg border t-border px-3 py-1.5 text-sm focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
                           />
                           <input
                             type="number"
                             value={editItemQty}
                             onChange={(e) => setEditItemQty(e.target.value)}
                             placeholder="Qty"
-                            className="w-24 rounded-lg border border-[#E3E8E1] px-3 py-1.5 text-sm focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
+                            className="w-24 rounded-lg border t-border px-3 py-1.5 text-sm focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
                           />
                           <button
                             onClick={() => handleUpdateItem(item.id)}
@@ -352,7 +352,7 @@ export default function VipMenuPage() {
                           </button>
                           <button
                             onClick={() => setEditingItemId(null)}
-                            className="rounded-lg border border-[#E3E8E1] px-3 py-1.5 text-sm font-medium text-[#3A3D37] hover:bg-[#F4F6F3]"
+                            className="rounded-lg border t-border px-3 py-1.5 text-sm font-medium t-text-secondary hover:t-bg"
                           >
                             Cancel
                           </button>
@@ -360,8 +360,8 @@ export default function VipMenuPage() {
                       ) : (
                         <div className="flex items-center justify-between">
                           <div>
-                            <span className="text-sm text-[#1C1F1A]">{item.name}</span>
-                            <span className="ml-3 text-xs text-[#9CA396]">
+                            <span className="text-sm t-text">{item.name}</span>
+                            <span className="ml-3 text-xs t-text-faint">
                               Qty: {item.total_quantity}
                             </span>
                           </div>
@@ -372,7 +372,7 @@ export default function VipMenuPage() {
                                 setEditItemName(item.name);
                                 setEditItemQty(String(item.total_quantity));
                               }}
-                              className="rounded px-2 py-1 text-xs font-medium text-[#6B7366] hover:bg-[#F0F3EF]"
+                              className="rounded px-2 py-1 text-xs font-medium t-text-muted hover:t-bg-secondary"
                             >
                               Edit
                             </button>
@@ -390,21 +390,21 @@ export default function VipMenuPage() {
               </div>
 
               {/* Add Item */}
-              <div className="border-t border-[#E3E8E1]/50 px-6 py-3">
+              <div className="border-t t-border/50 px-6 py-3">
                 {addingItemCatId === cat.id ? (
                   <div className="flex flex-wrap gap-2">
                     <input
                       value={newItemName}
                       onChange={(e) => setNewItemName(e.target.value)}
                       placeholder="Item name"
-                      className="flex-1 min-w-[150px] rounded-lg border border-[#E3E8E1] px-3 py-1.5 text-sm placeholder-[#9CA396] focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
+                      className="flex-1 min-w-[150px] rounded-lg border t-border px-3 py-1.5 text-sm placeholder-[#9C9C9C] focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
                     />
                     <input
                       type="number"
                       value={newItemQty}
                       onChange={(e) => setNewItemQty(e.target.value)}
                       placeholder="Total qty"
-                      className="w-28 rounded-lg border border-[#E3E8E1] px-3 py-1.5 text-sm focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
+                      className="w-28 rounded-lg border t-border px-3 py-1.5 text-sm focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
                     />
                     <button
                       onClick={() => handleAddItem(cat.id)}
@@ -419,7 +419,7 @@ export default function VipMenuPage() {
                         setNewItemName("");
                         setNewItemQty("100");
                       }}
-                      className="rounded-lg border border-[#E3E8E1] px-3 py-1.5 text-sm font-medium text-[#3A3D37] hover:bg-[#F4F6F3]"
+                      className="rounded-lg border t-border px-3 py-1.5 text-sm font-medium t-text-secondary hover:t-bg"
                     >
                       Cancel
                     </button>
@@ -427,7 +427,7 @@ export default function VipMenuPage() {
                 ) : (
                   <button
                     onClick={() => setAddingItemCatId(cat.id)}
-                    className="text-sm font-medium text-eco hover:text-eco-dark transition-colors"
+                    className="text-sm font-medium text-neutral-600 hover:text-neutral-700 transition-colors"
                   >
                     + Add VIP Item
                   </button>

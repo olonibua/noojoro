@@ -61,15 +61,15 @@ export default function CreateEventPage() {
       <div className="mb-6">
         <button
           onClick={() => router.back()}
-          className="text-sm text-[#6B7366] hover:text-[#3A3D37] transition-colors"
+          className="text-sm t-text-muted hover:t-text-secondary transition-colors"
         >
           &larr; Back
         </button>
       </div>
 
-      <div className="rounded-xl border border-[#E3E8E1] bg-white p-6 shadow-sm">
-        <h1 className="text-2xl font-bold text-[#1C1F1A]">Create Event</h1>
-        <p className="mt-1 text-sm text-[#6B7366]">
+      <div className="rounded-xl border t-border t-bg-card p-6 shadow-sm">
+        <h1 className="text-2xl font-bold t-text">Create Event</h1>
+        <p className="mt-1 text-sm t-text-muted">
           Set up your event details. You can configure tables, menus, and staff later.
         </p>
 
@@ -82,7 +82,7 @@ export default function CreateEventPage() {
         <form onSubmit={handleSubmit} className="mt-6 space-y-5">
           {/* Event Name */}
           <div>
-            <label htmlFor="name" className="block text-sm font-medium text-[#3A3D37]">
+            <label htmlFor="name" className="block text-sm font-medium t-text-secondary">
               Event Name
             </label>
             <input
@@ -93,14 +93,14 @@ export default function CreateEventPage() {
               value={form.name}
               onChange={handleChange}
               placeholder="e.g., Tunde & Adaeze's Wedding"
-              className="mt-1 block w-full rounded-lg border border-[#E3E8E1] px-3 py-2.5 text-sm text-[#1C1F1A] placeholder-[#9CA396] focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
+              className="mt-1 block w-full rounded-lg border t-border px-3 py-2.5 text-sm t-text placeholder-[#9C9C9C] focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
             />
           </div>
 
           {/* Date & Time */}
           <div className="grid gap-4 sm:grid-cols-2">
             <div>
-              <label htmlFor="date" className="block text-sm font-medium text-[#3A3D37]">
+              <label htmlFor="date" className="block text-sm font-medium t-text-secondary">
                 Event Date
               </label>
               <input
@@ -110,11 +110,11 @@ export default function CreateEventPage() {
                 required
                 value={form.date}
                 onChange={handleChange}
-                className="mt-1 block w-full rounded-lg border border-[#E3E8E1] px-3 py-2.5 text-sm text-[#1C1F1A] focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
+                className="mt-1 block w-full rounded-lg border t-border px-3 py-2.5 text-sm t-text focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
               />
             </div>
             <div>
-              <label htmlFor="time" className="block text-sm font-medium text-[#3A3D37]">
+              <label htmlFor="time" className="block text-sm font-medium t-text-secondary">
                 Event Time
               </label>
               <input
@@ -123,14 +123,14 @@ export default function CreateEventPage() {
                 type="time"
                 value={form.time}
                 onChange={handleChange}
-                className="mt-1 block w-full rounded-lg border border-[#E3E8E1] px-3 py-2.5 text-sm text-[#1C1F1A] focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
+                className="mt-1 block w-full rounded-lg border t-border px-3 py-2.5 text-sm t-text focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
               />
             </div>
           </div>
 
           {/* Venue Name */}
           <div>
-            <label htmlFor="venue_name" className="block text-sm font-medium text-[#3A3D37]">
+            <label htmlFor="venue_name" className="block text-sm font-medium t-text-secondary">
               Venue Name
             </label>
             <input
@@ -141,14 +141,14 @@ export default function CreateEventPage() {
               value={form.venue_name}
               onChange={handleChange}
               placeholder="e.g., Eko Hotels Convention Centre"
-              className="mt-1 block w-full rounded-lg border border-[#E3E8E1] px-3 py-2.5 text-sm text-[#1C1F1A] placeholder-[#9CA396] focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
+              className="mt-1 block w-full rounded-lg border t-border px-3 py-2.5 text-sm t-text placeholder-[#9C9C9C] focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
             />
           </div>
 
           {/* Table Count & Guests per Table */}
           <div className="grid gap-4 sm:grid-cols-2">
             <div>
-              <label htmlFor="table_count" className="block text-sm font-medium text-[#3A3D37]">
+              <label htmlFor="table_count" className="block text-sm font-medium t-text-secondary">
                 Number of Tables
               </label>
               <input
@@ -159,11 +159,11 @@ export default function CreateEventPage() {
                 required
                 value={form.table_count}
                 onChange={handleChange}
-                className="mt-1 block w-full rounded-lg border border-[#E3E8E1] px-3 py-2.5 text-sm text-[#1C1F1A] focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
+                className="mt-1 block w-full rounded-lg border t-border px-3 py-2.5 text-sm t-text focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
               />
             </div>
             <div>
-              <label htmlFor="guests_per_table" className="block text-sm font-medium text-[#3A3D37]">
+              <label htmlFor="guests_per_table" className="block text-sm font-medium t-text-secondary">
                 Guests per Table
               </label>
               <input
@@ -174,14 +174,14 @@ export default function CreateEventPage() {
                 required
                 value={form.guests_per_table}
                 onChange={handleChange}
-                className="mt-1 block w-full rounded-lg border border-[#E3E8E1] px-3 py-2.5 text-sm text-[#1C1F1A] focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
+                className="mt-1 block w-full rounded-lg border t-border px-3 py-2.5 text-sm t-text focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
               />
             </div>
           </div>
 
           {/* Theme Color */}
           <div>
-            <label htmlFor="theme_color" className="block text-sm font-medium text-[#3A3D37]">
+            <label htmlFor="theme_color" className="block text-sm font-medium t-text-secondary">
               Theme Color
             </label>
             <div className="mt-1 flex items-center gap-3">
@@ -193,16 +193,16 @@ export default function CreateEventPage() {
                 onChange={handleChange}
                 placeholder="#22C55E"
                 pattern="^#[0-9A-Fa-f]{6}$"
-                className="block w-full rounded-lg border border-[#E3E8E1] px-3 py-2.5 text-sm text-[#1C1F1A] placeholder-[#9CA396] focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
+                className="block w-full rounded-lg border t-border px-3 py-2.5 text-sm t-text placeholder-[#9C9C9C] focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
               />
               <input
                 type="color"
                 value={form.theme_color}
                 onChange={(e) => setForm((prev) => ({ ...prev, theme_color: e.target.value }))}
-                className="h-10 w-10 cursor-pointer rounded-lg border border-[#E3E8E1] p-0.5"
+                className="h-10 w-10 cursor-pointer rounded-lg border t-border p-0.5"
               />
               <div
-                className="h-10 w-10 rounded-lg border border-[#E3E8E1]"
+                className="h-10 w-10 rounded-lg border t-border"
                 style={{ backgroundColor: form.theme_color }}
               />
             </div>
@@ -220,7 +220,7 @@ export default function CreateEventPage() {
             <button
               type="button"
               onClick={() => router.back()}
-              className="rounded-lg border border-[#E3E8E1] px-6 py-2.5 text-sm font-medium text-[#3A3D37] hover:bg-[#F4F6F3] transition-colors"
+              className="rounded-lg border t-border px-6 py-2.5 text-sm font-medium t-text-secondary hover:t-bg transition-colors"
             >
               Cancel
             </button>

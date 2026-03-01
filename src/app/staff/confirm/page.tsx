@@ -191,7 +191,7 @@ export default function StaffConfirmPage() {
             Order #{result.order_number}
           </p>
           {result.table_number !== undefined && (
-            <p className="text-base text-[#6B7366]">
+            <p className="text-base t-text-muted">
               Table {result.table_number}
               {result.seat_number !== undefined ? `, Seat ${result.seat_number}` : ""}
             </p>
@@ -218,8 +218,8 @@ export default function StaffConfirmPage() {
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </div>
-          <h1 className="mb-2 text-2xl font-bold text-[#1C1F1A]">Failed</h1>
-          <p className="text-lg text-[#6B7366]">{errorMsg}</p>
+          <h1 className="mb-2 text-2xl font-bold t-text">Failed</h1>
+          <p className="text-lg t-text-muted">{errorMsg}</p>
         </div>
         <button
           onClick={reset}
@@ -236,8 +236,8 @@ export default function StaffConfirmPage() {
     return (
       <div className="flex min-h-screen items-center justify-center bg-white">
         <div className="text-center">
-          <div className="mx-auto mb-4 h-10 w-10 animate-spin rounded-full border-4 border-[#E3E8E1] border-t-emerald-500" />
-          <p className="text-lg font-medium text-[#3A3D37]">Confirming...</p>
+          <div className="mx-auto mb-4 h-10 w-10 animate-spin rounded-full border-4 t-border border-t-emerald-500" />
+          <p className="text-lg font-medium t-text-secondary">Confirming...</p>
         </div>
       </div>
     );
@@ -247,15 +247,15 @@ export default function StaffConfirmPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
-      <div className="border-b border-[#E3E8E1] px-4 py-4">
-        <h1 className="text-center text-xl font-bold text-[#1C1F1A]">
+      <div className="border-b t-border px-4 py-4">
+        <h1 className="text-center text-xl font-bold t-text">
           Confirm Order
         </h1>
       </div>
 
       {/* Tabs */}
       <div className="mx-auto max-w-sm px-4 pt-4">
-        <div className="flex overflow-hidden rounded-xl border-2 border-[#E3E8E1]">
+        <div className="flex overflow-hidden rounded-xl border-2 t-border">
           <button
             onClick={() => {
               setTab("scan");
@@ -264,7 +264,7 @@ export default function StaffConfirmPage() {
             className={`min-h-[48px] flex-1 py-3 text-base font-semibold transition-colors ${
               tab === "scan"
                 ? "bg-eco text-white"
-                : "bg-white text-[#6B7366]"
+                : "bg-white t-text-muted"
             }`}
           >
             Scan Barcode
@@ -277,7 +277,7 @@ export default function StaffConfirmPage() {
             className={`min-h-[48px] flex-1 py-3 text-base font-semibold transition-colors ${
               tab === "code"
                 ? "bg-eco text-white"
-                : "bg-white text-[#6B7366]"
+                : "bg-white t-text-muted"
             }`}
           >
             Enter Code
@@ -309,7 +309,7 @@ export default function StaffConfirmPage() {
           )}
 
           <div className="mt-6">
-            <p className="mb-2 text-base font-medium text-[#3A3D37]">
+            <p className="mb-2 text-base font-medium t-text-secondary">
               {cameraAvailable === false
                 ? "Camera not available. Enter barcode manually:"
                 : "Or enter barcode manually:"}
@@ -320,7 +320,7 @@ export default function StaffConfirmPage() {
                 value={manualCode}
                 onChange={(e) => setManualCode(e.target.value)}
                 placeholder="Enter barcode"
-                className="min-h-[52px] flex-1 rounded-xl border-2 border-[#E3E8E1] px-4 py-3 text-lg text-[#1C1F1A] outline-none focus:border-eco"
+                className="min-h-[52px] flex-1 rounded-xl border-2 t-border px-4 py-3 text-lg t-text outline-none focus:border-eco"
               />
               <button
                 onClick={() => submitBarcode(manualCode)}
@@ -337,7 +337,7 @@ export default function StaffConfirmPage() {
       {/* Code Tab */}
       {tab === "code" && (
         <div className="mx-auto max-w-sm px-4 py-6">
-          <p className="mb-6 text-center text-base text-[#6B7366]">
+          <p className="mb-6 text-center text-base t-text-muted">
             Enter the 4-digit order PIN
           </p>
 
@@ -354,7 +354,7 @@ export default function StaffConfirmPage() {
                 value={digit}
                 onChange={(e) => handlePinChange(i, e.target.value)}
                 onKeyDown={(e) => handlePinKeyDown(i, e)}
-                className="h-16 w-16 rounded-xl border-2 border-[#E3E8E1] text-center text-3xl font-bold text-[#1C1F1A] outline-none focus:border-eco"
+                className="h-16 w-16 rounded-xl border-2 t-border text-center text-3xl font-bold t-text outline-none focus:border-eco"
               />
             ))}
           </div>
@@ -369,7 +369,7 @@ export default function StaffConfirmPage() {
         </div>
       )}
 
-      <p className="mt-8 text-center text-xs text-[#9CA396]">
+      <p className="mt-8 text-center text-xs t-text-faint">
         Powered by No Ojoro
       </p>
     </div>

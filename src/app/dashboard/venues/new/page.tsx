@@ -43,19 +43,19 @@ export default function CreateVenuePage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F4F6F3]">
+    <div className="min-h-screen t-bg">
       {/* Header */}
-      <header className="border-b border-[#E3E8E1] bg-white">
+      <header className="border-b t-border t-bg-card">
         <div className="mx-auto flex max-w-4xl items-center justify-between px-4 py-4 sm:px-6">
           <div className="flex items-center gap-3">
             <Link
               href="/dashboard"
-              className="text-sm font-medium text-[#6B7366] hover:text-[#3A3D37]"
+              className="text-sm font-medium t-text-muted hover:t-text-secondary"
             >
               Dashboard
             </Link>
-            <span className="text-[#C5C9C2]">/</span>
-            <span className="text-sm font-semibold text-[#1C1F1A]">
+            <span className="t-text-faint">/</span>
+            <span className="text-sm font-semibold t-text">
               New Venue
             </span>
           </div>
@@ -64,10 +64,10 @@ export default function CreateVenuePage() {
 
       {/* Content */}
       <main className="mx-auto max-w-2xl px-4 py-10 sm:px-6">
-        <h1 className="mb-1 text-2xl font-bold text-[#1C1F1A]">
+        <h1 className="mb-1 text-2xl font-bold t-text">
           Create a New Venue
         </h1>
-        <p className="mb-8 text-sm text-[#6B7366]">
+        <p className="mb-8 text-sm t-text-muted">
           Set up your bar or venue to start taking orders.
         </p>
 
@@ -82,7 +82,7 @@ export default function CreateVenuePage() {
           <div>
             <label
               htmlFor="name"
-              className="mb-1.5 block text-sm font-medium text-[#3A3D37]"
+              className="mb-1.5 block text-sm font-medium t-text-secondary"
             >
               Venue Name
             </label>
@@ -93,7 +93,7 @@ export default function CreateVenuePage() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="e.g. The Velvet Lounge"
-              className="w-full rounded-lg border border-[#E3E8E1] bg-white px-4 py-2.5 text-sm text-[#1C1F1A] placeholder-[#9CA396] outline-none transition-colors focus:border-eco focus:ring-2 focus:ring-emerald-500/20"
+              className="w-full rounded-lg border t-border t-bg-card px-4 py-2.5 text-sm t-text placeholder-[#9C9C9C] outline-none transition-colors focus:border-eco focus:ring-2 focus:ring-emerald-500/20"
             />
           </div>
 
@@ -101,7 +101,7 @@ export default function CreateVenuePage() {
           <div>
             <label
               htmlFor="address"
-              className="mb-1.5 block text-sm font-medium text-[#3A3D37]"
+              className="mb-1.5 block text-sm font-medium t-text-secondary"
             >
               Address
             </label>
@@ -112,7 +112,7 @@ export default function CreateVenuePage() {
               value={address}
               onChange={(e) => setAddress(e.target.value)}
               placeholder="e.g. 12 Admiralty Way, Lekki Phase 1, Lagos"
-              className="w-full rounded-lg border border-[#E3E8E1] bg-white px-4 py-2.5 text-sm text-[#1C1F1A] placeholder-[#9CA396] outline-none transition-colors focus:border-eco focus:ring-2 focus:ring-emerald-500/20"
+              className="w-full rounded-lg border t-border t-bg-card px-4 py-2.5 text-sm t-text placeholder-[#9C9C9C] outline-none transition-colors focus:border-eco focus:ring-2 focus:ring-emerald-500/20"
             />
           </div>
 
@@ -120,7 +120,7 @@ export default function CreateVenuePage() {
           <div>
             <label
               htmlFor="tableCount"
-              className="mb-1.5 block text-sm font-medium text-[#3A3D37]"
+              className="mb-1.5 block text-sm font-medium t-text-secondary"
             >
               Number of Tables
             </label>
@@ -132,7 +132,7 @@ export default function CreateVenuePage() {
               max={500}
               value={tableCount}
               onChange={(e) => setTableCount(Number(e.target.value))}
-              className="w-full rounded-lg border border-[#E3E8E1] bg-white px-4 py-2.5 text-sm text-[#1C1F1A] placeholder-[#9CA396] outline-none transition-colors focus:border-eco focus:ring-2 focus:ring-emerald-500/20"
+              className="w-full rounded-lg border t-border t-bg-card px-4 py-2.5 text-sm t-text placeholder-[#9C9C9C] outline-none transition-colors focus:border-eco focus:ring-2 focus:ring-emerald-500/20"
             />
           </div>
 
@@ -140,7 +140,7 @@ export default function CreateVenuePage() {
           <div>
             <label
               htmlFor="logoUrl"
-              className="mb-1.5 block text-sm font-medium text-[#3A3D37]"
+              className="mb-1.5 block text-sm font-medium t-text-secondary"
             >
               Logo URL
             </label>
@@ -150,9 +150,9 @@ export default function CreateVenuePage() {
               value={logoUrl}
               onChange={(e) => setLogoUrl(e.target.value)}
               placeholder="https://example.com/logo.png"
-              className="w-full rounded-lg border border-[#E3E8E1] bg-white px-4 py-2.5 text-sm text-[#1C1F1A] placeholder-[#9CA396] outline-none transition-colors focus:border-eco focus:ring-2 focus:ring-emerald-500/20"
+              className="w-full rounded-lg border t-border t-bg-card px-4 py-2.5 text-sm t-text placeholder-[#9C9C9C] outline-none transition-colors focus:border-eco focus:ring-2 focus:ring-emerald-500/20"
             />
-            <p className="mt-1 text-xs text-[#9CA396]">Optional</p>
+            <p className="mt-1 text-xs t-text-faint">Optional</p>
           </div>
 
           {/* Submit */}
@@ -166,7 +166,7 @@ export default function CreateVenuePage() {
             </button>
             <Link
               href="/dashboard"
-              className="rounded-lg px-6 py-2.5 text-sm font-medium text-[#6B7366] transition-colors hover:text-[#3A3D37]"
+              className="rounded-lg px-6 py-2.5 text-sm font-medium t-text-muted transition-colors hover:t-text-secondary"
             >
               Cancel
             </Link>

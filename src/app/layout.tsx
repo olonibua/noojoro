@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import ThemeProvider from "@/components/ui/ThemeProvider";
 import AuthModal from "@/components/ui/AuthModal";
@@ -7,6 +7,13 @@ export const metadata: Metadata = {
   title: "No Ojoro - Event & Hospitality Operations",
   description:
     "Token-controlled event and hospitality operations platform for Nigeria",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
 };
 
 export default function RootLayout({

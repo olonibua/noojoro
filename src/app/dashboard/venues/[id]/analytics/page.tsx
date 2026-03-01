@@ -49,21 +49,21 @@ export default function AnalyticsPage() {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[#F4F6F3]">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-eco border-t-transparent" />
+      <div className="flex min-h-screen items-center justify-center t-bg">
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-neutral-300 border-t-transparent" />
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="flex min-h-screen flex-col items-center justify-center bg-[#F4F6F3] px-4">
+      <div className="flex min-h-screen flex-col items-center justify-center t-bg px-4">
         <div className="rounded-lg border border-red-200 bg-red-50 px-6 py-4 text-sm text-red-700">
           {error}
         </div>
         <Link
           href={`/dashboard/venues/${venueId}`}
-          className="mt-4 text-sm font-medium text-eco-dark hover:text-eco-dark"
+          className="mt-4 text-sm font-medium text-neutral-700 hover:text-neutral-700"
         >
           Back to Venue
         </Link>
@@ -79,26 +79,26 @@ export default function AnalyticsPage() {
   );
 
   return (
-    <div className="min-h-screen bg-[#F4F6F3]">
+    <div className="min-h-screen t-bg">
       {/* Header */}
-      <header className="border-b border-[#E3E8E1] bg-white">
+      <header className="border-b t-border t-bg-card">
         <div className="mx-auto flex max-w-6xl items-center px-4 py-4 sm:px-6">
           <div className="flex items-center gap-3">
             <Link
               href="/dashboard"
-              className="text-sm font-medium text-[#6B7366] hover:text-[#3A3D37]"
+              className="text-sm font-medium t-text-muted hover:t-text-secondary"
             >
               Dashboard
             </Link>
-            <span className="text-[#C5C9C2]">/</span>
+            <span className="t-text-faint">/</span>
             <Link
               href={`/dashboard/venues/${venueId}`}
-              className="text-sm font-medium text-[#6B7366] hover:text-[#3A3D37]"
+              className="text-sm font-medium t-text-muted hover:t-text-secondary"
             >
               Venue
             </Link>
-            <span className="text-[#C5C9C2]">/</span>
-            <span className="text-sm font-semibold text-[#1C1F1A]">
+            <span className="t-text-faint">/</span>
+            <span className="text-sm font-semibold t-text">
               Analytics
             </span>
           </div>
@@ -106,69 +106,69 @@ export default function AnalyticsPage() {
       </header>
 
       <main className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
-        <h1 className="mb-1 text-2xl font-bold text-[#1C1F1A]">Analytics</h1>
-        <p className="mb-8 text-sm text-[#6B7366]">
+        <h1 className="mb-1 text-2xl font-bold t-text">Analytics</h1>
+        <p className="mb-8 text-sm t-text-muted">
           Revenue, orders, and performance insights.
         </p>
 
         {/* Summary Cards */}
         <div className="mb-10 grid gap-4 sm:grid-cols-3">
           {/* Total Revenue */}
-          <div className="rounded-xl border border-[#E3E8E1] bg-white p-6">
-            <p className="text-sm font-medium text-[#6B7366]">Total Revenue</p>
-            <p className="mt-2 text-3xl font-bold text-[#1C1F1A]">
+          <div className="rounded-xl border t-border t-bg-card p-6">
+            <p className="text-sm font-medium t-text-muted">Total Revenue</p>
+            <p className="mt-2 text-3xl font-bold t-text">
               {"\u20A6"}{formatCurrency(analytics.total_revenue)}
             </p>
           </div>
 
           {/* Total Orders */}
-          <div className="rounded-xl border border-[#E3E8E1] bg-white p-6">
-            <p className="text-sm font-medium text-[#6B7366]">Total Orders</p>
-            <p className="mt-2 text-3xl font-bold text-[#1C1F1A]">
+          <div className="rounded-xl border t-border t-bg-card p-6">
+            <p className="text-sm font-medium t-text-muted">Total Orders</p>
+            <p className="mt-2 text-3xl font-bold t-text">
               {analytics.total_orders.toLocaleString()}
             </p>
           </div>
 
           {/* Average Order Value */}
-          <div className="rounded-xl border border-[#E3E8E1] bg-white p-6">
-            <p className="text-sm font-medium text-[#6B7366]">Avg Order Value</p>
-            <p className="mt-2 text-3xl font-bold text-[#1C1F1A]">
+          <div className="rounded-xl border t-border t-bg-card p-6">
+            <p className="text-sm font-medium t-text-muted">Avg Order Value</p>
+            <p className="mt-2 text-3xl font-bold t-text">
               {"\u20A6"}{formatCurrency(analytics.average_order_value)}
             </p>
           </div>
         </div>
 
         {/* Top Selling Items */}
-        <h2 className="mb-4 text-lg font-semibold text-[#1C1F1A]">
+        <h2 className="mb-4 text-lg font-semibold t-text">
           Top Selling Items
         </h2>
 
         {analytics.top_selling_items.length === 0 ? (
-          <div className="rounded-xl border border-dashed border-[#E3E8E1] bg-white px-6 py-12 text-center">
-            <p className="text-sm text-[#6B7366]">
+          <div className="rounded-xl border border-dashed t-border t-bg-card px-6 py-12 text-center">
+            <p className="text-sm t-text-muted">
               No sales data available yet.
             </p>
           </div>
         ) : (
-          <div className="rounded-xl border border-[#E3E8E1] bg-white p-6">
-            <h3 className="mb-6 text-sm font-semibold text-[#3A3D37]">
+          <div className="rounded-xl border t-border t-bg-card p-6">
+            <h3 className="mb-6 text-sm font-semibold t-text-secondary">
               By Quantity Sold
             </h3>
             <div className="space-y-4">
               {analytics.top_selling_items.map((item, index) => (
                 <div key={item.name}>
                   <div className="mb-1.5 flex items-center justify-between">
-                    <span className="flex items-center gap-2 text-sm font-medium text-[#1C1F1A]">
-                      <span className="flex h-5 w-5 items-center justify-center rounded-full bg-eco/10 text-[10px] font-bold text-eco-dark">
+                    <span className="flex items-center gap-2 text-sm font-medium t-text">
+                      <span className="flex h-5 w-5 items-center justify-center rounded-full bg-neutral-100 text-[10px] font-bold text-neutral-700">
                         {index + 1}
                       </span>
                       {item.name}
                     </span>
-                    <span className="text-sm font-semibold text-[#6B7366]">
+                    <span className="text-sm font-semibold t-text-muted">
                       {item.total_sold}
                     </span>
                   </div>
-                  <div className="h-3 w-full overflow-hidden rounded-full bg-[#F0F3EF]">
+                  <div className="h-3 w-full overflow-hidden rounded-full t-bg-secondary">
                     <div
                       className="h-3 rounded-full bg-eco transition-all duration-500"
                       style={{
@@ -184,49 +184,49 @@ export default function AnalyticsPage() {
 
         {/* Ranked List */}
         {analytics.top_selling_items.length > 0 && (
-          <div className="mt-8 rounded-xl border border-[#E3E8E1] bg-white">
-            <div className="border-b border-[#E3E8E1]/50 px-6 py-4">
-              <h3 className="text-sm font-semibold text-[#3A3D37]">
+          <div className="mt-8 rounded-xl border t-border t-bg-card">
+            <div className="border-b t-border/50 px-6 py-4">
+              <h3 className="text-sm font-semibold t-text-secondary">
                 Full Ranking
               </h3>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-[#E3E8E1]/50 bg-[#F4F6F3]">
-                    <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-[#6B7366]">
+                  <tr className="border-b t-border/50 t-bg">
+                    <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider t-text-muted">
                       Rank
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-[#6B7366]">
+                    <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider t-text-muted">
                       Item
                     </th>
-                    <th className="px-6 py-3 text-right text-xs font-semibold uppercase tracking-wider text-[#6B7366]">
+                    <th className="px-6 py-3 text-right text-xs font-semibold uppercase tracking-wider t-text-muted">
                       Qty Sold
                     </th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-50">
                   {analytics.top_selling_items.map((item, index) => (
-                    <tr key={item.name} className="hover:bg-[#F4F6F3]">
+                    <tr key={item.name} className="hover:t-bg">
                       <td className="px-6 py-3.5">
                         <span
                           className={`inline-flex h-6 w-6 items-center justify-center rounded-full text-xs font-bold ${
                             index === 0
-                              ? "bg-eco/10 text-eco-dark"
+                              ? "bg-neutral-100 text-neutral-700"
                               : index === 1
-                              ? "bg-emerald-50 text-eco-dark"
+                              ? "bg-neutral-100 text-neutral-700"
                               : index === 2
-                              ? "bg-[#F0F3EF] text-[#6B7366]"
-                              : "text-[#9CA396]"
+                              ? "t-bg-secondary t-text-muted"
+                              : "t-text-faint"
                           }`}
                         >
                           {index + 1}
                         </span>
                       </td>
-                      <td className="px-6 py-3.5 text-sm font-medium text-[#1C1F1A]">
+                      <td className="px-6 py-3.5 text-sm font-medium t-text">
                         {item.name}
                       </td>
-                      <td className="px-6 py-3.5 text-right text-sm font-semibold text-[#3A3D37]">
+                      <td className="px-6 py-3.5 text-right text-sm font-semibold t-text-secondary">
                         {item.total_sold.toLocaleString()}
                       </td>
                     </tr>

@@ -205,40 +205,40 @@ export default function MenuBuilderPage() {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[#F4F6F3]">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-eco border-t-transparent" />
+      <div className="flex min-h-screen items-center justify-center t-bg">
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-neutral-300 border-t-transparent" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#F4F6F3]">
+    <div className="min-h-screen t-bg">
       {/* Header */}
-      <header className="border-b border-[#E3E8E1] bg-white">
+      <header className="border-b t-border t-bg-card">
         <div className="mx-auto flex max-w-5xl items-center px-4 py-4 sm:px-6">
           <div className="flex items-center gap-3">
             <Link
               href="/dashboard"
-              className="text-sm font-medium text-[#6B7366] hover:text-[#3A3D37]"
+              className="text-sm font-medium t-text-muted hover:t-text-secondary"
             >
               Dashboard
             </Link>
-            <span className="text-[#C5C9C2]">/</span>
+            <span className="t-text-faint">/</span>
             <Link
               href={`/dashboard/venues/${venueId}`}
-              className="text-sm font-medium text-[#6B7366] hover:text-[#3A3D37]"
+              className="text-sm font-medium t-text-muted hover:t-text-secondary"
             >
               Venue
             </Link>
-            <span className="text-[#C5C9C2]">/</span>
-            <span className="text-sm font-semibold text-[#1C1F1A]">Menu</span>
+            <span className="t-text-faint">/</span>
+            <span className="text-sm font-semibold t-text">Menu</span>
           </div>
         </div>
       </header>
 
       <main className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
-        <h1 className="mb-1 text-2xl font-bold text-[#1C1F1A]">Menu Builder</h1>
-        <p className="mb-8 text-sm text-[#6B7366]">
+        <h1 className="mb-1 text-2xl font-bold t-text">Menu Builder</h1>
+        <p className="mb-8 text-sm t-text-muted">
           Add categories and drink items with pricing and stock quantities.
         </p>
 
@@ -249,8 +249,8 @@ export default function MenuBuilderPage() {
         )}
 
         {/* Add Category */}
-        <div className="mb-8 rounded-xl border border-[#E3E8E1] bg-white p-6">
-          <h2 className="mb-4 text-base font-semibold text-[#1C1F1A]">
+        <div className="mb-8 rounded-xl border t-border t-bg-card p-6">
+          <h2 className="mb-4 text-base font-semibold t-text">
             Add Category
           </h2>
           <form
@@ -258,7 +258,7 @@ export default function MenuBuilderPage() {
             className="flex flex-col gap-3 sm:flex-row sm:items-end"
           >
             <div className="flex-1">
-              <label className="mb-1.5 block text-sm font-medium text-[#3A3D37]">
+              <label className="mb-1.5 block text-sm font-medium t-text-secondary">
                 Category Name
               </label>
               <input
@@ -267,7 +267,7 @@ export default function MenuBuilderPage() {
                 value={newCategoryName}
                 onChange={(e) => setNewCategoryName(e.target.value)}
                 placeholder="e.g. Spirits, Cocktails, Beer"
-                className="w-full rounded-lg border border-[#E3E8E1] bg-white px-4 py-2.5 text-sm text-[#1C1F1A] placeholder-[#9CA396] outline-none focus:border-eco focus:ring-2 focus:ring-emerald-500/20"
+                className="w-full rounded-lg border t-border t-bg-card px-4 py-2.5 text-sm t-text placeholder-[#9C9C9C] outline-none focus:border-eco focus:ring-2 focus:ring-emerald-500/20"
               />
             </div>
             <button
@@ -282,8 +282,8 @@ export default function MenuBuilderPage() {
 
         {/* Categories & Items */}
         {categories.length === 0 ? (
-          <div className="rounded-xl border border-dashed border-[#E3E8E1] bg-white px-6 py-12 text-center">
-            <p className="text-sm text-[#6B7366]">
+          <div className="rounded-xl border border-dashed t-border t-bg-card px-6 py-12 text-center">
+            <p className="text-sm t-text-muted">
               No categories yet. Add a category above to get started.
             </p>
           </div>
@@ -292,14 +292,14 @@ export default function MenuBuilderPage() {
             {categories.map((category) => (
               <div
                 key={category.id}
-                className="rounded-xl border border-[#E3E8E1] bg-white"
+                className="rounded-xl border t-border t-bg-card"
               >
                 {/* Category Header */}
-                <div className="flex items-center justify-between border-b border-[#E3E8E1]/50 px-6 py-4">
-                  <h3 className="text-lg font-semibold text-[#1C1F1A]">
+                <div className="flex items-center justify-between border-b t-border/50 px-6 py-4">
+                  <h3 className="text-lg font-semibold t-text">
                     {category.name}
                   </h3>
-                  <span className="text-xs font-medium text-[#9CA396]">
+                  <span className="text-xs font-medium t-text-faint">
                     {category.items.length}{" "}
                     {category.items.length === 1 ? "item" : "items"}
                   </span>
@@ -315,8 +315,8 @@ export default function MenuBuilderPage() {
                       }`}
                     >
                       <div className="flex-1">
-                        <p className="font-medium text-[#1C1F1A]">{item.name}</p>
-                        <p className="mt-0.5 text-sm text-eco-dark font-semibold">
+                        <p className="font-medium t-text">{item.name}</p>
+                        <p className="mt-0.5 text-sm text-neutral-700 font-semibold">
                           {"\u20A6"}{formatPrice(item.price)}
                         </p>
                       </div>
@@ -324,7 +324,7 @@ export default function MenuBuilderPage() {
                       <div className="flex items-center gap-4">
                         {/* Stock */}
                         <div className="flex items-center gap-2">
-                          <span className="text-xs text-[#6B7366]">Stock:</span>
+                          <span className="text-xs t-text-muted">Stock:</span>
                           {editingStock === item.id ? (
                             <div className="flex items-center gap-1">
                               <input
@@ -334,7 +334,7 @@ export default function MenuBuilderPage() {
                                 onChange={(e) =>
                                   setEditStockValue(e.target.value)
                                 }
-                                className="w-20 rounded border border-[#E3E8E1] px-2 py-1 text-sm text-[#1C1F1A] outline-none focus:border-eco"
+                                className="w-20 rounded border t-border px-2 py-1 text-sm t-text outline-none focus:border-eco"
                               />
                               <button
                                 onClick={() =>
@@ -346,7 +346,7 @@ export default function MenuBuilderPage() {
                               </button>
                               <button
                                 onClick={() => setEditingStock(null)}
-                                className="rounded px-2 py-1 text-xs font-medium text-[#6B7366] hover:text-[#3A3D37]"
+                                className="rounded px-2 py-1 text-xs font-medium t-text-muted hover:t-text-secondary"
                               >
                                 Cancel
                               </button>
@@ -359,7 +359,7 @@ export default function MenuBuilderPage() {
                                   item.total_quantity.toString()
                                 );
                               }}
-                              className="rounded bg-[#F0F3EF] px-2.5 py-1 text-sm font-medium text-[#3A3D37] hover:bg-gray-200"
+                              className="rounded t-bg-secondary px-2.5 py-1 text-sm font-medium t-text-secondary hover:bg-gray-200"
                             >
                               {item.total_quantity}
                             </button>
@@ -379,7 +379,7 @@ export default function MenuBuilderPage() {
                           aria-label={`Toggle availability for ${item.name}`}
                         >
                           <span
-                            className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition-transform ${
+                            className={`pointer-events-none inline-block h-5 w-5 transform rounded-full t-bg-card shadow ring-0 transition-transform ${
                               item.is_available
                                 ? "translate-x-5"
                                 : "translate-x-0"
@@ -392,7 +392,7 @@ export default function MenuBuilderPage() {
                 </div>
 
                 {/* Add Item Form */}
-                <div className="border-t border-[#E3E8E1]/50 px-6 py-4">
+                <div className="border-t t-border/50 px-6 py-4">
                   {itemForms[category.id] ? (
                     <div className="space-y-3">
                       <div className="grid gap-3 sm:grid-cols-3">
@@ -403,7 +403,7 @@ export default function MenuBuilderPage() {
                           onChange={(e) =>
                             updateItemForm(category.id, "name", e.target.value)
                           }
-                          className="rounded-lg border border-[#E3E8E1] bg-white px-3 py-2 text-sm text-[#1C1F1A] placeholder-[#9CA396] outline-none focus:border-eco focus:ring-2 focus:ring-emerald-500/20"
+                          className="rounded-lg border t-border t-bg-card px-3 py-2 text-sm t-text placeholder-[#9C9C9C] outline-none focus:border-eco focus:ring-2 focus:ring-emerald-500/20"
                         />
                         <input
                           type="number"
@@ -414,7 +414,7 @@ export default function MenuBuilderPage() {
                           onChange={(e) =>
                             updateItemForm(category.id, "price", e.target.value)
                           }
-                          className="rounded-lg border border-[#E3E8E1] bg-white px-3 py-2 text-sm text-[#1C1F1A] placeholder-[#9CA396] outline-none focus:border-eco focus:ring-2 focus:ring-emerald-500/20"
+                          className="rounded-lg border t-border t-bg-card px-3 py-2 text-sm t-text placeholder-[#9C9C9C] outline-none focus:border-eco focus:ring-2 focus:ring-emerald-500/20"
                         />
                         <input
                           type="number"
@@ -424,7 +424,7 @@ export default function MenuBuilderPage() {
                           onChange={(e) =>
                             updateItemForm(category.id, "stock", e.target.value)
                           }
-                          className="rounded-lg border border-[#E3E8E1] bg-white px-3 py-2 text-sm text-[#1C1F1A] placeholder-[#9CA396] outline-none focus:border-eco focus:ring-2 focus:ring-emerald-500/20"
+                          className="rounded-lg border t-border t-bg-card px-3 py-2 text-sm t-text placeholder-[#9C9C9C] outline-none focus:border-eco focus:ring-2 focus:ring-emerald-500/20"
                         />
                       </div>
                       <div className="flex items-center gap-2">
@@ -439,7 +439,7 @@ export default function MenuBuilderPage() {
                         </button>
                         <button
                           onClick={() => closeItemForm(category.id)}
-                          className="rounded-lg px-4 py-2 text-sm font-medium text-[#6B7366] hover:text-[#3A3D37]"
+                          className="rounded-lg px-4 py-2 text-sm font-medium t-text-muted hover:t-text-secondary"
                         >
                           Cancel
                         </button>
@@ -448,7 +448,7 @@ export default function MenuBuilderPage() {
                   ) : (
                     <button
                       onClick={() => openItemForm(category.id)}
-                      className="inline-flex items-center gap-1.5 text-sm font-medium text-eco-dark hover:text-eco-dark"
+                      className="inline-flex items-center gap-1.5 text-sm font-medium text-neutral-700 hover:text-neutral-700"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
