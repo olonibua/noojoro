@@ -8,11 +8,12 @@ interface EventDetail {
   id: string;
   name: string;
   date: string;
-  time: string;
+  time: string | null;
   venue_name: string;
   table_count: number;
   guests_per_table: number;
-  theme_color: string;
+  primary_color: string;
+  secondary_color: string | null;
   status: string;
   total_tokens: number;
 }
@@ -36,9 +37,9 @@ export default function EventDetailPage() {
   const [editForm, setEditForm] = useState({
     name: "",
     date: "",
-    time: "",
     venue_name: "",
-    theme_color: "",
+    primary_color: "",
+    secondary_color: "",
   });
 
   const fetchEvent = useCallback(async () => {
@@ -48,9 +49,9 @@ export default function EventDetailPage() {
       setEditForm({
         name: data.name,
         date: data.date || "",
-        time: data.time || "",
         venue_name: data.venue_name,
-        theme_color: data.theme_color || "#22C55E",
+        primary_color: data.primary_color || "#22C55E",
+        secondary_color: data.secondary_color || "#FFFFFF",
       });
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to load event");
@@ -140,22 +141,13 @@ export default function EventDetailPage() {
                     className="mt-1 block w-full rounded-lg border t-border px-3 py-2 text-sm focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
                   />
                 </div>
-                <div className="grid gap-4 sm:grid-cols-3">
+                <div className="grid gap-4 sm:grid-cols-2">
                   <div>
                     <label className="block text-sm font-medium t-text-secondary">Date</label>
                     <input
                       type="date"
                       value={editForm.date}
                       onChange={(e) => setEditForm((p) => ({ ...p, date: e.target.value }))}
-                      className="mt-1 block w-full rounded-lg border t-border px-3 py-2 text-sm focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium t-text-secondary">Time</label>
-                    <input
-                      type="time"
-                      value={editForm.time}
-                      onChange={(e) => setEditForm((p) => ({ ...p, time: e.target.value }))}
                       className="mt-1 block w-full rounded-lg border t-border px-3 py-2 text-sm focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
                     />
                   </div>
@@ -168,20 +160,38 @@ export default function EventDetailPage() {
                     />
                   </div>
                 </div>
-                <div>
-                  <label className="block text-sm font-medium t-text-secondary">Theme Color</label>
-                  <div className="mt-1 flex items-center gap-2">
-                    <input
-                      value={editForm.theme_color}
-                      onChange={(e) => setEditForm((p) => ({ ...p, theme_color: e.target.value }))}
-                      className="block w-full rounded-lg border t-border px-3 py-2 text-sm focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
-                    />
-                    <input
-                      type="color"
-                      value={editForm.theme_color}
-                      onChange={(e) => setEditForm((p) => ({ ...p, theme_color: e.target.value }))}
-                      className="h-9 w-9 rounded border t-border p-0.5 cursor-pointer"
-                    />
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <div>
+                    <label className="block text-sm font-medium t-text-secondary">Primary Color</label>
+                    <div className="mt-1 flex items-center gap-2">
+                      <input
+                        value={editForm.primary_color}
+                        onChange={(e) => setEditForm((p) => ({ ...p, primary_color: e.target.value }))}
+                        className="block w-full rounded-lg border t-border px-3 py-2 text-sm focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
+                      />
+                      <input
+                        type="color"
+                        value={editForm.primary_color}
+                        onChange={(e) => setEditForm((p) => ({ ...p, primary_color: e.target.value }))}
+                        className="h-9 w-9 rounded border t-border p-0.5 cursor-pointer"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium t-text-secondary">Secondary Color</label>
+                    <div className="mt-1 flex items-center gap-2">
+                      <input
+                        value={editForm.secondary_color}
+                        onChange={(e) => setEditForm((p) => ({ ...p, secondary_color: e.target.value }))}
+                        className="block w-full rounded-lg border t-border px-3 py-2 text-sm focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
+                      />
+                      <input
+                        type="color"
+                        value={editForm.secondary_color}
+                        onChange={(e) => setEditForm((p) => ({ ...p, secondary_color: e.target.value }))}
+                        className="h-9 w-9 rounded border t-border p-0.5 cursor-pointer"
+                      />
+                    </div>
                   </div>
                 </div>
                 <div className="flex gap-2">
@@ -227,6 +237,7 @@ export default function EventDetailPage() {
                 <div className="mt-3 flex flex-wrap gap-x-6 gap-y-2 text-sm t-text-muted">
                   <span>{event.table_count} tables</span>
                   <span>{event.guests_per_table} guests/table</span>
+                  <span>{(event.table_count * event.guests_per_table).toLocaleString()} total guests</span>
                   <span>{event.total_tokens} total tokens</span>
                 </div>
               </>
@@ -237,9 +248,16 @@ export default function EventDetailPage() {
             <div className="flex items-center gap-2">
               <div
                 className="h-6 w-6 rounded-full border t-border"
-                style={{ backgroundColor: event.theme_color || "#22C55E" }}
-                title={event.theme_color}
+                style={{ backgroundColor: event.primary_color || "#22C55E" }}
+                title={`Primary: ${event.primary_color}`}
               />
+              {event.secondary_color && (
+                <div
+                  className="h-6 w-6 rounded-full border t-border"
+                  style={{ backgroundColor: event.secondary_color }}
+                  title={`Secondary: ${event.secondary_color}`}
+                />
+              )}
               <button
                 onClick={() => setEditing(true)}
                 className="rounded-lg border t-border px-3 py-1.5 text-sm font-medium t-text-secondary hover:t-bg transition-colors"

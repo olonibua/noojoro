@@ -16,11 +16,11 @@ export default function CreateEventPage() {
   const [form, setForm] = useState({
     name: "",
     date: "",
-    time: "",
     venue_name: "",
     table_count: 10,
     guests_per_table: 10,
-    theme_color: "#22C55E",
+    primary_color: "#22C55E",
+    secondary_color: "#FFFFFF",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,11 +40,12 @@ export default function CreateEventPage() {
       const payload = {
         name: form.name,
         date: form.date,
-        time: form.time || "00:00:00",
+        time: null,
         venue_name: form.venue_name,
         table_count: form.table_count,
         guests_per_table: form.guests_per_table,
-        theme_color: form.theme_color,
+        primary_color: form.primary_color,
+        secondary_color: form.secondary_color,
       };
 
       const result = await api.post<CreateEventResponse>("/api/events", payload);
@@ -97,35 +98,20 @@ export default function CreateEventPage() {
             />
           </div>
 
-          {/* Date & Time */}
-          <div className="grid gap-4 sm:grid-cols-2">
-            <div>
-              <label htmlFor="date" className="block text-sm font-medium t-text-secondary">
-                Event Date
-              </label>
-              <input
-                id="date"
-                name="date"
-                type="date"
-                required
-                value={form.date}
-                onChange={handleChange}
-                className="mt-1 block w-full rounded-lg border t-border px-3 py-2.5 text-sm t-text focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
-              />
-            </div>
-            <div>
-              <label htmlFor="time" className="block text-sm font-medium t-text-secondary">
-                Event Time
-              </label>
-              <input
-                id="time"
-                name="time"
-                type="time"
-                value={form.time}
-                onChange={handleChange}
-                className="mt-1 block w-full rounded-lg border t-border px-3 py-2.5 text-sm t-text focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
-              />
-            </div>
+          {/* Event Date */}
+          <div>
+            <label htmlFor="date" className="block text-sm font-medium t-text-secondary">
+              Event Date
+            </label>
+            <input
+              id="date"
+              name="date"
+              type="date"
+              required
+              value={form.date}
+              onChange={handleChange}
+              className="mt-1 block w-full rounded-lg border t-border px-3 py-2.5 text-sm t-text focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
+            />
           </div>
 
           {/* Venue Name */}
@@ -179,32 +165,76 @@ export default function CreateEventPage() {
             </div>
           </div>
 
-          {/* Theme Color */}
+          {/* Total Guests (read-only) */}
           <div>
-            <label htmlFor="theme_color" className="block text-sm font-medium t-text-secondary">
-              Theme Color
+            <label className="block text-sm font-medium t-text-secondary">
+              Total Guests
             </label>
-            <div className="mt-1 flex items-center gap-3">
-              <input
-                id="theme_color"
-                name="theme_color"
-                type="text"
-                value={form.theme_color}
-                onChange={handleChange}
-                placeholder="#22C55E"
-                pattern="^#[0-9A-Fa-f]{6}$"
-                className="block w-full rounded-lg border t-border px-3 py-2.5 text-sm t-text placeholder-[#9C9C9C] focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
-              />
-              <input
-                type="color"
-                value={form.theme_color}
-                onChange={(e) => setForm((prev) => ({ ...prev, theme_color: e.target.value }))}
-                className="h-10 w-10 cursor-pointer rounded-lg border t-border p-0.5"
-              />
-              <div
-                className="h-10 w-10 rounded-lg border t-border"
-                style={{ backgroundColor: form.theme_color }}
-              />
+            <div className="mt-1 rounded-lg border t-border bg-neutral-50 px-3 py-2.5 text-sm t-text font-semibold">
+              {(form.table_count * form.guests_per_table).toLocaleString()} guests
+            </div>
+          </div>
+
+          {/* Colors of the Day */}
+          <div>
+            <label className="block text-sm font-medium t-text-secondary mb-3">
+              Colors of the Day
+            </label>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div>
+                <label htmlFor="primary_color" className="block text-xs font-medium t-text-muted mb-1">
+                  Primary Color
+                </label>
+                <div className="flex items-center gap-2">
+                  <input
+                    id="primary_color"
+                    name="primary_color"
+                    type="text"
+                    value={form.primary_color}
+                    onChange={handleChange}
+                    placeholder="#22C55E"
+                    pattern="^#[0-9A-Fa-f]{6}$"
+                    className="block w-full rounded-lg border t-border px-3 py-2.5 text-sm t-text placeholder-[#9C9C9C] focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
+                  />
+                  <input
+                    type="color"
+                    value={form.primary_color}
+                    onChange={(e) => setForm((prev) => ({ ...prev, primary_color: e.target.value }))}
+                    className="h-10 w-10 cursor-pointer rounded-lg border t-border p-0.5"
+                  />
+                  <div
+                    className="h-10 w-10 shrink-0 rounded-lg border t-border"
+                    style={{ backgroundColor: form.primary_color }}
+                  />
+                </div>
+              </div>
+              <div>
+                <label htmlFor="secondary_color" className="block text-xs font-medium t-text-muted mb-1">
+                  Secondary Color
+                </label>
+                <div className="flex items-center gap-2">
+                  <input
+                    id="secondary_color"
+                    name="secondary_color"
+                    type="text"
+                    value={form.secondary_color}
+                    onChange={handleChange}
+                    placeholder="#FFFFFF"
+                    pattern="^#[0-9A-Fa-f]{6}$"
+                    className="block w-full rounded-lg border t-border px-3 py-2.5 text-sm t-text placeholder-[#9C9C9C] focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
+                  />
+                  <input
+                    type="color"
+                    value={form.secondary_color}
+                    onChange={(e) => setForm((prev) => ({ ...prev, secondary_color: e.target.value }))}
+                    className="h-10 w-10 cursor-pointer rounded-lg border t-border p-0.5"
+                  />
+                  <div
+                    className="h-10 w-10 shrink-0 rounded-lg border t-border"
+                    style={{ backgroundColor: form.secondary_color }}
+                  />
+                </div>
+              </div>
             </div>
           </div>
 

@@ -12,6 +12,7 @@ interface RegisterFormProps {
 
 export default function RegisterForm({ onNavigate, referralCode }: RegisterFormProps) {
   const [mode, setMode] = useState<InputMode>("email");
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
@@ -26,12 +27,10 @@ export default function RegisterForm({ onNavigate, referralCode }: RegisterFormP
     setLoading(true);
 
     try {
-      const body: Record<string, string> = { password, role };
+      const body: Record<string, string> = { name, phone, password, role };
 
       if (mode === "email") {
         body.email = email;
-      } else {
-        body.phone = phone;
       }
 
       if (referralCode) {
@@ -78,6 +77,38 @@ export default function RegisterForm({ onNavigate, referralCode }: RegisterFormP
         </div>
       )}
 
+      {/* Full Name */}
+      <div className="mb-5">
+        <label htmlFor="reg-name" className="mb-1.5 block text-sm font-medium t-text-secondary">
+          Full Name
+        </label>
+        <input
+          id="reg-name"
+          type="text"
+          required
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="Your full name"
+          className="w-full t-input px-4 py-3 outline-none"
+        />
+      </div>
+
+      {/* Phone Number (always required) */}
+      <div className="mb-5">
+        <label htmlFor="reg-phone-main" className="mb-1.5 block text-sm font-medium t-text-secondary">
+          Phone Number
+        </label>
+        <input
+          id="reg-phone-main"
+          type="tel"
+          required
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+          placeholder="+234 801 234 5678"
+          className="w-full t-input px-4 py-3 outline-none"
+        />
+      </div>
+
       {/* Mode Tabs */}
       <div className="mb-6 flex overflow-hidden rounded-xl t-tab-bg p-1">
         <button
@@ -89,7 +120,7 @@ export default function RegisterForm({ onNavigate, referralCode }: RegisterFormP
               : "t-text-muted hover:text-eco"
           }`}
         >
-          Email
+          Email + Phone
         </button>
         <button
           type="button"
@@ -100,12 +131,12 @@ export default function RegisterForm({ onNavigate, referralCode }: RegisterFormP
               : "t-text-muted hover:text-eco"
           }`}
         >
-          Phone
+          Phone Only
         </button>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-5">
-        {mode === "email" ? (
+        {mode === "email" && (
           <div>
             <label htmlFor="reg-email" className="mb-1.5 block text-sm font-medium t-text-secondary">
               Email Address
@@ -117,21 +148,6 @@ export default function RegisterForm({ onNavigate, referralCode }: RegisterFormP
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@example.com"
-              className="w-full t-input px-4 py-3 outline-none"
-            />
-          </div>
-        ) : (
-          <div>
-            <label htmlFor="reg-phone" className="mb-1.5 block text-sm font-medium t-text-secondary">
-              Phone Number
-            </label>
-            <input
-              id="reg-phone"
-              type="tel"
-              required
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              placeholder="+234 801 234 5678"
               className="w-full t-input px-4 py-3 outline-none"
             />
           </div>
@@ -180,7 +196,7 @@ export default function RegisterForm({ onNavigate, referralCode }: RegisterFormP
             onChange={(e) => setRole(e.target.value)}
             className="w-full t-input px-4 py-3 outline-none"
           >
-            <option value="caterer" className="t-select-option">Caterer</option>
+            <option value="caterer" className="t-select-option">Event Planner / Caterer</option>
             <option value="bar_owner" className="t-select-option">Bar Owner</option>
           </select>
         </div>

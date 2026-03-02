@@ -201,7 +201,7 @@ export default function CelebrantPhotosPage() {
 
       <h1 className="text-2xl font-bold t-text">Celebrant Photos</h1>
       <p className="mt-1 text-sm t-text-muted">
-        Upload photos for the celebrant gallery. Guests will see these during the event.
+        Upload photos for the celebrant gallery (max 6). Guests will see these during the event.
       </p>
 
       {error && (
@@ -218,41 +218,49 @@ export default function CelebrantPhotosPage() {
       {/* Upload Area */}
       <div className="mt-6 rounded-xl border t-border t-bg-card p-6 shadow-sm">
         <h2 className="text-lg font-semibold t-text">Upload Photos</h2>
-        <div
-          onDrop={handleDrop}
-          onDragOver={handleDragOver}
-          onDragLeave={handleDragLeave}
-          onClick={() => fileInputRef.current?.click()}
-          className={`mt-4 flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed p-10 transition-colors ${
-            dragOver
-              ? "border-neutral-300 bg-neutral-50"
-              : "t-border hover:border-gray-400"
-          }`}
-        >
-          <svg
-            className="h-10 w-10 t-text-faint"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
+        {photos.length >= 6 ? (
+          <div className="mt-4 rounded-xl border-2 border-dashed t-border p-10 text-center">
+            <p className="text-sm font-medium t-text-muted">
+              Maximum of 6 photos reached
+            </p>
+          </div>
+        ) : (
+          <div
+            onDrop={handleDrop}
+            onDragOver={handleDragOver}
+            onDragLeave={handleDragLeave}
+            onClick={() => fileInputRef.current?.click()}
+            className={`mt-4 flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed p-10 transition-colors ${
+              dragOver
+                ? "border-neutral-300 bg-neutral-50"
+                : "t-border hover:border-gray-400"
+            }`}
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3.75 21h16.5a2.25 2.25 0 002.25-2.25V6.75a2.25 2.25 0 00-2.25-2.25H3.75A2.25 2.25 0 001.5 6.75v12a2.25 2.25 0 002.25 2.25z"
-            />
-          </svg>
-          {uploading ? (
-            <p className="mt-3 text-sm t-text-muted">Uploading...</p>
-          ) : (
-            <>
-              <p className="mt-3 text-sm font-medium t-text-secondary">
-                Drag & drop photos here, or click to browse
-              </p>
-              <p className="mt-1 text-xs t-text-faint">PNG, JPG, WEBP up to 10MB each</p>
-            </>
-          )}
-        </div>
+            <svg
+              className="h-10 w-10 t-text-faint"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3.75 21h16.5a2.25 2.25 0 002.25-2.25V6.75a2.25 2.25 0 00-2.25-2.25H3.75A2.25 2.25 0 001.5 6.75v12a2.25 2.25 0 002.25 2.25z"
+              />
+            </svg>
+            {uploading ? (
+              <p className="mt-3 text-sm t-text-muted">Uploading...</p>
+            ) : (
+              <>
+                <p className="mt-3 text-sm font-medium t-text-secondary">
+                  Drag & drop photos here, or click to browse
+                </p>
+                <p className="mt-1 text-xs t-text-faint">PNG, JPG, WEBP up to 10MB each</p>
+              </>
+            )}
+          </div>
+        )}
         <input
           ref={fileInputRef}
           type="file"
@@ -267,7 +275,7 @@ export default function CelebrantPhotosPage() {
       {photos.length > 0 && (
         <div className="mt-6 rounded-xl border t-border t-bg-card p-6 shadow-sm">
           <h2 className="text-lg font-semibold t-text">
-            Uploaded Photos ({photos.length})
+            Uploaded Photos ({photos.length}/6)
           </h2>
           <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
             {photos.map((photo) => (

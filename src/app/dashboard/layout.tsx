@@ -8,6 +8,7 @@ import { useTheme } from "@/components/ui/ThemeProvider";
 
 interface User {
   id: string;
+  name: string | null;
   email: string | null;
   phone: string | null;
   role: string;
@@ -140,19 +141,19 @@ function MoonIcon({ className }: { className?: string }) {
 
 /* ═══════════ NAV CONFIG ═══════════ */
 
-const navItems = [
-  { label: "Dashboard", href: "/dashboard", icon: GridIcon, exact: true },
-  { label: "Events", href: "/dashboard/events", icon: CalendarIcon },
-  { label: "Venues", href: "/dashboard/venues", icon: BuildingIcon },
-  { label: "Referrals", href: "/dashboard/referrals", icon: UsersIcon },
-  { label: "Event Proofs", href: "/dashboard/event-proofs", icon: CameraIcon },
+const allNavItems = [
+  { label: "Dashboard", href: "/dashboard", icon: GridIcon, exact: true, roles: ["caterer", "bar_owner"] },
+  { label: "Events", href: "/dashboard/events", icon: CalendarIcon, roles: ["caterer"] },
+  { label: "Venues", href: "/dashboard/venues", icon: BuildingIcon, roles: ["bar_owner"] },
+  { label: "My Network", href: "/dashboard/referrals", icon: UsersIcon, roles: ["caterer", "bar_owner"] },
+  { label: "Event Proofs", href: "/dashboard/event-proofs", icon: CameraIcon, roles: ["caterer", "bar_owner"] },
 ];
 
 function getPageInfo(pathname: string): { title: string; icon: React.ComponentType<{ className?: string }> } {
   if (pathname === "/dashboard") return { title: "Dashboard", icon: GridIcon };
   if (pathname.startsWith("/dashboard/events")) return { title: "Events", icon: CalendarIcon };
   if (pathname.startsWith("/dashboard/venues")) return { title: "Venues", icon: BuildingIcon };
-  if (pathname.startsWith("/dashboard/referrals")) return { title: "Referrals", icon: UsersIcon };
+  if (pathname.startsWith("/dashboard/referrals")) return { title: "My Network", icon: UsersIcon };
   if (pathname.startsWith("/dashboard/event-proofs")) return { title: "Event Proofs", icon: CameraIcon };
   return { title: "Dashboard", icon: GridIcon };
 }
@@ -246,7 +247,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   const pageInfo = getPageInfo(pathname);
   const PageIcon = pageInfo.icon;
-  const userInitial = (user?.email || user?.phone || "U").charAt(0).toUpperCase();
+  const navItems = allNavItems.filter((item) => item.roles.includes(user?.role || "caterer"));
+  const userInitial = (user?.name || user?.email || user?.phone || "U").charAt(0).toUpperCase();
 
   return (
     <div className="flex h-screen t-bg">
@@ -336,8 +338,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                   {userInitial}
                 </div>
                 <div className="overflow-hidden">
-                  <p className="text-sm font-medium t-text truncate">{user?.email || user?.phone}</p>
-                  <p className="text-xs t-text-faint capitalize">{user?.role}</p>
+                  <p className="text-sm font-medium t-text truncate">{user?.name || user?.email || user?.phone}</p>
+                  <p className="text-xs t-text-faint capitalize">{user?.role?.replace("_", " ")}</p>
                 </div>
               </div>
             </>

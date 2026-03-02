@@ -73,18 +73,29 @@ function ListIcon({ className }: { className?: string }) {
 
 /* ═══════════ PAGE ═══════════ */
 
+interface User {
+  id: string;
+  name: string | null;
+  email: string | null;
+  phone: string | null;
+  role: string;
+}
+
 export default function DashboardHome() {
   const router = useRouter();
+  const [user, setUser] = useState<User | null>(null);
   const [events, setEvents] = useState<Event[]>([]);
   const [venues, setVenues] = useState<Venue[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     Promise.all([
+      api.get<User>("/api/auth/me").catch(() => null),
       api.get<Event[]>("/api/events").catch(() => [] as Event[]),
       api.get<Venue[]>("/api/venues").catch(() => [] as Venue[]),
     ])
-      .then(([evts, vns]) => {
+      .then(([u, evts, vns]) => {
+        setUser(u);
         setEvents(evts);
         setVenues(vns);
       })
@@ -127,39 +138,50 @@ export default function DashboardHome() {
     },
   ];
 
+  const isCaterer = user?.role === "caterer";
+  const isBarOwner = user?.role === "bar_owner";
+
   const quickActions = [
-    {
-      title: "Create Event",
-      description: "Set up a new event with tables, menus, and tokens.",
-      href: "/dashboard/events/new",
-      icon: PlusIcon,
-      iconBg: "bg-neutral-100",
-      iconColor: "text-neutral-600",
-    },
-    {
-      title: "Create Venue",
-      description: "Register a new bar or restaurant venue.",
-      href: "/dashboard/venues/new",
-      icon: PlusIcon,
-      iconBg: "bg-neutral-100",
-      iconColor: "text-neutral-600",
-    },
-    {
-      title: "My Events",
-      description: "View and manage all your existing events.",
-      href: "/dashboard/events",
-      icon: ListIcon,
-      iconBg: "t-bg-secondary",
-      iconColor: "t-text-muted",
-    },
-    {
-      title: "My Venues",
-      description: "View and manage all your registered venues.",
-      href: "/dashboard/venues",
-      icon: ListIcon,
-      iconBg: "t-bg-secondary",
-      iconColor: "t-text-muted",
-    },
+    ...(isCaterer
+      ? [
+          {
+            title: "Create Event",
+            description: "Set up a new event with tables, menus, and tokens.",
+            href: "/dashboard/events/new",
+            icon: PlusIcon,
+            iconBg: "bg-neutral-100",
+            iconColor: "text-neutral-600",
+          },
+          {
+            title: "My Events",
+            description: "View and manage all your existing events.",
+            href: "/dashboard/events",
+            icon: ListIcon,
+            iconBg: "t-bg-secondary",
+            iconColor: "t-text-muted",
+          },
+        ]
+      : []),
+    ...(isBarOwner
+      ? [
+          {
+            title: "Create Venue",
+            description: "Register a new bar or restaurant venue.",
+            href: "/dashboard/venues/new",
+            icon: PlusIcon,
+            iconBg: "bg-neutral-100",
+            iconColor: "text-neutral-600",
+          },
+          {
+            title: "My Venues",
+            description: "View and manage all your registered venues.",
+            href: "/dashboard/venues",
+            icon: ListIcon,
+            iconBg: "t-bg-secondary",
+            iconColor: "t-text-muted",
+          },
+        ]
+      : []),
   ];
 
   return (
@@ -167,7 +189,7 @@ export default function DashboardHome() {
       {/* Greeting */}
       <div>
         <h1 className="text-2xl font-bold t-text lg:text-3xl">
-          Welcome back to No Ojoro
+          Welcome back{user?.name ? `, ${user.name}` : ""}
         </h1>
         <p className="mt-1 t-text-muted">
           Here&apos;s an overview of your events and venues.

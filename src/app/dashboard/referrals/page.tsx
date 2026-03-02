@@ -95,7 +95,7 @@ export default function ReferralsPage() {
     <div className="space-y-8">
       {/* Referral Code + Link */}
       <div className="card-elevated rounded-2xl p-6">
-        <h2 className="text-lg font-semibold t-text mb-4">Your Referral Code</h2>
+        <h2 className="text-lg font-semibold t-text mb-4">Your Network Code</h2>
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
           <div className="flex items-center gap-3">
             <span className="rounded-xl bg-eco/10 px-4 py-2.5 text-lg font-bold text-eco tracking-wider">

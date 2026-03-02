@@ -29,7 +29,8 @@ interface BackendCategory {
 
 interface BackendTokenData {
   event_name: string;
-  theme_color: string | null;
+  primary_color: string | null;
+  secondary_color: string | null;
   celebrant_photos: Record<string, string> | null;
   menu: BackendCategory[];
   table_number: number;
@@ -58,7 +59,9 @@ interface Photo {
 
 interface TokenData {
   event_name: string;
-  theme_color: string;
+  primary_color: string;
+  secondary_color: string;
+  background_photo: Photo | null;
   photos: Photo[];
   menu: CategoryGroup[];
 }
@@ -93,7 +96,7 @@ export default function GuestCateringOrderPage() {
   const [waiterRequested, setWaiterRequested] = useState(false);
   const slideTimer = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  const themeColor = tokenData?.theme_color || "#22C55E";
+  const themeColor = tokenData?.primary_color || "#22C55E";
 
   /* --- Load token data --- */
   useEffect(() => {
@@ -104,11 +107,15 @@ export default function GuestCateringOrderPage() {
         );
 
         // Convert celebrant_photos dict to photos array
-        const photos: Photo[] = raw.celebrant_photos
+        const allPhotos: Photo[] = raw.celebrant_photos
           ? Object.values(raw.celebrant_photos).map((url) => ({
               url: url.startsWith("http") ? url : `${API_URL}${url}`,
             }))
           : [];
+
+        // First photo = background, rest = slideshow
+        const backgroundPhoto = allPhotos.length > 0 ? allPhotos[0] : null;
+        const slideshowPhotos = allPhotos.length > 1 ? allPhotos.slice(1) : [];
 
         // Map backend categories to display format
         const menu: CategoryGroup[] = raw.menu.map((cat) => ({
@@ -123,13 +130,15 @@ export default function GuestCateringOrderPage() {
 
         const mapped: TokenData = {
           event_name: raw.event_name,
-          theme_color: raw.theme_color || "#22C55E",
-          photos,
+          primary_color: raw.primary_color || "#22C55E",
+          secondary_color: raw.secondary_color || "#FFFFFF",
+          background_photo: backgroundPhoto,
+          photos: slideshowPhotos,
           menu,
         };
 
         setTokenData(mapped);
-        if (photos.length > 0) {
+        if (slideshowPhotos.length > 0) {
           setPhase("slideshow");
         } else {
           setPhase("menu");
@@ -264,43 +273,56 @@ export default function GuestCateringOrderPage() {
     const photos = tokenData.photos;
     const current = photos[slideIndex];
     return (
-      <div className="flex min-h-screen flex-col items-center justify-center bg-white px-6">
-        <h2
-          className="mb-6 text-center text-2xl font-bold"
-          style={{ color: themeColor }}
-        >
-          Welcome to {tokenData.event_name}!
-        </h2>
-
-        {current && (
-          <div className="relative mb-6 w-full max-w-sm overflow-hidden rounded-2xl">
-            <img
-              src={current.url}
-              alt="Celebration photo"
-              className="h-72 w-full object-cover"
-            />
+      <div className="relative flex min-h-screen flex-col items-center justify-center px-6">
+        {/* Background photo (first uploaded photo) */}
+        {tokenData.background_photo && (
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: `url(${tokenData.background_photo.url})` }}
+          >
+            <div className="absolute inset-0 bg-black/50" />
           </div>
         )}
+        {!tokenData.background_photo && <div className="absolute inset-0 bg-white" />}
 
-        {/* Dots */}
-        <div className="mb-6 flex gap-2">
-          {photos.map((_, i) => (
-            <div
-              key={i}
-              className="h-2 w-2 rounded-full transition-colors"
-              style={{
-                backgroundColor: i === slideIndex ? themeColor : "#D1D5DB",
-              }}
-            />
-          ))}
+        <div className="relative z-10">
+          <h2
+            className="mb-6 text-center text-2xl font-bold"
+            style={{ color: tokenData.background_photo ? "#FFFFFF" : themeColor }}
+          >
+            Welcome to {tokenData.event_name}!
+          </h2>
+
+          {current && (
+            <div className="relative mb-6 w-full max-w-sm overflow-hidden rounded-2xl">
+              <img
+                src={current.url}
+                alt="Celebration photo"
+                className="h-72 w-full object-cover"
+              />
+            </div>
+          )}
+
+          {/* Dots */}
+          <div className="mb-6 flex justify-center gap-2">
+            {photos.map((_, i) => (
+              <div
+                key={i}
+                className="h-2 w-2 rounded-full transition-colors"
+                style={{
+                  backgroundColor: i === slideIndex ? themeColor : "#D1D5DB",
+                }}
+              />
+            ))}
+          </div>
+
+          <button
+            onClick={skipSlideshow}
+            className="min-h-[48px] min-w-[120px] rounded-xl border-2 border-white/50 px-6 py-3 text-lg font-semibold text-white active:bg-white/10"
+          >
+            Skip
+          </button>
         </div>
-
-        <button
-          onClick={skipSlideshow}
-          className="min-h-[48px] min-w-[120px] rounded-xl border-2 border-gray-300 px-6 py-3 text-lg font-semibold text-gray-700 active:bg-gray-100"
-        >
-          Skip
-        </button>
       </div>
     );
   }
