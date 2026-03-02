@@ -85,9 +85,9 @@ export default function VerifyForm({ onClose }: VerifyFormProps) {
       if (verifyPhone) loginBody.phone = verifyPhone;
 
       if (loginBody.password) {
-        const loginResult = await api.post<{ access_token?: string }>("/api/auth/login", loginBody);
+        const loginResult = await api.post<{ access_token?: string; refresh_token?: string }>("/api/auth/login", loginBody);
         if (loginResult.access_token) {
-          setAuthTokens(loginResult.access_token);
+          setAuthTokens(loginResult.access_token, loginResult.refresh_token || undefined);
         }
       }
 

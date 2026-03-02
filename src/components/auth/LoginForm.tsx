@@ -36,7 +36,7 @@ export default function LoginForm({ onNavigate, onClose }: LoginFormProps) {
         body.phone = phone;
       }
 
-      const result = await api.post<{ message: string; access_token?: string }>("/api/auth/login", body);
+      const result = await api.post<{ message: string; access_token?: string; refresh_token?: string }>("/api/auth/login", body);
 
       if (result.message === "verify_required") {
         if (mode === "email") {
@@ -50,7 +50,7 @@ export default function LoginForm({ onNavigate, onClose }: LoginFormProps) {
       }
 
       if (result.access_token) {
-        setAuthTokens(result.access_token);
+        setAuthTokens(result.access_token, result.refresh_token || undefined);
       }
 
       onClose();

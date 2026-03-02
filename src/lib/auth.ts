@@ -26,11 +26,14 @@ export function clearAuthTokens(): void {
   // Clear auth cookies
   document.cookie = "logged_in=; path=/; max-age=0";
   document.cookie = "noojoro_token=; path=/; max-age=0";
+  document.cookie = "noojoro_refresh=; path=/; max-age=0";
 }
 
-export function setAuthTokens(accessToken: string): void {
+export function setAuthTokens(accessToken: string, refreshToken?: string): void {
   if (typeof window === "undefined") return;
-  // Store access token as a first-party cookie (avoids cross-domain cookie blocking)
   document.cookie = `noojoro_token=${encodeURIComponent(accessToken)}; path=/; max-age=${7 * 24 * 60 * 60}; samesite=lax`;
   document.cookie = `logged_in=true; path=/; max-age=${7 * 24 * 60 * 60}; samesite=lax`;
+  if (refreshToken) {
+    document.cookie = `noojoro_refresh=${encodeURIComponent(refreshToken)}; path=/; max-age=${7 * 24 * 60 * 60}; samesite=lax`;
+  }
 }

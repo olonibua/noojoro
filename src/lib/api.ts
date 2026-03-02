@@ -1,4 +1,4 @@
-import { isTokenExpired, clearAuthTokens } from "./auth";
+import { isTokenExpired, clearAuthTokens, setAuthTokens } from "./auth";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
@@ -33,10 +33,47 @@ export function getBearerToken(): string | null {
     null;
 
   if (token && isTokenExpired(token)) {
-    clearAuthTokens();
+    // Don't clear tokens here — let the refresh attempt handle it
     return null;
   }
   return token;
+}
+
+let refreshPromise: Promise<string | null> | null = null;
+
+async function tryRefreshToken(): Promise<string | null> {
+  const refreshToken = getCookie("noojoro_refresh");
+  if (!refreshToken || isTokenExpired(refreshToken)) {
+    clearAuthTokens();
+    return null;
+  }
+
+  try {
+    const resp = await fetch(`${API_URL}/api/auth/refresh`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${refreshToken}`,
+      },
+      credentials: "include",
+    });
+
+    if (!resp.ok) {
+      clearAuthTokens();
+      return null;
+    }
+
+    const data = await resp.json();
+    if (data.access_token) {
+      setAuthTokens(data.access_token);
+      return data.access_token;
+    }
+    clearAuthTokens();
+    return null;
+  } catch {
+    clearAuthTokens();
+    return null;
+  }
 }
 
 async function request<T>(
@@ -45,8 +82,17 @@ async function request<T>(
 ): Promise<T> {
   const { method = "GET", body, headers = {} } = options;
 
+  let token = getBearerToken();
+
+  // If access token is expired, try refreshing before making the request
+  if (!token && getCookie("noojoro_refresh")) {
+    if (!refreshPromise) {
+      refreshPromise = tryRefreshToken().finally(() => { refreshPromise = null; });
+    }
+    token = await refreshPromise;
+  }
+
   const authHeaders: Record<string, string> = {};
-  const token = getBearerToken();
   if (token) {
     authHeaders["Authorization"] = `Bearer ${token}`;
   }
@@ -67,11 +113,37 @@ async function request<T>(
 
   const response = await fetch(`${API_URL}${endpoint}`, config);
 
+  // If 401, attempt one refresh and retry
+  if (response.status === 401 && getCookie("noojoro_refresh")) {
+    if (!refreshPromise) {
+      refreshPromise = tryRefreshToken().finally(() => { refreshPromise = null; });
+    }
+    const newToken = await refreshPromise;
+    if (newToken) {
+      const retryConfig: RequestInit = {
+        method,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${newToken}`,
+          ...headers,
+        },
+        credentials: "include",
+      };
+      if (body) retryConfig.body = JSON.stringify(body);
+
+      const retryResponse = await fetch(`${API_URL}${endpoint}`, retryConfig);
+      if (retryResponse.ok) {
+        return retryResponse.json();
+      }
+    }
+    // Refresh failed or retry failed — clear and throw
+    clearAuthTokens();
+  }
+
   if (!response.ok) {
     const error = await response.json().catch(() => ({ detail: "Request failed" }));
     const detail = error.detail;
 
-    // Centralized 401/403 handling: clear tokens so user is redirected
     if (response.status === 401 || response.status === 403) {
       clearAuthTokens();
     }
