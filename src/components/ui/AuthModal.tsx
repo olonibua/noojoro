@@ -56,16 +56,18 @@ function AuthModalInner() {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-[60] flex items-center justify-center">
+    <div className="fixed inset-0 z-[60] overflow-y-auto">
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-black/50 backdrop-blur-sm animate-fade-in"
+        className="fixed inset-0 bg-black/50 backdrop-blur-sm animate-fade-in"
         onClick={close}
       />
 
-      {/* Modal card */}
-      <div className="relative w-full max-w-md mx-4 animate-modal-in">
-        <div className="card-elevated rounded-2xl p-8 t-text max-h-[90vh] overflow-y-auto">
+      {/* Scrollable wrapper */}
+      <div className="flex min-h-full items-center justify-center p-4">
+        {/* Modal card */}
+        <div className="relative w-full max-w-md animate-modal-in">
+          <div className="card-elevated rounded-2xl p-8 t-text">
           {/* Close button */}
           <button
             type="button"
@@ -79,10 +81,11 @@ function AuthModalInner() {
           </button>
 
           {/* Form content */}
-          {authView === "login" && <LoginForm onNavigate={navigate} onClose={close} />}
-          {authView === "register" && <RegisterForm onNavigate={navigate} referralCode={searchParams.get("ref") || undefined} />}
-          {authView === "verify" && <VerifyForm onClose={close} />}
-          {authView === "reset" && <ResetPasswordForm onNavigate={navigate} />}
+            {authView === "login" && <LoginForm onNavigate={navigate} onClose={close} />}
+            {authView === "register" && <RegisterForm onNavigate={navigate} referralCode={searchParams.get("ref") || undefined} />}
+            {authView === "verify" && <VerifyForm onClose={close} />}
+            {authView === "reset" && <ResetPasswordForm onNavigate={navigate} />}
+          </div>
         </div>
       </div>
     </div>
