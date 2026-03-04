@@ -3,6 +3,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { api } from "@/lib/api";
+import WizardSteps from "@/components/wizard/WizardSteps";
 
 interface MenuItem {
   id: string;
@@ -18,6 +19,10 @@ interface MenuCategory {
   description: string | null;
   display_order: number;
   items: MenuItem[];
+}
+
+interface EventInfo {
+  total_tokens: number;
 }
 
 // Predefined category options
@@ -43,6 +48,8 @@ export default function MenuBuilderPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [totalGuests, setTotalGuests] = useState(0);
+  const [dismissedWarnings, setDismissedWarnings] = useState<Set<string>>(new Set());
 
   // New category form
   const [newCatName, setNewCatName] = useState(CATEGORY_OPTIONS[0]);
@@ -69,11 +76,13 @@ export default function MenuBuilderPage() {
 
   const fetchMenu = useCallback(async () => {
     try {
-      const res = await api.get<{ categories: MenuCategory[] }>(
-        `/api/events/${eventId}/menu/manage`
-      );
-      const data = res.categories;
+      const [menuRes, eventRes] = await Promise.all([
+        api.get<{ categories: MenuCategory[] }>(`/api/events/${eventId}/menu/manage`),
+        api.get<EventInfo>(`/api/events/${eventId}`),
+      ]);
+      const data = menuRes.categories;
       setCategories(Array.isArray(data) ? data : []);
+      setTotalGuests(eventRes.total_tokens || 0);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to load menu");
     } finally {
@@ -188,6 +197,20 @@ export default function MenuBuilderPage() {
     }
   };
 
+  // Check for quantity warnings
+  const getQuantityWarnings = () => {
+    const warnings: { itemName: string; qty: number; itemId: string }[] = [];
+    if (totalGuests <= 0) return warnings;
+    for (const cat of categories) {
+      for (const item of cat.items || []) {
+        if (item.total_quantity < totalGuests && !dismissedWarnings.has(item.id)) {
+          warnings.push({ itemName: item.name, qty: item.total_quantity, itemId: item.id });
+        }
+      }
+    }
+    return warnings;
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
@@ -196,14 +219,18 @@ export default function MenuBuilderPage() {
     );
   }
 
+  const quantityWarnings = getQuantityWarnings();
+
   return (
     <div className="mx-auto max-w-4xl">
+      <WizardSteps currentStep={2} />
+
       <div className="mb-6 flex items-center justify-between">
         <button
-          onClick={() => router.push(`/dashboard/events/${eventId}`)}
+          onClick={() => router.back()}
           className="text-sm t-text-muted hover:t-text-secondary transition-colors"
         >
-          &larr; Back to Event
+          &larr; Back
         </button>
         <button
           onClick={() => router.push(`/dashboard/events/${eventId}/menu/vip`)}
@@ -226,6 +253,44 @@ export default function MenuBuilderPage() {
       {success && (
         <div className="mt-4 rounded-lg bg-emerald-50 border border-emerald-200 px-4 py-3 text-sm t-text">
           {success}
+        </div>
+      )}
+
+      {/* Quantity Warnings */}
+      {quantityWarnings.length > 0 && (
+        <div className="mt-4 space-y-2">
+          {quantityWarnings.map((w) => (
+            <div
+              key={w.itemId}
+              className="flex items-center justify-between rounded-lg bg-amber-50 border border-amber-200 px-4 py-3 text-sm text-amber-800"
+            >
+              <span>
+                Total quantity of <strong>{w.itemName}</strong> ({w.qty}) is less than total guests ({totalGuests}). Add more?
+              </span>
+              <div className="ml-4 flex shrink-0 gap-2">
+                <button
+                  onClick={() => setDismissedWarnings((prev) => new Set(prev).add(w.itemId))}
+                  className="rounded px-3 py-1 text-xs font-medium text-amber-700 hover:bg-amber-100"
+                >
+                  Ignore
+                </button>
+                <button
+                  onClick={() => {
+                    setEditingItemId(w.itemId);
+                    const item = categories.flatMap((c) => c.items).find((i) => i.id === w.itemId);
+                    if (item) {
+                      setEditItemName(item.name);
+                      setEditItemQty(String(item.total_quantity));
+                      setEditItemOrder(String(item.display_order));
+                    }
+                  }}
+                  className="rounded bg-amber-200 px-3 py-1 text-xs font-medium text-amber-900 hover:bg-amber-300"
+                >
+                  Edit
+                </button>
+              </div>
+            </div>
+          ))}
         </div>
       )}
 
@@ -490,22 +555,22 @@ export default function MenuBuilderPage() {
           ))}
       </div>
 
-      {/* Complete Setup Button */}
-      <div className="mt-8 flex justify-end gap-3">
+      {/* Navigation Buttons */}
+      <div className="mt-8 flex justify-between gap-3">
         <button
-          onClick={() => router.push(`/dashboard/events/${eventId}`)}
+          onClick={() => router.back()}
           className="rounded-lg border t-border px-6 py-3 text-sm font-semibold t-text-secondary transition-colors hover:t-bg"
         >
-          Back to Event Details
+          &larr; Back
         </button>
         <button
-          onClick={() => router.push("/dashboard")}
+          onClick={() => router.push(`/dashboard/events/${eventId}/staff`)}
           className="inline-flex items-center gap-2 rounded-lg bg-eco px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-eco-dark"
         >
+          Proceed to Staff Assignment
           <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+            <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
           </svg>
-          Complete Setup
         </button>
       </div>
     </div>

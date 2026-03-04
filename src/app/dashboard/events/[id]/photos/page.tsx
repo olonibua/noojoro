@@ -3,6 +3,7 @@
 import { useEffect, useState, useCallback, useRef } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { api, getBearerToken } from "@/lib/api";
+import WizardSteps from "@/components/wizard/WizardSteps";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
@@ -35,12 +36,20 @@ export default function CelebrantPhotosPage() {
 
   const [partyId, setPartyId] = useState("");
 
+  // Background photo selection
+  const [backgroundPhotoId, setBackgroundPhotoId] = useState<string | null>(null);
+
+  // Celebrant message
+  const [celebrantMessage, setCelebrantMessage] = useState("");
+
   const fetchPhotos = useCallback(async () => {
     try {
       const event = await api.get<{
         celebrant_photos: Record<string, string> | null;
         party_id: string | null;
         celebrant_password_set: boolean;
+        background_photo_id: string | null;
+        celebrant_message: string | null;
       }>(`/api/events/${eventId}`);
       const photosMap = event.celebrant_photos || {};
       const photoList: Photo[] = Object.entries(photosMap).map(([id, url]) => ({
@@ -50,6 +59,8 @@ export default function CelebrantPhotosPage() {
       }));
       setPhotos(photoList);
       setPartyId(event.party_id || "");
+      setBackgroundPhotoId(event.background_photo_id || null);
+      setCelebrantMessage(event.celebrant_message || "");
       // Show reset tab if password is already set
       if (event.celebrant_password_set) {
         setPasswordView("reset");
@@ -206,6 +217,18 @@ export default function CelebrantPhotosPage() {
     }
   };
 
+  const handleProceedToPreview = async () => {
+    try {
+      await api.put(`/api/events/${eventId}`, {
+        background_photo_id: backgroundPhotoId,
+        celebrant_message: celebrantMessage,
+      });
+      router.push(`/dashboard/events/${eventId}/preview`);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to save changes");
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
@@ -216,12 +239,14 @@ export default function CelebrantPhotosPage() {
 
   return (
     <div className="mx-auto max-w-4xl">
+      <WizardSteps currentStep={4} />
+
       <div className="mb-6">
         <button
-          onClick={() => router.push(`/dashboard/events/${eventId}`)}
+          onClick={() => router.push(`/dashboard/events/${eventId}/staff`)}
           className="text-sm t-text-muted hover:t-text-secondary transition-colors"
         >
-          &larr; Back to Event
+          &larr; Back to Staff
         </button>
       </div>
 
@@ -303,22 +328,60 @@ export default function CelebrantPhotosPage() {
           <h2 className="text-lg font-semibold t-text">
             Uploaded Photos ({photos.length}/6)
           </h2>
+          <p className="mt-1 text-sm t-text-muted">
+            Click a photo to set it as the background image for your event page.
+          </p>
           <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
             {photos.map((photo) => (
               <div
                 key={photo.id}
-                className="group relative aspect-square overflow-hidden rounded-lg border t-border t-bg"
+                onClick={() => setBackgroundPhotoId(photo.id === backgroundPhotoId ? null : photo.id)}
+                className={`group relative aspect-square cursor-pointer overflow-hidden rounded-lg border-2 transition-all ${
+                  photo.id === backgroundPhotoId
+                    ? "border-eco ring-2 ring-eco/30"
+                    : "t-border hover:border-gray-400"
+                } t-bg`}
               >
                 <img
                   src={photo.url.startsWith("http") ? photo.url : `${API_URL}${photo.url}`}
                   alt={photo.filename || "Photo"}
                   className="h-full w-full object-cover transition-transform group-hover:scale-105"
                 />
+                {photo.id === backgroundPhotoId && (
+                  <div className="absolute top-2 left-2 rounded-md bg-eco px-2 py-0.5 text-xs font-bold text-white shadow">
+                    BG
+                  </div>
+                )}
               </div>
             ))}
           </div>
         </div>
       )}
+
+      {/* Celebrant Message */}
+      <div className="mt-6 rounded-xl border t-border t-bg-card p-6 shadow-sm">
+        <h2 className="text-lg font-semibold t-text">Celebrant Message</h2>
+        <p className="mt-1 text-sm t-text-muted">
+          Write a personal message from the celebrant that guests will see on the event page.
+        </p>
+        <div className="mt-4">
+          <textarea
+            value={celebrantMessage}
+            onChange={(e) => {
+              if (e.target.value.length <= 500) {
+                setCelebrantMessage(e.target.value);
+              }
+            }}
+            placeholder="e.g., Thank you for celebrating with me! Your presence means the world..."
+            rows={4}
+            maxLength={500}
+            className="block w-full rounded-lg border t-border px-4 py-3 text-sm t-text placeholder-[#9C9C9C] focus:border-eco focus:outline-none focus:ring-2 focus:ring-eco resize-none"
+          />
+          <p className="mt-1.5 text-xs t-text-faint text-right">
+            {celebrantMessage.length}/500 characters
+          </p>
+        </div>
+      </div>
 
       {/* Celebrant Access */}
       <div className="mt-6 rounded-xl border t-border t-bg-card p-6 shadow-sm">
@@ -483,13 +546,13 @@ export default function CelebrantPhotosPage() {
         </div>
       </div>
 
-      {/* Continue to Menu Button */}
+      {/* Proceed to Preview Button */}
       <div className="mt-8 flex justify-end">
         <button
-          onClick={() => router.push(`/dashboard/events/${eventId}/menu`)}
+          onClick={handleProceedToPreview}
           className="inline-flex items-center gap-2 rounded-lg bg-eco px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-eco-dark"
         >
-          Continue to Menu Setup
+          Proceed to Preview
           <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
           </svg>

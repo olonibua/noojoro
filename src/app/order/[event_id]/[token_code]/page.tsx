@@ -32,6 +32,14 @@ interface BackendTokenData {
   primary_color: string | null;
   secondary_color: string | null;
   celebrant_photos: Record<string, string> | null;
+  celebrant_message: string | null;
+  background_photo_id: string | null;
+  font_family: string | null;
+  font_size: string | null;
+  font_weight: string | null;
+  font_style: string | null;
+  letter_spacing: string | null;
+  text_align: string | null;
   menu: BackendCategory[];
   table_number: number;
   seat_number: number;
@@ -57,13 +65,24 @@ interface Photo {
   url: string;
 }
 
+interface FontStyle {
+  fontFamily: string;
+  fontSize: string;
+  fontWeight: string;
+  fontStyle: string;
+  letterSpacing: string;
+  textAlign: "left" | "center" | "right";
+}
+
 interface TokenData {
   event_name: string;
   primary_color: string;
   secondary_color: string;
+  celebrant_message: string | null;
   background_photo: Photo | null;
   photos: Photo[];
   menu: CategoryGroup[];
+  fontStyle: FontStyle;
 }
 
 interface OrderResult {
@@ -107,15 +126,46 @@ export default function GuestCateringOrderPage() {
         );
 
         // Convert celebrant_photos dict to photos array
-        const allPhotos: Photo[] = raw.celebrant_photos
-          ? Object.values(raw.celebrant_photos).map((url) => ({
-              url: url.startsWith("http") ? url : `${API_URL}${url}`,
-            }))
-          : [];
+        const photosMap = raw.celebrant_photos || {};
+        const photoEntries = Object.entries(photosMap);
+        const allPhotos: { id: string; photo: Photo }[] = photoEntries.map(([id, url]) => ({
+          id,
+          photo: { url: (url as string).startsWith("http") ? (url as string) : `${API_URL}${url}` },
+        }));
 
-        // First photo = background, rest = slideshow
-        const backgroundPhoto = allPhotos.length > 0 ? allPhotos[0] : null;
-        const slideshowPhotos = allPhotos.length > 1 ? allPhotos.slice(1) : [];
+        // Use background_photo_id if set, otherwise fall back to first photo
+        let backgroundPhoto: Photo | null = null;
+        const slideshowPhotos: Photo[] = [];
+
+        if (raw.background_photo_id) {
+          const bgEntry = allPhotos.find((p) => p.id === raw.background_photo_id);
+          if (bgEntry) {
+            backgroundPhoto = bgEntry.photo;
+            // Remaining photos go to slideshow
+            for (const p of allPhotos) {
+              if (p.id !== raw.background_photo_id) slideshowPhotos.push(p.photo);
+            }
+          }
+        }
+
+        // Fallback: first photo = background, rest = slideshow
+        if (!backgroundPhoto && allPhotos.length > 0) {
+          backgroundPhoto = allPhotos[0].photo;
+          for (let i = 1; i < allPhotos.length; i++) slideshowPhotos.push(allPhotos[i].photo);
+        }
+
+        // Map font settings
+        const FONT_SIZE_MAP: Record<string, string> = { small: "0.875rem", normal: "1rem", large: "1.125rem" };
+        const LETTER_SPACING_MAP: Record<string, string> = { tight: "-0.025em", normal: "0em", wide: "0.05em" };
+
+        const fontSettings: FontStyle = {
+          fontFamily: raw.font_family || "Plus Jakarta Sans",
+          fontSize: FONT_SIZE_MAP[raw.font_size || "normal"] || "1rem",
+          fontWeight: raw.font_weight || "normal",
+          fontStyle: raw.font_style || "normal",
+          letterSpacing: LETTER_SPACING_MAP[raw.letter_spacing || "normal"] || "0em",
+          textAlign: (raw.text_align as "left" | "center" | "right") || "center",
+        };
 
         // Map backend categories to display format
         const menu: CategoryGroup[] = raw.menu.map((cat) => ({
@@ -132,9 +182,11 @@ export default function GuestCateringOrderPage() {
           event_name: raw.event_name,
           primary_color: raw.primary_color || "#22C55E",
           secondary_color: raw.secondary_color || "#FFFFFF",
+          celebrant_message: raw.celebrant_message || null,
           background_photo: backgroundPhoto,
           photos: slideshowPhotos,
           menu,
+          fontStyle: fontSettings,
         };
 
         setTokenData(mapped);
@@ -176,6 +228,22 @@ export default function GuestCateringOrderPage() {
       if (slideTimer.current) clearInterval(slideTimer.current);
     };
   }, [phase, tokenData]);
+
+  /* --- Dynamic font loading --- */
+  useEffect(() => {
+    if (!tokenData) return;
+    const fontFamily = tokenData.fontStyle.fontFamily;
+    if (fontFamily === "Plus Jakarta Sans") return; // Already loaded in layout
+
+    const linkId = `dynamic-font-${fontFamily.replace(/\s+/g, "-")}`;
+    if (document.getElementById(linkId)) return;
+
+    const link = document.createElement("link");
+    link.id = linkId;
+    link.rel = "stylesheet";
+    link.href = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(fontFamily)}:ital,wght@0,400;0,700;1,400;1,700&display=swap`;
+    document.head.appendChild(link);
+  }, [tokenData]);
 
   const skipSlideshow = useCallback(() => {
     if (slideTimer.current) clearInterval(slideTimer.current);
@@ -287,11 +355,24 @@ export default function GuestCateringOrderPage() {
 
         <div className="relative z-10">
           <h2
-            className="mb-6 text-center text-2xl font-bold"
+            className="mb-4 text-center text-2xl font-bold"
             style={{ color: tokenData.background_photo ? "#FFFFFF" : themeColor }}
           >
             Welcome to {tokenData.event_name}!
           </h2>
+
+          {tokenData.celebrant_message && (
+            <p
+              className="mb-6 text-center text-base"
+              style={{
+                color: tokenData.background_photo ? "#FFFFFFCC" : "#6B7280",
+                fontFamily: tokenData.fontStyle.fontFamily,
+                fontStyle: tokenData.fontStyle.fontStyle,
+              }}
+            >
+              {tokenData.celebrant_message}
+            </p>
+          )}
 
           {current && (
             <div className="relative mb-6 w-full max-w-sm overflow-hidden rounded-2xl">
@@ -345,8 +426,37 @@ export default function GuestCateringOrderPage() {
           </p>
         </div>
 
+        {/* Celebrant Message */}
+        {tokenData.celebrant_message && (
+          <div className="mx-auto max-w-lg px-4 pt-4">
+            <p
+              className="rounded-xl bg-gray-50 p-4 text-gray-600"
+              style={{
+                fontFamily: tokenData.fontStyle.fontFamily,
+                fontSize: tokenData.fontStyle.fontSize,
+                fontWeight: tokenData.fontStyle.fontWeight,
+                fontStyle: tokenData.fontStyle.fontStyle,
+                letterSpacing: tokenData.fontStyle.letterSpacing,
+                textAlign: tokenData.fontStyle.textAlign,
+              }}
+            >
+              {tokenData.celebrant_message}
+            </p>
+          </div>
+        )}
+
         {/* Categories */}
-        <div className="mx-auto max-w-lg px-4 py-4">
+        <div
+          className="mx-auto max-w-lg px-4 py-4"
+          style={{
+            fontFamily: tokenData.fontStyle.fontFamily,
+            fontSize: tokenData.fontStyle.fontSize,
+            fontWeight: tokenData.fontStyle.fontWeight,
+            fontStyle: tokenData.fontStyle.fontStyle,
+            letterSpacing: tokenData.fontStyle.letterSpacing,
+            textAlign: tokenData.fontStyle.textAlign,
+          }}
+        >
           {tokenData.menu.map((group) => (
             <div key={group.category} className="mb-8">
               <h2

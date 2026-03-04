@@ -3,6 +3,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { api } from "@/lib/api";
+import WizardSteps from "@/components/wizard/WizardSteps";
 
 interface Staff {
   id: string;
@@ -16,6 +17,7 @@ interface Staff {
 interface EventInfo {
   event_code: string;
   name: string;
+  party_id: string | null;
 }
 
 export default function StaffManagementPage() {
@@ -139,12 +141,14 @@ export default function StaffManagementPage() {
 
   return (
     <div className="mx-auto max-w-4xl">
+      <WizardSteps currentStep={3} />
+
       <div className="mb-6">
         <button
-          onClick={() => router.push(`/dashboard/events/${eventId}`)}
+          onClick={() => router.push(`/dashboard/events/${eventId}/menu`)}
           className="text-sm t-text-muted hover:t-text-secondary transition-colors"
         >
-          &larr; Back to Event
+          &larr; Back to Menu
         </button>
       </div>
 
@@ -155,12 +159,20 @@ export default function StaffManagementPage() {
             Add and manage staff members for this event.
           </p>
         </div>
-        {eventInfo?.event_code && (
-          <div className="rounded-lg border t-border t-bg px-4 py-2">
-            <p className="text-xs t-text-muted">Event Code (share with staff)</p>
-            <p className="font-mono text-lg font-bold t-text">{eventInfo.event_code}</p>
-          </div>
-        )}
+        <div className="flex flex-wrap gap-3">
+          {eventInfo?.party_id && (
+            <div className="rounded-lg border t-border t-bg px-4 py-2">
+              <p className="text-xs t-text-muted">Party ID</p>
+              <p className="font-mono text-lg font-bold t-text">{eventInfo.party_id}</p>
+            </div>
+          )}
+          {eventInfo?.event_code && (
+            <div className="rounded-lg border t-border t-bg px-4 py-2">
+              <p className="text-xs t-text-muted">Event Code (share with staff)</p>
+              <p className="font-mono text-lg font-bold t-text">{eventInfo.event_code}</p>
+            </div>
+          )}
+        </div>
       </div>
 
       {error && (
@@ -337,6 +349,22 @@ export default function StaffManagementPage() {
             ))}
           </div>
         )}
+      </div>
+
+      {/* Navigation Buttons */}
+      <div className="mt-8 flex items-center justify-between">
+        <button
+          onClick={() => router.push(`/dashboard/events/${eventId}/menu`)}
+          className="rounded-lg border t-border px-5 py-2.5 text-sm font-semibold t-text-secondary hover:t-bg transition-colors"
+        >
+          Back
+        </button>
+        <button
+          onClick={() => router.push(`/dashboard/events/${eventId}/photos`)}
+          className="rounded-lg bg-eco px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-eco-dark transition-colors"
+        >
+          Proceed to Celebrant Setup
+        </button>
       </div>
     </div>
   );

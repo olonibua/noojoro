@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { api } from "@/lib/api";
+import WizardSteps from "@/components/wizard/WizardSteps";
 
 interface CreateEventResponse {
   id: string;
@@ -19,8 +20,6 @@ export default function CreateEventPage() {
     venue_name: "",
     table_count: 10,
     guests_per_table: 10,
-    primary_color: "#22C55E",
-    secondary_color: "#FFFFFF",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,13 +43,10 @@ export default function CreateEventPage() {
         venue_name: form.venue_name,
         table_count: form.table_count,
         guests_per_table: form.guests_per_table,
-        primary_color: form.primary_color,
-        secondary_color: form.secondary_color,
       };
 
       const result = await api.post<CreateEventResponse>("/api/events", payload);
-      // Redirect to celebrant photos page (step 1 of event setup)
-      router.push(`/dashboard/events/${result.id}/photos`);
+      router.push(`/dashboard/events/${result.id}/menu`);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to create event");
     } finally {
@@ -60,6 +56,8 @@ export default function CreateEventPage() {
 
   return (
     <div className="mx-auto max-w-2xl">
+      <WizardSteps currentStep={1} />
+
       <div className="mb-6">
         <button
           onClick={() => router.back()}
@@ -72,7 +70,7 @@ export default function CreateEventPage() {
       <div className="rounded-xl border t-border t-bg-card p-6 shadow-sm">
         <h1 className="text-2xl font-bold t-text">Create Event</h1>
         <p className="mt-1 text-sm t-text-muted">
-          Set up your event details. You can configure tables, menus, and staff later.
+          Set up your event details. You&apos;ll configure menu, staff, and styling next.
         </p>
 
         {error && (
@@ -173,69 +171,6 @@ export default function CreateEventPage() {
             </label>
             <div className="mt-1 rounded-lg border t-border bg-neutral-50 px-3 py-2.5 text-sm t-text font-semibold">
               {(form.table_count * form.guests_per_table).toLocaleString()} guests
-            </div>
-          </div>
-
-          {/* Colors of the Day */}
-          <div>
-            <label className="block text-sm font-medium t-text-secondary mb-3">
-              Colors of the Day
-            </label>
-            <div className="grid gap-4 sm:grid-cols-2">
-              <div>
-                <label htmlFor="primary_color" className="block text-xs font-medium t-text-muted mb-1">
-                  Primary Color
-                </label>
-                <div className="flex items-center gap-2">
-                  <input
-                    id="primary_color"
-                    name="primary_color"
-                    type="text"
-                    value={form.primary_color}
-                    onChange={handleChange}
-                    placeholder="#22C55E"
-                    pattern="^#[0-9A-Fa-f]{6}$"
-                    className="block w-full rounded-lg border t-border px-3 py-2.5 text-sm t-text placeholder-[#9C9C9C] focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
-                  />
-                  <input
-                    type="color"
-                    value={form.primary_color}
-                    onChange={(e) => setForm((prev) => ({ ...prev, primary_color: e.target.value }))}
-                    className="h-10 w-10 cursor-pointer rounded-lg border t-border p-0.5"
-                  />
-                  <div
-                    className="h-10 w-10 shrink-0 rounded-lg border t-border"
-                    style={{ backgroundColor: form.primary_color }}
-                  />
-                </div>
-              </div>
-              <div>
-                <label htmlFor="secondary_color" className="block text-xs font-medium t-text-muted mb-1">
-                  Secondary Color
-                </label>
-                <div className="flex items-center gap-2">
-                  <input
-                    id="secondary_color"
-                    name="secondary_color"
-                    type="text"
-                    value={form.secondary_color}
-                    onChange={handleChange}
-                    placeholder="#FFFFFF"
-                    pattern="^#[0-9A-Fa-f]{6}$"
-                    className="block w-full rounded-lg border t-border px-3 py-2.5 text-sm t-text placeholder-[#9C9C9C] focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
-                  />
-                  <input
-                    type="color"
-                    value={form.secondary_color}
-                    onChange={(e) => setForm((prev) => ({ ...prev, secondary_color: e.target.value }))}
-                    className="h-10 w-10 cursor-pointer rounded-lg border t-border p-0.5"
-                  />
-                  <div
-                    className="h-10 w-10 shrink-0 rounded-lg border t-border"
-                    style={{ backgroundColor: form.secondary_color }}
-                  />
-                </div>
-              </div>
             </div>
           </div>
 
