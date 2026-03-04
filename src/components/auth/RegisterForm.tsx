@@ -71,6 +71,32 @@ export default function RegisterForm({ onNavigate, referralCode }: RegisterFormP
         </div>
       )}
 
+      {/* Mode Tabs - at the top */}
+      <div className="mb-6 flex overflow-hidden rounded-xl t-tab-bg p-1">
+        <button
+          type="button"
+          onClick={() => setMode("email")}
+          className={`flex-1 rounded-lg py-2.5 text-sm font-medium transition-all ${
+            mode === "email"
+              ? "bg-eco text-white shadow-sm"
+              : "t-text-muted hover:text-eco"
+          }`}
+        >
+          Email + Phone
+        </button>
+        <button
+          type="button"
+          onClick={() => setMode("phone")}
+          className={`flex-1 rounded-lg py-2.5 text-sm font-medium transition-all ${
+            mode === "phone"
+              ? "bg-eco text-white shadow-sm"
+              : "t-text-muted hover:text-eco"
+          }`}
+        >
+          Phone Only
+        </button>
+      </div>
+
       {error && (
         <div className="mb-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
           {error}
@@ -107,32 +133,6 @@ export default function RegisterForm({ onNavigate, referralCode }: RegisterFormP
           placeholder="+234 801 234 5678"
           className="w-full t-input px-4 py-3 outline-none"
         />
-      </div>
-
-      {/* Mode Tabs */}
-      <div className="mb-6 flex overflow-hidden rounded-xl t-tab-bg p-1">
-        <button
-          type="button"
-          onClick={() => setMode("email")}
-          className={`flex-1 rounded-lg py-2.5 text-sm font-medium transition-all ${
-            mode === "email"
-              ? "bg-eco text-white shadow-sm"
-              : "t-text-muted hover:text-eco"
-          }`}
-        >
-          Email + Phone
-        </button>
-        <button
-          type="button"
-          onClick={() => setMode("phone")}
-          className={`flex-1 rounded-lg py-2.5 text-sm font-medium transition-all ${
-            mode === "phone"
-              ? "bg-eco text-white shadow-sm"
-              : "t-text-muted hover:text-eco"
-          }`}
-        >
-          Phone Only
-        </button>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-5">
@@ -184,6 +184,9 @@ export default function RegisterForm({ onNavigate, referralCode }: RegisterFormP
               )}
             </button>
           </div>
+          <p className="mt-1.5 text-xs t-text-faint">
+            Must include at least 1 capital letter and 1 number
+          </p>
         </div>
 
         <div>
