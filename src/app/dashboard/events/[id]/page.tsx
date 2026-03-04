@@ -20,7 +20,7 @@ interface EventDetail {
 
 const statusColors: Record<string, string> = {
   draft: "bg-yellow-100 text-yellow-800",
-  active: "bg-neutral-100 text-neutral-700",
+  active: "t-bg-secondary t-text-secondary",
   completed: "t-bg-secondary t-text-muted",
 };
 
@@ -102,7 +102,7 @@ export default function EventDetailPage() {
         <p className="text-red-600">{error || "Event not found"}</p>
         <button
           onClick={() => router.push("/dashboard/events")}
-          className="mt-4 text-sm text-neutral-600 hover:underline"
+          className="mt-4 text-sm t-text-muted hover:underline"
         >
           Back to Events
         </button>
@@ -275,10 +275,10 @@ export default function EventDetailPage() {
           <button
             key={link.href}
             onClick={() => router.push(link.href)}
-            className="flex items-center gap-3 rounded-xl border t-border t-bg-card p-4 text-left shadow-sm transition-all hover:border-neutral-300/40 hover:shadow-md"
+            className="flex items-center gap-3 rounded-xl border t-border t-bg-card p-4 text-left shadow-sm transition-all hover:border-eco/30 hover:shadow-md"
           >
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-neutral-100">
-              <span className="text-sm font-bold text-neutral-600">
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg t-bg-secondary">
+              <span className="text-sm font-bold t-text-muted">
                 {link.label.charAt(0)}
               </span>
             </div>

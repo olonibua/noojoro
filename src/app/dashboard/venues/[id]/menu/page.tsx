@@ -206,7 +206,7 @@ export default function MenuBuilderPage() {
   if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center t-bg">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-neutral-300 border-t-transparent" />
+        <div className="h-8 w-8 animate-spin rounded-full border-4 t-border border-t-transparent" />
       </div>
     );
   }
@@ -306,7 +306,7 @@ export default function MenuBuilderPage() {
                 </div>
 
                 {/* Items */}
-                <div className="divide-y divide-gray-50">
+                <div className="divide-y t-divide">
                   {category.items.map((item) => (
                     <div
                       key={item.id}
@@ -316,7 +316,7 @@ export default function MenuBuilderPage() {
                     >
                       <div className="flex-1">
                         <p className="font-medium t-text">{item.name}</p>
-                        <p className="mt-0.5 text-sm text-neutral-700 font-semibold">
+                        <p className="mt-0.5 text-sm t-text-secondary font-semibold">
                           {"\u20A6"}{formatPrice(item.price)}
                         </p>
                       </div>
@@ -359,7 +359,7 @@ export default function MenuBuilderPage() {
                                   item.total_quantity.toString()
                                 );
                               }}
-                              className="rounded t-bg-secondary px-2.5 py-1 text-sm font-medium t-text-secondary hover:bg-gray-200"
+                              className="rounded t-bg-secondary px-2.5 py-1 text-sm font-medium t-text-secondary hover:t-bg"
                             >
                               {item.total_quantity}
                             </button>
@@ -372,7 +372,7 @@ export default function MenuBuilderPage() {
                             toggleAvailability(category.id, item)
                           }
                           className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors ${
-                            item.is_available ? "bg-eco" : "bg-gray-300"
+                            item.is_available ? "bg-eco" : "t-bg-secondary"
                           }`}
                           role="switch"
                           aria-checked={item.is_available}
@@ -448,7 +448,7 @@ export default function MenuBuilderPage() {
                   ) : (
                     <button
                       onClick={() => openItemForm(category.id)}
-                      className="inline-flex items-center gap-1.5 text-sm font-medium text-neutral-700 hover:text-neutral-700"
+                      className="inline-flex items-center gap-1.5 text-sm font-medium t-text-muted hover:t-text-secondary"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"

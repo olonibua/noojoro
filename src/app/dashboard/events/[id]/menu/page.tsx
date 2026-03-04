@@ -15,9 +15,24 @@ interface MenuItem {
 interface MenuCategory {
   id: string;
   name: string;
+  description: string | null;
   display_order: number;
   items: MenuItem[];
 }
+
+// Predefined category options
+const CATEGORY_OPTIONS = [
+  "Starter",
+  "Main Course",
+  "Dessert",
+  "Drinks",
+  "Appetizer",
+  "Side Dish",
+  "Soup",
+  "Salad",
+  "Protein",
+  "Other",
+];
 
 export default function MenuBuilderPage() {
   const router = useRouter();
@@ -30,7 +45,8 @@ export default function MenuBuilderPage() {
   const [success, setSuccess] = useState("");
 
   // New category form
-  const [newCatName, setNewCatName] = useState("");
+  const [newCatName, setNewCatName] = useState(CATEGORY_OPTIONS[0]);
+  const [newCatDescription, setNewCatDescription] = useState("");
   const [newCatOrder, setNewCatOrder] = useState("");
   const [addingCat, setAddingCat] = useState(false);
 
@@ -77,9 +93,11 @@ export default function MenuBuilderPage() {
     try {
       await api.post(`/api/events/${eventId}/menu/categories`, {
         name: newCatName,
+        description: newCatDescription || null,
         display_order: parseInt(newCatOrder) || 0,
       });
-      setNewCatName("");
+      setNewCatName(CATEGORY_OPTIONS[0]);
+      setNewCatDescription("");
       setNewCatOrder(String(categories.length));
       setSuccess("Category added!");
       await fetchMenu();
@@ -189,7 +207,7 @@ export default function MenuBuilderPage() {
         </button>
         <button
           onClick={() => router.push(`/dashboard/events/${eventId}/menu/vip`)}
-          className="rounded-lg border border-neutral-300 px-4 py-2 text-sm font-medium text-neutral-600 hover:bg-neutral-50 transition-colors"
+          className="rounded-lg border t-border px-4 py-2 text-sm font-medium t-text-muted hover:t-bg-secondary transition-colors"
         >
           VIP Menu &rarr;
         </button>
@@ -206,7 +224,7 @@ export default function MenuBuilderPage() {
         </div>
       )}
       {success && (
-        <div className="mt-4 rounded-lg bg-emerald-50 border border-emerald-200 px-4 py-3 text-sm text-neutral-700">
+        <div className="mt-4 rounded-lg bg-emerald-50 border border-emerald-200 px-4 py-3 text-sm t-text">
           {success}
         </div>
       )}
@@ -214,25 +232,54 @@ export default function MenuBuilderPage() {
       {/* Add Category */}
       <div className="mt-6 rounded-xl border t-border t-bg-card p-6 shadow-sm">
         <h2 className="text-lg font-semibold t-text">Add Category</h2>
-        <form onSubmit={handleAddCategory} className="mt-3 flex flex-wrap gap-3">
-          <input
-            required
-            value={newCatName}
-            onChange={(e) => setNewCatName(e.target.value)}
-            placeholder="Category name (e.g. Starters)"
-            className="flex-1 min-w-[200px] rounded-lg border t-border px-3 py-2.5 text-sm t-text placeholder-[#9C9C9C] focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
-          />
-          <input
-            type="number"
-            value={newCatOrder}
-            onChange={(e) => setNewCatOrder(e.target.value)}
-            placeholder="Order"
-            className="w-24 rounded-lg border t-border px-3 py-2.5 text-sm t-text focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
-          />
+        <form onSubmit={handleAddCategory} className="mt-3 space-y-4">
+          <div className="flex flex-wrap gap-3">
+            <div className="flex-1 min-w-[200px]">
+              <label className="block text-sm font-medium t-text-secondary mb-1.5">
+                Category Type
+              </label>
+              <select
+                required
+                value={newCatName}
+                onChange={(e) => setNewCatName(e.target.value)}
+                className="w-full rounded-lg border t-border px-3 py-2.5 text-sm t-text focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
+              >
+                {CATEGORY_OPTIONS.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="w-24">
+              <label className="block text-sm font-medium t-text-secondary mb-1.5">
+                Order
+              </label>
+              <input
+                type="number"
+                value={newCatOrder}
+                onChange={(e) => setNewCatOrder(e.target.value)}
+                placeholder="0"
+                className="w-full rounded-lg border t-border px-3 py-2.5 text-sm t-text focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
+              />
+            </div>
+          </div>
+          <div>
+            <label className="block text-sm font-medium t-text-secondary mb-1.5">
+              Description (optional)
+            </label>
+            <textarea
+              value={newCatDescription}
+              onChange={(e) => setNewCatDescription(e.target.value)}
+              placeholder="e.g., Small chops with chicken"
+              rows={2}
+              className="w-full rounded-lg border t-border px-3 py-2.5 text-sm t-text placeholder-[#9C9C9C] focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco resize-none"
+            />
+          </div>
           <button
             type="submit"
             disabled={addingCat}
-            className="rounded-lg bg-eco px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-eco-dark disabled:opacity-50 transition-colors"
+            className="w-full sm:w-auto rounded-lg bg-eco px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-eco-dark disabled:opacity-50 transition-colors"
           >
             {addingCat ? "Adding..." : "Add Category"}
           </button>
@@ -285,9 +332,12 @@ export default function MenuBuilderPage() {
                   </div>
                 ) : (
                   <>
-                    <div>
+                    <div className="flex-1">
                       <h3 className="text-base font-semibold t-text">{cat.name}</h3>
-                      <p className="text-xs t-text-faint">
+                      {cat.description && (
+                        <p className="mt-1 text-sm t-text-muted">{cat.description}</p>
+                      )}
+                      <p className="mt-1 text-xs t-text-faint">
                         Order: {cat.display_order} &middot; {cat.items?.length || 0} items
                       </p>
                     </div>
@@ -314,7 +364,7 @@ export default function MenuBuilderPage() {
               </div>
 
               {/* Items */}
-              <div className="divide-y divide-gray-50">
+              <div className="divide-y t-divide">
                 {(cat.items || [])
                   .sort((a, b) => a.display_order - b.display_order)
                   .map((item) => (
@@ -430,7 +480,7 @@ export default function MenuBuilderPage() {
                 ) : (
                   <button
                     onClick={() => setAddingItemCatId(cat.id)}
-                    className="text-sm font-medium text-neutral-600 hover:text-neutral-700 transition-colors"
+                    className="text-sm font-medium t-text-muted hover:t-text-secondary transition-colors"
                   >
                     + Add Item
                   </button>
@@ -438,6 +488,25 @@ export default function MenuBuilderPage() {
               </div>
             </div>
           ))}
+      </div>
+
+      {/* Complete Setup Button */}
+      <div className="mt-8 flex justify-end gap-3">
+        <button
+          onClick={() => router.push(`/dashboard/events/${eventId}`)}
+          className="rounded-lg border t-border px-6 py-3 text-sm font-semibold t-text-secondary transition-colors hover:t-bg"
+        >
+          Back to Event Details
+        </button>
+        <button
+          onClick={() => router.push("/dashboard")}
+          className="inline-flex items-center gap-2 rounded-lg bg-eco px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-eco-dark"
+        >
+          <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+          </svg>
+          Complete Setup
+        </button>
       </div>
     </div>
   );

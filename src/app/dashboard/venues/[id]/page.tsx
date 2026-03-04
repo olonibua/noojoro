@@ -122,7 +122,7 @@ export default function VenueDetailPage() {
   if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center t-bg">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-neutral-300 border-t-transparent" />
+        <div className="h-8 w-8 animate-spin rounded-full border-4 t-border border-t-transparent" />
       </div>
     );
   }
@@ -135,7 +135,7 @@ export default function VenueDetailPage() {
         </div>
         <Link
           href="/dashboard"
-          className="mt-4 text-sm font-medium text-neutral-700 hover:text-neutral-700"
+          className="mt-4 text-sm font-medium t-text-muted hover:t-text-secondary"
         >
           Back to Dashboard
         </Link>
@@ -276,7 +276,7 @@ export default function VenueDetailPage() {
                 </h1>
                 <p className="mt-1 text-sm t-text-muted">{venue.address}</p>
                 <div className="mt-3 flex flex-wrap gap-3">
-                  <span className="inline-flex items-center rounded-full bg-neutral-100 px-3 py-1 text-xs font-medium text-neutral-700">
+                  <span className="inline-flex items-center rounded-full t-bg-secondary px-3 py-1 text-xs font-medium t-text-secondary">
                     {venue.table_count} {venue.table_count === 1 ? "table" : "tables"}
                   </span>
                 </div>
@@ -292,10 +292,10 @@ export default function VenueDetailPage() {
             <Link
               key={link.href}
               href={link.href}
-              className="group rounded-xl border t-border t-bg-card p-5 transition-all hover:border-neutral-300/40 hover:shadow-md"
+              className="group rounded-xl border t-border t-bg-card p-5 transition-all hover:border-eco/30 hover:shadow-md"
             >
               <div className="flex items-start gap-4">
-                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-neutral-100 text-neutral-700 transition-colors group-hover:bg-neutral-100">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg t-bg-secondary t-text-secondary transition-colors group-hover:t-bg-secondary">
                   {link.icon}
                 </div>
                 <div>

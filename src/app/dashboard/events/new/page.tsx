@@ -49,7 +49,8 @@ export default function CreateEventPage() {
       };
 
       const result = await api.post<CreateEventResponse>("/api/events", payload);
-      router.push(`/dashboard/events/${result.id}`);
+      // Redirect to celebrant photos page (step 1 of event setup)
+      router.push(`/dashboard/events/${result.id}/photos`);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to create event");
     } finally {

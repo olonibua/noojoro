@@ -89,7 +89,7 @@ export default function StaffPerformancePage() {
         <div className="mx-auto max-w-2xl">
           <Link
             href={`/dashboard/events/${eventId}/live`}
-            className="mb-2 inline-flex items-center gap-1 text-sm font-medium text-neutral-700"
+            className="mb-2 inline-flex items-center gap-1 text-sm font-medium t-text-muted"
           >
             <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
@@ -112,7 +112,7 @@ export default function StaffPerformancePage() {
             <p className="text-sm t-text-muted">Staff Active</p>
           </div>
           <div className="rounded-xl border-2 t-border p-4 text-center">
-            <p className="text-3xl font-bold text-neutral-700">
+            <p className="text-3xl font-bold t-text">
               {rankedStaff.reduce((s, m) => s + m.confirmations, 0)}
             </p>
             <p className="text-sm t-text-muted">Total Confirmations</p>
@@ -140,7 +140,7 @@ export default function StaffPerformancePage() {
                       index === 0
                         ? "bg-amber-400 text-amber-900"
                         : index === 1
-                        ? "bg-gray-300 t-text-secondary"
+                        ? "t-bg-secondary t-text-secondary"
                         : index === 2
                         ? "bg-orange-300 text-orange-800"
                         : "t-bg-secondary t-text-muted"
@@ -158,7 +158,7 @@ export default function StaffPerformancePage() {
               <div className="flex gap-4 text-sm">
                 <div>
                   <span className="t-text-muted">Confirmations: </span>
-                  <span className="font-bold text-neutral-700">
+                  <span className="font-bold t-text">
                     {member.confirmations}
                   </span>
                 </div>
@@ -200,7 +200,7 @@ export default function StaffPerformancePage() {
                 <tr
                   key={member.staff_name}
                   className={`border-b t-border/50 ${
-                    member.out_of_range_flags > 0 ? "bg-red-50" : ""
+                    member.out_of_range_flags > 0 ? "bg-red-50/80" : ""
                   }`}
                 >
                   <td className="px-4 py-3">
@@ -209,7 +209,7 @@ export default function StaffPerformancePage() {
                         index === 0
                           ? "bg-amber-400 text-amber-900"
                           : index === 1
-                          ? "bg-gray-300 t-text-secondary"
+                          ? "t-bg-secondary t-text-secondary"
                           : index === 2
                           ? "bg-orange-300 text-orange-800"
                           : "t-bg-secondary t-text-muted"
@@ -224,7 +224,7 @@ export default function StaffPerformancePage() {
                   <td className="px-4 py-3 text-sm t-text-muted">
                     {member.table_range}
                   </td>
-                  <td className="px-4 py-3 text-right text-base font-bold text-neutral-700">
+                  <td className="px-4 py-3 text-right text-base font-bold t-text">
                     {member.confirmations}
                   </td>
                   <td className="px-4 py-3 text-right">

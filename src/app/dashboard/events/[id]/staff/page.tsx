@@ -169,7 +169,7 @@ export default function StaffManagementPage() {
         </div>
       )}
       {success && (
-        <div className="mt-4 rounded-lg bg-emerald-50 border border-emerald-200 px-4 py-3 text-sm text-neutral-700">
+        <div className="mt-4 rounded-lg bg-emerald-50 border border-emerald-200 px-4 py-3 text-sm t-text">
           {success}
         </div>
       )}
@@ -253,7 +253,7 @@ export default function StaffManagementPage() {
             No staff members added yet. Use the form above to add staff.
           </div>
         ) : (
-          <div className="divide-y divide-gray-100">
+          <div className="divide-y t-divide">
             {staffList.map((s) => (
               <div key={s.id} className="px-6 py-4">
                 {editingId === s.id ? (

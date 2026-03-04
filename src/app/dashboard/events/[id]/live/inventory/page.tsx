@@ -132,7 +132,7 @@ export default function InventoryMonitorPage() {
         <div className="mx-auto max-w-2xl">
           <Link
             href={`/dashboard/events/${eventId}/live`}
-            className="mb-2 inline-flex items-center gap-1 text-sm font-medium text-neutral-700"
+            className="mb-2 inline-flex items-center gap-1 text-sm font-medium t-text-muted"
           >
             <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
@@ -186,7 +186,7 @@ export default function InventoryMonitorPage() {
                     </div>
 
                     {/* Progress bar */}
-                    <div className="h-3 w-full overflow-hidden rounded-full bg-gray-200">
+                    <div className="h-3 w-full overflow-hidden rounded-full t-bg-secondary">
                       <div
                         className={`h-full rounded-full transition-all duration-500 ${getBarColor(item)}`}
                         style={{ width: `${pct}%` }}
@@ -203,7 +203,7 @@ export default function InventoryMonitorPage() {
                             ? "text-red-600"
                             : pct < 20
                             ? "text-amber-600"
-                            : "text-neutral-700"
+                            : "t-text"
                         }`}
                       >
                         {pct === 0

@@ -112,22 +112,22 @@ export default function DashboardHome() {
       label: "Total Events",
       value: totalEvents,
       icon: CalendarIcon,
-      iconBg: "bg-neutral-100",
-      iconColor: "text-neutral-600",
+      iconBg: "t-bg-secondary",
+      iconColor: "t-text-muted",
     },
     {
       label: "Active Events",
       value: activeEvents,
       icon: CheckCircleIcon,
-      iconBg: "bg-neutral-100",
-      iconColor: "text-neutral-600",
+      iconBg: "t-bg-secondary",
+      iconColor: "t-text-muted",
     },
     {
       label: "Venues",
       value: totalVenues,
       icon: BuildingIcon,
-      iconBg: "bg-neutral-100",
-      iconColor: "text-neutral-600",
+      iconBg: "t-bg-secondary",
+      iconColor: "t-text-muted",
     },
     {
       label: "Tokens Issued",
@@ -149,8 +149,8 @@ export default function DashboardHome() {
             description: "Set up a new event with tables, menus, and tokens.",
             href: "/dashboard/events/new",
             icon: PlusIcon,
-            iconBg: "bg-neutral-100",
-            iconColor: "text-neutral-600",
+            iconBg: "t-bg-secondary",
+            iconColor: "t-text-muted",
           },
           {
             title: "My Events",
@@ -169,8 +169,8 @@ export default function DashboardHome() {
             description: "Register a new bar or restaurant venue.",
             href: "/dashboard/venues/new",
             icon: PlusIcon,
-            iconBg: "bg-neutral-100",
-            iconColor: "text-neutral-600",
+            iconBg: "t-bg-secondary",
+            iconColor: "t-text-muted",
           },
           {
             title: "My Venues",
@@ -228,7 +228,7 @@ export default function DashboardHome() {
               <div className={`flex h-12 w-12 items-center justify-center rounded-2xl ${action.iconBg}`}>
                 <action.icon className={`h-6 w-6 ${action.iconColor}`} />
               </div>
-              <h3 className="mt-4 text-sm font-semibold t-text group-hover:text-neutral-600 transition-colors">
+              <h3 className="mt-4 text-sm font-semibold t-text group-hover:text-eco transition-colors">
                 {action.title}
               </h3>
               <p className="mt-1 text-xs t-text-muted">{action.description}</p>

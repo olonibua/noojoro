@@ -81,6 +81,7 @@ body {
 .t-text-ghost { color: var(--text-ghost); }
 .t-border { border-color: var(--border-primary); }
 .t-bg-card { background-color: var(--bg-card); }
+.t-divide > :not([hidden]) ~ :not([hidden]) { border-color: var(--border-primary); }
 
 /* ═══════════ CARDS — 20px radius, soft shadows ═══════════ */
 

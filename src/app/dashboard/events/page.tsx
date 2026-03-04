@@ -29,7 +29,7 @@ export default function EventsListPage() {
 
   const statusColor: Record<string, string> = {
     draft: "t-bg-secondary t-text-secondary",
-    active: "bg-neutral-100 text-neutral-700",
+    active: "t-bg-secondary t-text-secondary",
     completed: "bg-blue-100 text-blue-700",
   };
 
@@ -47,7 +47,7 @@ export default function EventsListPage() {
 
       {loading ? (
         <div className="flex justify-center py-12">
-          <div className="h-8 w-8 animate-spin rounded-full border-4 border-neutral-300 border-t-transparent" />
+          <div className="h-8 w-8 animate-spin rounded-full border-4 t-border border-t-transparent" />
         </div>
       ) : events.length === 0 ? (
         <div className="rounded-xl border border-dashed t-border t-bg-card px-6 py-16 text-center">
@@ -68,10 +68,10 @@ export default function EventsListPage() {
             <Link
               key={event.id}
               href={`/dashboard/events/${event.id}`}
-              className="group rounded-xl border t-border t-bg-card p-5 transition hover:border-neutral-300/40 hover:shadow-md"
+              className="group rounded-xl border t-border t-bg-card p-5 transition hover:border-eco/30 hover:shadow-md"
             >
               <div className="mb-3 flex items-start justify-between">
-                <h3 className="text-lg font-semibold t-text group-hover:text-neutral-700">
+                <h3 className="text-lg font-semibold t-text group-hover:text-eco">
                   {event.name}
                 </h3>
                 <span

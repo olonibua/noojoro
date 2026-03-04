@@ -144,7 +144,7 @@ export default function TokenManagementPage() {
         </div>
       )}
       {success && (
-        <div className="mt-4 rounded-lg bg-emerald-50 border border-emerald-200 px-4 py-3 text-sm text-neutral-700">
+        <div className="mt-4 rounded-lg bg-emerald-50 border border-emerald-200 px-4 py-3 text-sm t-text">
           {success}
         </div>
       )}
@@ -162,7 +162,7 @@ export default function TokenManagementPage() {
             <p className="text-xs font-medium uppercase tracking-wide t-text-muted">
               Activated
             </p>
-            <p className="mt-2 text-3xl font-bold text-neutral-600">{stats.active}</p>
+            <p className="mt-2 text-3xl font-bold t-text-secondary">{stats.active}</p>
           </div>
           <div className="rounded-xl border t-border t-bg-card p-5 shadow-sm">
             <p className="text-xs font-medium uppercase tracking-wide t-text-muted">
@@ -202,7 +202,7 @@ export default function TokenManagementPage() {
             <button
               onClick={handleActivate}
               disabled={activating}
-              className="flex items-center gap-2 rounded-lg border-2 border-neutral-300 px-5 py-3 text-sm font-semibold text-neutral-600 transition-colors hover:bg-neutral-50 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex items-center gap-2 rounded-lg border-2 t-border px-5 py-3 text-sm font-semibold t-text-secondary transition-colors hover:t-bg-secondary disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z" />
@@ -213,7 +213,7 @@ export default function TokenManagementPage() {
 
           {/* Tokens activated badge */}
           {stats && stats.inactive === 0 && stats.active > 0 && (
-            <div className="flex items-center gap-2 rounded-lg bg-emerald-50 border border-emerald-200 px-5 py-3 text-sm font-semibold text-neutral-700">
+            <div className="flex items-center gap-2 rounded-lg bg-emerald-50 border border-emerald-200 px-5 py-3 text-sm font-semibold t-text">
               <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>

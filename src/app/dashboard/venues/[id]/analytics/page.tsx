@@ -50,7 +50,7 @@ export default function AnalyticsPage() {
   if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center t-bg">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-neutral-300 border-t-transparent" />
+        <div className="h-8 w-8 animate-spin rounded-full border-4 t-border border-t-transparent" />
       </div>
     );
   }
@@ -63,7 +63,7 @@ export default function AnalyticsPage() {
         </div>
         <Link
           href={`/dashboard/venues/${venueId}`}
-          className="mt-4 text-sm font-medium text-neutral-700 hover:text-neutral-700"
+          className="mt-4 text-sm font-medium t-text-muted hover:t-text-secondary"
         >
           Back to Venue
         </Link>
@@ -159,7 +159,7 @@ export default function AnalyticsPage() {
                 <div key={item.name}>
                   <div className="mb-1.5 flex items-center justify-between">
                     <span className="flex items-center gap-2 text-sm font-medium t-text">
-                      <span className="flex h-5 w-5 items-center justify-center rounded-full bg-neutral-100 text-[10px] font-bold text-neutral-700">
+                      <span className="flex h-5 w-5 items-center justify-center rounded-full t-bg-secondary text-[10px] font-bold t-text-secondary">
                         {index + 1}
                       </span>
                       {item.name}
@@ -205,16 +205,16 @@ export default function AnalyticsPage() {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-50">
+                <tbody className="divide-y t-divide">
                   {analytics.top_selling_items.map((item, index) => (
                     <tr key={item.name} className="hover:t-bg">
                       <td className="px-6 py-3.5">
                         <span
                           className={`inline-flex h-6 w-6 items-center justify-center rounded-full text-xs font-bold ${
                             index === 0
-                              ? "bg-neutral-100 text-neutral-700"
+                              ? "t-bg-secondary t-text-secondary"
                               : index === 1
-                              ? "bg-neutral-100 text-neutral-700"
+                              ? "t-bg-secondary t-text-secondary"
                               : index === 2
                               ? "t-bg-secondary t-text-muted"
                               : "t-text-faint"

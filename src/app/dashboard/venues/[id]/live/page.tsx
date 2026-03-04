@@ -105,7 +105,7 @@ export default function LiveDashboardPage() {
   if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center t-bg">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-neutral-300 border-t-transparent" />
+        <div className="h-8 w-8 animate-spin rounded-full border-4 t-border border-t-transparent" />
       </div>
     );
   }
@@ -258,7 +258,7 @@ export default function LiveDashboardPage() {
             {/* Fulfilled */}
             <div className="rounded-xl border t-border t-bg-card p-5">
               <p className="text-sm font-medium t-text-muted">Fulfilled</p>
-              <p className="mt-2 text-3xl font-bold text-neutral-700">
+              <p className="mt-2 text-3xl font-bold t-text">
                 {dashboard.orders_fulfilled}
               </p>
               <div className="mt-2 h-1 w-full rounded-full t-bg-secondary">
@@ -283,14 +283,14 @@ export default function LiveDashboardPage() {
             </div>
 
             {/* Revenue */}
-            <div className="rounded-xl border border-neutral-200 bg-neutral-100 p-5">
-              <p className="text-sm font-medium text-neutral-700">
+            <div className="rounded-xl border t-border t-bg-secondary p-5">
+              <p className="text-sm font-medium t-text-secondary">
                 Total Revenue
               </p>
-              <p className="mt-2 text-3xl font-bold text-neutral-700">
+              <p className="mt-2 text-3xl font-bold t-text">
                 {"\u20A6"}{formatCurrency(dashboard.total_revenue)}
               </p>
-              <p className="mt-2 text-xs text-neutral-700">Live total</p>
+              <p className="mt-2 text-xs t-text-muted">Live total</p>
             </div>
           </div>
         )}
@@ -322,7 +322,7 @@ export default function LiveDashboardPage() {
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-50">
+              <tbody className="divide-y t-divide">
                 {inventory.map((item) => {
                   const pct = item.total > 0 ? Math.round((item.remaining / item.total) * 100) : 0;
                   const isOut = item.remaining === 0;
@@ -374,7 +374,7 @@ export default function LiveDashboardPage() {
                             Low Stock
                           </span>
                         ) : (
-                          <span className="inline-flex rounded-full bg-neutral-100 px-2.5 py-0.5 text-xs font-medium text-neutral-700">
+                          <span className="inline-flex rounded-full t-bg-secondary px-2.5 py-0.5 text-xs font-medium t-text-secondary">
                             In Stock
                           </span>
                         )}

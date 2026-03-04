@@ -102,7 +102,7 @@ export default function TableConfigPage() {
   if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center t-bg">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-neutral-300 border-t-transparent" />
+        <div className="h-8 w-8 animate-spin rounded-full border-4 t-border border-t-transparent" />
       </div>
     );
   }
@@ -172,7 +172,7 @@ export default function TableConfigPage() {
         )}
 
         {successMsg && (
-          <div className="mb-6 rounded-lg border border-neutral-200 bg-neutral-100 px-4 py-3 text-sm text-neutral-700">
+          <div className="mb-6 rounded-lg border t-border t-bg-secondary px-4 py-3 text-sm t-text">
             {successMsg}
           </div>
         )}

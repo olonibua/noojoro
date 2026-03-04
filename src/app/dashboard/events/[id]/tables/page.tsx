@@ -150,7 +150,7 @@ export default function TableConfigPage() {
         </div>
       )}
       {success && (
-        <div className="mt-4 rounded-lg bg-emerald-50 border border-emerald-200 px-4 py-3 text-sm text-neutral-700">
+        <div className="mt-4 rounded-lg bg-emerald-50 border border-emerald-200 px-4 py-3 text-sm t-text">
           {success}
         </div>
       )}
@@ -214,7 +214,7 @@ export default function TableConfigPage() {
                   key={num}
                   className={`rounded-lg border p-3 transition-colors ${
                     isVip
-                      ? "border-neutral-300 bg-neutral-50"
+                      ? "border-eco/30 t-bg-secondary"
                       : "t-border t-bg-card"
                   }`}
                 >
@@ -223,7 +223,7 @@ export default function TableConfigPage() {
                       type="checkbox"
                       checked={!!isVip}
                       onChange={() => toggleVip(num)}
-                      className="h-4 w-4 rounded t-border text-neutral-600 focus:ring-eco"
+                      className="h-4 w-4 rounded t-border text-eco focus:ring-eco"
                     />
                     <span className="text-sm font-medium t-text">Table {num}</span>
                   </label>
@@ -231,10 +231,10 @@ export default function TableConfigPage() {
                     <select
                       value={tier}
                       onChange={(e) => setVipTier(num, e.target.value)}
-                      className="mt-2 block w-full rounded border t-border px-2 py-1 text-xs t-text-secondary focus:border-eco focus:outline-none"
+                      className="mt-2 block w-full rounded border t-border t-bg-card px-2 py-1 text-xs t-text-secondary focus:border-eco focus:outline-none"
                     >
-                      <option value="vip">VIP</option>
-                      <option value="vvip">VVIP</option>
+                      <option value="vip" className="t-select-option">VIP</option>
+                      <option value="vvip" className="t-select-option">VVIP</option>
                     </select>
                   )}
                 </div>
@@ -276,7 +276,7 @@ export default function TableConfigPage() {
                     <td className="px-3 py-2 t-text-muted">{t.seat_count}</td>
                     <td className="px-3 py-2">
                       {t.is_vip ? (
-                        <span className="inline-flex rounded-full bg-neutral-100 px-2 py-0.5 text-xs font-medium text-neutral-700">
+                        <span className="inline-flex rounded-full t-bg-secondary px-2 py-0.5 text-xs font-medium t-text-secondary">
                           Yes
                         </span>
                       ) : (

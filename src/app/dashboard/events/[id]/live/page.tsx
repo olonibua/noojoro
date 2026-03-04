@@ -120,7 +120,7 @@ export default function CatererLiveDashboardPage() {
                 cy="70"
                 r={radius}
                 fill="none"
-                stroke="#E5E7EB"
+                style={{ stroke: 'var(--border-primary)' }}
                 strokeWidth="10"
               />
               <circle
@@ -149,7 +149,7 @@ export default function CatererLiveDashboardPage() {
               <p className="text-sm t-text-muted">Total</p>
             </div>
             <div>
-              <p className="text-2xl font-bold text-neutral-700">{used}</p>
+              <p className="text-2xl font-bold t-text">{used}</p>
               <p className="text-sm t-text-muted">Used</p>
             </div>
             <div>
@@ -167,11 +167,11 @@ export default function CatererLiveDashboardPage() {
             </p>
             <p className="text-sm font-medium text-amber-600">Waiting</p>
           </div>
-          <div className="rounded-xl border-2 border-neutral-200 bg-neutral-100 p-4 text-center">
-            <p className="text-3xl font-bold text-neutral-700">
+          <div className="rounded-xl border-2 t-border t-bg-secondary p-4 text-center">
+            <p className="text-3xl font-bold t-text">
               {data?.orders.served ?? 0}
             </p>
-            <p className="text-sm font-medium text-neutral-700">Served</p>
+            <p className="text-sm font-medium t-text-secondary">Served</p>
           </div>
         </div>
 

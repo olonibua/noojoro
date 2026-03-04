@@ -28,12 +28,20 @@ export default function CelebrantPhotosPage() {
 
   // Celebrant password
   const [password, setPassword] = useState("");
+  const [currentPassword, setCurrentPassword] = useState("");
   const [savingPassword, setSavingPassword] = useState(false);
   const [linkCopied, setLinkCopied] = useState(false);
+  const [passwordView, setPasswordView] = useState<"set" | "reset">("set");
+
+  const [partyId, setPartyId] = useState("");
 
   const fetchPhotos = useCallback(async () => {
     try {
-      const event = await api.get<{ celebrant_photos: Record<string, string> | null }>(`/api/events/${eventId}`);
+      const event = await api.get<{
+        celebrant_photos: Record<string, string> | null;
+        party_id: string | null;
+        celebrant_password_set: boolean;
+      }>(`/api/events/${eventId}`);
       const photosMap = event.celebrant_photos || {};
       const photoList: Photo[] = Object.entries(photosMap).map(([id, url]) => ({
         id,
@@ -41,6 +49,11 @@ export default function CelebrantPhotosPage() {
         filename: id,
       }));
       setPhotos(photoList);
+      setPartyId(event.party_id || "");
+      // Show reset tab if password is already set
+      if (event.celebrant_password_set) {
+        setPasswordView("reset");
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to load photos");
     } finally {
@@ -161,18 +174,31 @@ export default function CelebrantPhotosPage() {
     setDragOver(false);
   };
 
+  const validatePasswordFormat = (pwd: string): boolean => {
+    // Format: 1 letter + 6 numbers (e.g., A123456)
+    const regex = /^[A-Za-z]\d{6}$/;
+    return regex.test(pwd);
+  };
+
   const handleSetPassword = async (e: React.FormEvent) => {
     e.preventDefault();
     setSavingPassword(true);
     setError("");
-    setSuccess("");
+
+    if (!validatePasswordFormat(password)) {
+      setError("Password must be 1 letter followed by 6 numbers (e.g., A123456)");
+      setSavingPassword(false);
+      return;
+    }
 
     try {
       await api.put(`/api/events/${eventId}/celebrant-password`, {
         password,
       });
-      setSuccess("Celebrant password updated!");
-      setPassword("");
+      // Store the password to display it (plaintext, as required)
+      setCurrentPassword(password);
+      setPasswordView("reset");
+      // Don't clear password or show success notification
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to set password");
     } finally {
@@ -210,7 +236,7 @@ export default function CelebrantPhotosPage() {
         </div>
       )}
       {success && (
-        <div className="mt-4 rounded-lg bg-emerald-50 border border-emerald-200 px-4 py-3 text-sm text-neutral-700">
+        <div className="mt-4 rounded-lg bg-emerald-50 border border-emerald-200 px-4 py-3 text-sm t-text">
           {success}
         </div>
       )}
@@ -232,7 +258,7 @@ export default function CelebrantPhotosPage() {
             onClick={() => fileInputRef.current?.click()}
             className={`mt-4 flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed p-10 transition-colors ${
               dragOver
-                ? "border-neutral-300 bg-neutral-50"
+                ? "border-eco/30 t-bg-secondary"
                 : "t-border hover:border-gray-400"
             }`}
           >
@@ -301,31 +327,143 @@ export default function CelebrantPhotosPage() {
           Give your celebrant real-time access to monitor serving progress on their phone.
         </p>
 
+        {/* Party ID Display */}
+        <div className="mt-4 rounded-lg bg-gray-50 p-4 border t-border">
+          <label className="block text-sm font-medium t-text-secondary mb-2">
+            Party ID
+          </label>
+          <div className="flex items-center gap-3">
+            <code className="flex-1 rounded-md bg-white border t-border px-4 py-3 text-lg font-mono font-bold t-text">
+              {partyId || "Loading..."}
+            </code>
+            <button
+              type="button"
+              onClick={() => {
+                navigator.clipboard.writeText(partyId);
+                setLinkCopied(true);
+                setTimeout(() => setLinkCopied(false), 2000);
+              }}
+              className="rounded-lg border t-border px-4 py-3 text-sm font-semibold t-text-secondary hover:t-bg transition-colors"
+            >
+              {linkCopied ? "Copied!" : "Copy"}
+            </button>
+          </div>
+          <p className="mt-2 text-xs t-text-faint">
+            Share this Party ID with your celebrant
+          </p>
+        </div>
+
         <ol className="mt-4 list-decimal list-inside space-y-1.5 text-sm t-text-muted">
+          <li>Copy the Party ID above</li>
           <li>Set a password below for the celebrant</li>
           <li>Copy the celebrant link using the button</li>
-          <li>Share the link and password with your event host/celebrant</li>
-          <li>They&apos;ll use it to monitor serving progress live on their phone</li>
+          <li>Share the Party ID, link, and password with your event host/celebrant</li>
+          <li>They&apos;ll use them to monitor serving progress live on their phone</li>
         </ol>
 
-        <form onSubmit={handleSetPassword} className="mt-5 flex gap-3">
-          <input
-            type="text"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Min 6 characters"
-            required
-            minLength={6}
-            className="block flex-1 rounded-lg border t-border px-3 py-2.5 text-sm t-text placeholder-[#9C9C9C] focus:border-eco focus:outline-none focus:ring-1 focus:ring-eco"
-          />
+        {/* Password Tabs */}
+        <div className="mt-5 border-b t-border flex gap-4">
           <button
-            type="submit"
-            disabled={savingPassword}
-            className="rounded-lg bg-eco px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-eco-dark disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            type="button"
+            onClick={() => setPasswordView("set")}
+            className={`pb-2 px-1 text-sm font-semibold transition-colors border-b-2 ${
+              passwordView === "set"
+                ? "border-eco text-eco"
+                : "border-transparent t-text-muted hover:t-text-secondary"
+            }`}
           >
-            {savingPassword ? "Saving..." : "Set Password"}
+            Set Password
           </button>
-        </form>
+          <button
+            type="button"
+            onClick={() => setPasswordView("reset")}
+            className={`pb-2 px-1 text-sm font-semibold transition-colors border-b-2 ${
+              passwordView === "reset"
+                ? "border-eco text-eco"
+                : "border-transparent t-text-muted hover:t-text-secondary"
+            }`}
+          >
+            Reset Password
+          </button>
+        </div>
+
+        {passwordView === "set" ? (
+          <form onSubmit={handleSetPassword} className="mt-5 space-y-4">
+            <div>
+              <label className="block text-sm font-medium t-text-secondary mb-2">
+                Password (1 letter + 6 numbers, e.g. A123456)
+              </label>
+              <input
+                type="text"
+                value={password}
+                onChange={(e) => setPassword(e.target.value.toUpperCase())}
+                placeholder="e.g., A123456"
+                required
+                maxLength={7}
+                pattern="[A-Za-z]\d{6}"
+                className="block w-full rounded-lg border t-border px-4 py-3 text-lg font-mono font-bold t-text placeholder-[#9C9C9C] focus:border-eco focus:outline-none focus:ring-2 focus:ring-eco"
+              />
+              <p className="mt-1 text-xs t-text-faint">
+                Password will remain visible - save it securely
+              </p>
+            </div>
+            <button
+              type="submit"
+              disabled={savingPassword}
+              className="w-full rounded-lg bg-eco px-5 py-3 text-sm font-semibold text-white shadow-sm hover:bg-eco-dark disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            >
+              {savingPassword ? "Saving..." : "Set Password"}
+            </button>
+          </form>
+        ) : (
+          <div className="mt-5 space-y-4">
+            {currentPassword ? (
+              <>
+                <div className="rounded-lg bg-gray-50 border t-border p-4">
+                  <label className="block text-sm font-medium t-text-secondary mb-2">
+                    Current Password
+                  </label>
+                  <code className="block rounded-md bg-white border t-border px-4 py-3 text-lg font-mono font-bold t-text">
+                    {currentPassword}
+                  </code>
+                  <p className="mt-2 text-xs t-text-faint">
+                    Share this password with your celebrant
+                  </p>
+                </div>
+                <form onSubmit={handleSetPassword}>
+                  <label className="block text-sm font-medium t-text-secondary mb-2">
+                    New Password (1 letter + 6 numbers)
+                  </label>
+                  <div className="flex gap-3">
+                    <input
+                      type="text"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value.toUpperCase())}
+                      placeholder="e.g., B654321"
+                      required
+                      maxLength={7}
+                      pattern="[A-Za-z]\d{6}"
+                      className="flex-1 rounded-lg border t-border px-4 py-3 text-lg font-mono font-bold t-text placeholder-[#9C9C9C] focus:border-eco focus:outline-none focus:ring-2 focus:ring-eco"
+                    />
+                    <button
+                      type="submit"
+                      disabled={savingPassword}
+                      className="rounded-lg bg-eco px-5 py-3 text-sm font-semibold text-white shadow-sm hover:bg-eco-dark disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                    >
+                      {savingPassword ? "Updating..." : "Reset"}
+                    </button>
+                  </div>
+                </form>
+              </>
+            ) : (
+              <div className="rounded-lg border border-dashed t-border p-6 text-center">
+                <p className="text-sm t-text-muted">
+                  No password set yet. Go to "Set Password" tab to create one.
+                </p>
+              </div>
+            )}
+          </div>
+        )}
 
         <div className="mt-4">
           <button
@@ -343,6 +481,19 @@ export default function CelebrantPhotosPage() {
             Share this link along with the password you set
           </p>
         </div>
+      </div>
+
+      {/* Continue to Menu Button */}
+      <div className="mt-8 flex justify-end">
+        <button
+          onClick={() => router.push(`/dashboard/events/${eventId}/menu`)}
+          className="inline-flex items-center gap-2 rounded-lg bg-eco px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-eco-dark"
+        >
+          Continue to Menu Setup
+          <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+          </svg>
+        </button>
       </div>
     </div>
   );

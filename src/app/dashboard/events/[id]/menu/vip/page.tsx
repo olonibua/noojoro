@@ -213,7 +213,7 @@ export default function VipMenuPage() {
         </div>
       )}
       {success && (
-        <div className="mt-4 rounded-lg bg-emerald-50 border border-emerald-200 px-4 py-3 text-sm text-neutral-700">
+        <div className="mt-4 rounded-lg bg-emerald-50 border border-emerald-200 px-4 py-3 text-sm t-text">
           {success}
         </div>
       )}
@@ -326,7 +326,7 @@ export default function VipMenuPage() {
               </div>
 
               {/* Items */}
-              <div className="divide-y divide-gray-50">
+              <div className="divide-y t-divide">
                 {(cat.items || []).map((item) => (
                     <div key={item.id} className="px-6 py-3">
                       {editingItemId === item.id ? (
@@ -427,7 +427,7 @@ export default function VipMenuPage() {
                 ) : (
                   <button
                     onClick={() => setAddingItemCatId(cat.id)}
-                    className="text-sm font-medium text-neutral-600 hover:text-neutral-700 transition-colors"
+                    className="text-sm font-medium t-text-muted hover:t-text-secondary transition-colors"
                   >
                     + Add VIP Item
                   </button>

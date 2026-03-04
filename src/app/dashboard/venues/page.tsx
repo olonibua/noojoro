@@ -40,7 +40,7 @@ export default function VenuesListPage() {
 
       {loading ? (
         <div className="flex justify-center py-12">
-          <div className="h-8 w-8 animate-spin rounded-full border-4 border-neutral-300 border-t-transparent" />
+          <div className="h-8 w-8 animate-spin rounded-full border-4 t-border border-t-transparent" />
         </div>
       ) : venues.length === 0 ? (
         <div className="rounded-xl border border-dashed t-border t-bg-card px-6 py-16 text-center">
@@ -61,16 +61,16 @@ export default function VenuesListPage() {
             <Link
               key={venue.id}
               href={`/dashboard/venues/${venue.id}`}
-              className="group rounded-xl border t-border t-bg-card p-5 transition hover:border-neutral-300/40 hover:shadow-md"
+              className="group rounded-xl border t-border t-bg-card p-5 transition hover:border-eco/30 hover:shadow-md"
             >
               <div className="mb-3 flex items-start justify-between">
-                <h3 className="text-lg font-semibold t-text group-hover:text-neutral-700">
+                <h3 className="text-lg font-semibold t-text group-hover:text-eco">
                   {venue.name}
                 </h3>
                 <span
                   className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${
                     venue.status === "active"
-                      ? "bg-neutral-100 text-neutral-700"
+                      ? "t-bg-secondary t-text-secondary"
                       : "t-bg-secondary t-text-secondary"
                   }`}
                 >

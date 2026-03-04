@@ -115,6 +115,39 @@ export default function LandingPage() {
               <p className="mt-8 text-sm t-text-faint">
                 Zero double-servings · Works on 3G · Set up in minutes
               </p>
+
+              {/* View Live Event */}
+              <div className="mt-12 rounded-2xl border-2 t-border t-bg-card p-6">
+                <h3 className="mb-3 text-lg font-bold t-text">View Live Event</h3>
+                <p className="mb-4 text-sm t-text-muted">
+                  Have an event ID? Monitor your event in real-time.
+                </p>
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    const formData = new FormData(e.currentTarget);
+                    const eventId = formData.get("eventId");
+                    if (eventId) {
+                      window.location.href = `/live/${eventId}`;
+                    }
+                  }}
+                  className="flex flex-col gap-3 sm:flex-row"
+                >
+                  <input
+                    type="text"
+                    name="eventId"
+                    placeholder="Enter Event ID"
+                    required
+                    className="flex-1 rounded-lg border t-border px-4 py-3 text-sm t-text placeholder-[#9C9C9C] outline-none focus:border-eco focus:ring-2 focus:ring-emerald-500/20"
+                  />
+                  <button
+                    type="submit"
+                    className="rounded-lg bg-eco px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-eco-dark"
+                  >
+                    View Live
+                  </button>
+                </form>
+              </div>
             </div>
 
             {/* Right: Illustration */}
