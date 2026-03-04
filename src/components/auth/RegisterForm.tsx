@@ -24,6 +24,21 @@ export default function RegisterForm({ onNavigate, referralCode }: RegisterFormP
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError("");
+
+    // Frontend password validation
+    if (password.length < 8) {
+      setError("Password must be at least 8 characters");
+      return;
+    }
+    if (!/[A-Z]/.test(password)) {
+      setError("Password must include at least 1 capital letter");
+      return;
+    }
+    if (!/[0-9]/.test(password)) {
+      setError("Password must include at least 1 number");
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -185,7 +200,7 @@ export default function RegisterForm({ onNavigate, referralCode }: RegisterFormP
             </button>
           </div>
           <p className="mt-1.5 text-xs t-text-faint">
-            Must include at least 1 capital letter and 1 number
+            Min 8 characters, at least 1 capital letter and 1 number
           </p>
         </div>
 
