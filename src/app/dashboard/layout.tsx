@@ -239,8 +239,67 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   if (loading) {
     return (
-      <div className="flex h-screen items-center justify-center t-bg">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 t-border border-t-eco" />
+      <div className="flex h-screen t-bg animate-pulse">
+        {/* Skeleton sidebar */}
+        <aside className="hidden lg:flex flex-col w-[240px] border-r t-border p-4 gap-4 shrink-0">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="h-10 w-10 rounded-xl bg-eco/20 shrink-0" />
+            <div className="h-5 w-24 rounded-lg t-bg-secondary" />
+          </div>
+          {[1, 2, 3, 4].map((i) => (
+            <div key={i} className="h-10 rounded-xl t-bg-secondary" />
+          ))}
+          <div className="mt-auto">
+            <div className="h-10 rounded-xl t-bg-secondary" />
+            <div className="flex items-center gap-3 mt-3">
+              <div className="h-9 w-9 rounded-full t-bg-secondary shrink-0" />
+              <div className="space-y-1.5 flex-1">
+                <div className="h-3.5 w-24 rounded t-bg-secondary" />
+                <div className="h-3 w-16 rounded t-bg-secondary" />
+              </div>
+            </div>
+          </div>
+        </aside>
+
+        {/* Skeleton main area */}
+        <div className="flex flex-1 flex-col p-2 lg:p-3">
+          <div className="content-container flex-1">
+            {/* Skeleton top bar */}
+            <div className="flex items-center justify-between px-6 py-4 border-b t-border">
+              <div className="flex items-center gap-3">
+                <div className="h-5 w-5 rounded t-bg-secondary lg:hidden" />
+                <div className="h-5 w-24 rounded-lg t-bg-secondary" />
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="h-10 w-40 rounded-full t-bg-secondary hidden sm:block" />
+                <div className="h-10 w-10 rounded-xl t-bg-secondary" />
+                <div className="h-10 w-10 rounded-xl t-bg-secondary" />
+                <div className="h-9 w-9 rounded-full t-bg-secondary hidden lg:block" />
+              </div>
+            </div>
+
+            {/* Skeleton content */}
+            <div className="p-4 lg:p-8 space-y-6">
+              <div className="space-y-2">
+                <div className="h-7 w-56 rounded-lg t-bg-secondary" />
+                <div className="h-4 w-72 rounded t-bg-secondary" />
+              </div>
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                {[1, 2, 3, 4].map((i) => (
+                  <div key={i} className="h-24 rounded-2xl t-bg-secondary" />
+                ))}
+              </div>
+              <div className="space-y-3">
+                <div className="h-5 w-32 rounded t-bg-secondary" />
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                  {[1, 2].map((i) => (
+                    <div key={i} className="h-32 rounded-2xl t-bg-secondary" />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
