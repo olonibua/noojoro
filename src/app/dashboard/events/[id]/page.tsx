@@ -82,8 +82,7 @@ export default function EventDetailPage() {
     { label: "Tables", href: `/dashboard/events/${eventId}/tables`, icon: "grid" },
     { label: "Menu", href: `/dashboard/events/${eventId}/menu`, icon: "utensils" },
     { label: "Staff", href: `/dashboard/events/${eventId}/staff`, icon: "users" },
-    { label: "Photos", href: `/dashboard/events/${eventId}/photos`, icon: "camera" },
-    { label: "Celebrant", href: `/dashboard/events/${eventId}/photos`, icon: "sparkle" },
+    { label: "Celebrant Setup", href: `/dashboard/events/${eventId}/photos`, icon: "camera" },
     { label: "Tokens", href: `/dashboard/events/${eventId}/tokens`, icon: "ticket" },
     { label: "Live Dashboard", href: `/dashboard/events/${eventId}/live`, icon: "activity" },
   ];
