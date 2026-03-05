@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { api } from "@/lib/api";
+import { setVerifyCredentials } from "@/lib/auth-store";
 
 type InputMode = "email" | "phone";
 
@@ -54,14 +55,11 @@ export default function RegisterForm({ onNavigate, referralCode }: RegisterFormP
 
       await api.post("/api/auth/register", body);
 
-      if (mode === "email") {
-        localStorage.setItem("verify_email", email);
-        localStorage.removeItem("verify_phone");
-      } else {
-        localStorage.setItem("verify_phone", phone);
-        localStorage.removeItem("verify_email");
-      }
-      localStorage.setItem("verify_password", password);
+      setVerifyCredentials({
+        email: mode === "email" ? email : undefined,
+        phone,
+        password,
+      });
       onNavigate("verify");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Registration failed");
@@ -118,39 +116,38 @@ export default function RegisterForm({ onNavigate, referralCode }: RegisterFormP
         </div>
       )}
 
-      {/* Full Name */}
-      <div className="mb-5">
-        <label htmlFor="reg-name" className="mb-1.5 block text-sm font-medium t-text-secondary">
-          Full Name
-        </label>
-        <input
-          id="reg-name"
-          type="text"
-          required
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Your full name"
-          className="w-full t-input px-4 py-3 outline-none"
-        />
-      </div>
-
-      {/* Phone Number (always required) */}
-      <div className="mb-5">
-        <label htmlFor="reg-phone-main" className="mb-1.5 block text-sm font-medium t-text-secondary">
-          Phone Number
-        </label>
-        <input
-          id="reg-phone-main"
-          type="tel"
-          required
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
-          placeholder="+234 801 234 5678"
-          className="w-full t-input px-4 py-3 outline-none"
-        />
-      </div>
-
       <form onSubmit={handleSubmit} className="space-y-5">
+        {/* Full Name */}
+        <div>
+          <label htmlFor="reg-name" className="mb-1.5 block text-sm font-medium t-text-secondary">
+            Full Name
+          </label>
+          <input
+            id="reg-name"
+            type="text"
+            required
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Your full name"
+            className="w-full t-input px-4 py-3 outline-none"
+          />
+        </div>
+
+        {/* Phone Number (always required) */}
+        <div>
+          <label htmlFor="reg-phone-main" className="mb-1.5 block text-sm font-medium t-text-secondary">
+            Phone Number
+          </label>
+          <input
+            id="reg-phone-main"
+            type="tel"
+            required
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            placeholder="+234 801 234 5678"
+            className="w-full t-input px-4 py-3 outline-none"
+          />
+        </div>
         {mode === "email" && (
           <div>
             <label htmlFor="reg-email" className="mb-1.5 block text-sm font-medium t-text-secondary">

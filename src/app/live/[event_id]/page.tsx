@@ -142,10 +142,10 @@ export default function PublicLiveEventPage() {
   /* ========== Loading ========== */
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#0a0a0a] text-white flex items-center justify-center">
-        <div className="text-center space-y-4">
-          <div className="mx-auto h-12 w-12 rounded-full border-4 border-neutral-700 border-t-emerald-500 animate-spin" />
-          <p className="text-lg text-neutral-400">Loading live dashboard...</p>
+      <div className="min-h-screen party-bg text-white flex items-center justify-center">
+        <div className="text-center space-y-4 animate-fade-in">
+          <div className="mx-auto h-14 w-14 rounded-full border-4 border-[#1a1714] border-t-emerald-500 animate-spin" />
+          <p className="font-elegant text-lg italic text-neutral-500 tracking-wide">Loading live dashboard...</p>
         </div>
       </div>
     );
@@ -154,15 +154,15 @@ export default function PublicLiveEventPage() {
   /* ========== Error ========== */
   if (error && !data) {
     return (
-      <div className="min-h-screen bg-[#0a0a0a] text-white flex items-center justify-center px-6">
-        <div className="text-center space-y-4">
+      <div className="min-h-screen party-bg text-white flex items-center justify-center px-6">
+        <div className="text-center space-y-4 animate-fade-in">
           <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-red-500/10 border border-red-500/20">
             <svg className="h-8 w-8 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </div>
-          <h1 className="text-2xl font-bold">Event Not Found</h1>
-          <p className="text-neutral-400">{error}</p>
+          <h1 className="font-display text-2xl font-bold">Event Not Found</h1>
+          <p className="font-elegant italic text-neutral-400">{error}</p>
           <Link href="/" className="inline-flex items-center gap-2 rounded-full bg-emerald-500 px-6 py-3 font-semibold text-white hover:bg-emerald-600 transition-colors">
             Back to Home
           </Link>
@@ -189,29 +189,31 @@ export default function PublicLiveEventPage() {
 
   /* ========== Render ========== */
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white">
+    <div className="min-h-screen party-bg text-white">
 
       {/* ═══════════ HEADER ═══════════ */}
-      <header className="border-b border-neutral-800 bg-[#111111]">
+      <header className="party-header sticky top-0 z-20">
+        {/* Subtle gold accent line */}
+        <div className="h-[1px]" style={{ background: "linear-gradient(90deg, transparent, rgba(212,168,83,0.2), transparent)" }} />
         <div className="mx-auto max-w-[1600px] px-4 py-4 sm:px-6 lg:px-8">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-center gap-4">
               {/* Logo */}
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500 shrink-0">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-600 shrink-0 shadow-lg shadow-emerald-500/20">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                 </svg>
               </div>
               <div>
-                <h1 className="text-xl font-bold sm:text-2xl">{data?.event_name || "Event"}</h1>
-                <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-neutral-400">
-                  <span>{data?.venue_name}</span>
-                  <span className="hidden sm:inline">·</span>
+                <h1 className="font-display text-xl font-bold sm:text-2xl tracking-tight">{data?.event_name || "Event"}</h1>
+                <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-neutral-500">
+                  <span className="font-elegant italic">{data?.venue_name}</span>
+                  <span className="hidden sm:inline text-[#D4A853]/30">·</span>
                   <span>{formatDate(data?.event_date ?? null)}</span>
                   {data?.party_id && (
                     <>
-                      <span className="hidden sm:inline">·</span>
-                      <span className="font-mono text-emerald-400">{data.party_id}</span>
+                      <span className="hidden sm:inline text-[#D4A853]/30">·</span>
+                      <span className="font-mono text-emerald-400/80">{data.party_id}</span>
                     </>
                   )}
                 </div>
@@ -219,14 +221,14 @@ export default function PublicLiveEventPage() {
             </div>
 
             <div className="flex items-center gap-3">
-              <div className={`flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-semibold uppercase tracking-wide ${statusColor} text-white`}>
+              <div className={`flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.15em] ${statusColor} text-white`}>
                 <span className="relative flex h-2 w-2">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-white opacity-75" />
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-white" />
                 </span>
                 {data?.event_status || "—"}
               </div>
-              <div className="text-xs text-neutral-500">
+              <div className="text-xs text-neutral-600 font-elegant italic">
                 Updated {lastRefresh.toLocaleTimeString()}
               </div>
             </div>
@@ -249,16 +251,16 @@ export default function PublicLiveEventPage() {
         {/* ═══════════ TOKEN USAGE + TABLE SUMMARY ═══════════ */}
         <div className="grid gap-6 lg:grid-cols-3">
           {/* Token ring */}
-          <div className="rounded-2xl border border-neutral-800 bg-[#111111] p-6 flex flex-col items-center justify-center">
-            <h2 className="mb-4 text-sm font-semibold uppercase tracking-wider text-neutral-500">Token Usage</h2>
+          <div className="party-card-glow p-6 flex flex-col items-center justify-center">
+            <h2 className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-[#D4A853]/60">Token Usage</h2>
             <div className="relative h-32 w-32">
               <svg className="h-32 w-32 -rotate-90" viewBox="0 0 120 120">
                 <circle cx="60" cy="60" r={radius} fill="none" stroke="#262626" strokeWidth="8" />
                 <circle cx="60" cy="60" r={radius} fill="none" stroke="#22C55E" strokeWidth="8" strokeLinecap="round" strokeDasharray={circumference} strokeDashoffset={offset} className="transition-all duration-700" />
               </svg>
               <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <span className="text-3xl font-bold">{tokenPercent}%</span>
-                <span className="text-xs text-neutral-500">used</span>
+                <span className="font-display text-3xl font-bold">{tokenPercent}%</span>
+                <span className="font-elegant text-xs italic text-neutral-500">used</span>
               </div>
             </div>
             <div className="mt-4 grid grid-cols-3 gap-4 text-center w-full">
@@ -278,8 +280,8 @@ export default function PublicLiveEventPage() {
           </div>
 
           {/* Table overview summary */}
-          <div className="rounded-2xl border border-neutral-800 bg-[#111111] p-6 lg:col-span-2">
-            <h2 className="mb-4 text-sm font-semibold uppercase tracking-wider text-neutral-500">
+          <div className="party-card p-6 lg:col-span-2">
+            <h2 className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-[#D4A853]/60">
               Tables Overview — {tables.length} Tables · {totalAllSeats} Seats
             </h2>
 
@@ -348,9 +350,9 @@ export default function PublicLiveEventPage() {
 
         {/* ═══════════ TABLE DETAIL GRID ═══════════ */}
         {tables.length > 0 && (
-          <div className="rounded-2xl border border-neutral-800 bg-[#111111] overflow-hidden">
-            <div className="border-b border-neutral-800 px-6 py-4">
-              <h2 className="text-sm font-semibold uppercase tracking-wider text-neutral-500">
+          <div className="party-card overflow-hidden">
+            <div className="border-b border-[#D4A853]/10 px-6 py-4">
+              <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-[#D4A853]/60">
                 Table-by-Table Status
               </h2>
             </div>
@@ -417,9 +419,9 @@ export default function PublicLiveEventPage() {
         )}
 
         {/* ═══════════ STAFF PERFORMANCE ═══════════ */}
-        <div className="rounded-2xl border border-neutral-800 bg-[#111111] overflow-hidden">
-          <div className="border-b border-neutral-800 px-6 py-4 flex items-center justify-between">
-            <h2 className="text-sm font-semibold uppercase tracking-wider text-neutral-500">
+        <div className="party-card overflow-hidden">
+          <div className="border-b border-[#D4A853]/10 px-6 py-4 flex items-center justify-between">
+            <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-[#D4A853]/60">
               Staff Performance
             </h2>
             <span className="text-xs text-neutral-600">{staff.length} staff members</span>
@@ -502,9 +504,9 @@ export default function PublicLiveEventPage() {
 
         {/* ═══════════ MENU / INVENTORY ═══════════ */}
         {inventory.length > 0 && (
-          <div className="rounded-2xl border border-neutral-800 bg-[#111111] overflow-hidden">
-            <div className="border-b border-neutral-800 px-6 py-4">
-              <h2 className="text-sm font-semibold uppercase tracking-wider text-neutral-500">
+          <div className="party-card overflow-hidden">
+            <div className="border-b border-[#D4A853]/10 px-6 py-4">
+              <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-[#D4A853]/60">
                 Menu Inventory
               </h2>
             </div>
@@ -578,10 +580,15 @@ export default function PublicLiveEventPage() {
       </div>
 
       {/* ═══════════ FOOTER ═══════════ */}
-      <footer className="border-t border-neutral-800 mt-6 px-4 py-6 text-center">
-        <p className="text-sm text-neutral-600">
+      <footer className="mt-6 px-4 py-8 text-center">
+        <div className="flex items-center justify-center gap-3 mb-3">
+          <span className="h-px w-12" style={{ background: "linear-gradient(90deg, transparent, rgba(212,168,83,0.15))" }} />
+          <span className="inline-block h-1 w-1 rounded-full bg-[#D4A853]/20" />
+          <span className="h-px w-12" style={{ background: "linear-gradient(90deg, rgba(212,168,83,0.15), transparent)" }} />
+        </div>
+        <p className="font-elegant text-sm italic text-neutral-600">
           Live Dashboard · Auto-refreshes every 5 seconds · Powered by{" "}
-          <Link href="/" className="font-semibold text-emerald-500 hover:underline">No Ojoro</Link>
+          <Link href="/" className="font-semibold not-italic text-emerald-500 hover:text-emerald-400 transition-colors">No Ojoro</Link>
         </p>
       </footer>
     </div>
@@ -660,14 +667,22 @@ function MetricCard({
     ? "text-red-400"
     : "text-white";
 
+  const bgGlow = color === "emerald"
+    ? "bg-emerald-500/[0.04]"
+    : color === "amber"
+    ? "bg-amber-500/[0.04]"
+    : color === "red"
+    ? "bg-red-500/[0.04]"
+    : "";
+
   return (
-    <div className={`rounded-2xl border ${borderColor} bg-[#111111] p-4`}>
+    <div className={`rounded-2xl border ${borderColor} p-4 transition-all hover:scale-[1.02] ${bgGlow}`} style={{ background: bgGlow ? undefined : "linear-gradient(145deg, rgba(25,22,18,0.9) 0%, rgba(18,16,14,0.95) 100%)" }}>
       <div className="flex items-center gap-2 mb-2">
         <span className={iconColor}>{iconMap[icon]}</span>
-        <span className="text-xs font-medium text-neutral-500 uppercase tracking-wide">{label}</span>
+        <span className="text-xs font-medium text-neutral-600 uppercase tracking-[0.1em]">{label}</span>
       </div>
-      <p className={`text-2xl font-bold ${valueColor}`}>{value}</p>
-      {sub && <p className="text-xs text-neutral-500 mt-0.5">{sub}</p>}
+      <p className={`font-display text-2xl font-bold ${valueColor}`}>{value}</p>
+      {sub && <p className="text-xs text-neutral-600 mt-0.5">{sub}</p>}
     </div>
   );
 }

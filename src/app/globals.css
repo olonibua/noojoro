@@ -18,6 +18,16 @@
   --color-text-muted: #6B6B6B;
   --color-border: #E3E3E3;
   --font-sans: "Plus Jakarta Sans", "Inter", system-ui, sans-serif;
+  --font-display: "Playfair Display", "Georgia", serif;
+  --font-elegant: "Lora", "Georgia", serif;
+
+  /* Party accent palette — warm golds & champagne to complement eco green */
+  --color-gold: #D4A853;
+  --color-gold-light: #E8C97A;
+  --color-gold-dark: #B8912E;
+  --color-champagne: #F5E6C8;
+  --color-cream: #FFF9F0;
+  --color-rose: #C9A0A0;
 }
 
 body {
@@ -272,9 +282,231 @@ html[data-theme="dark"] body { background-color: #0F0F0F; }
   to { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes slide-up-lg {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.3); }
+  50% { box-shadow: 0 0 20px 4px rgba(34, 197, 94, 0.15); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
 .animate-fade-in { animation: fade-in 0.3s ease-out; }
 .animate-modal-in { animation: modal-in 0.25s ease-out; }
 .animate-slide-up { animation: slide-up 0.4s ease-out; }
+.animate-slide-up-lg { animation: slide-up-lg 0.6s ease-out both; }
+.animate-float { animation: float 3s ease-in-out infinite; }
+.animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+
+/* Staggered animation delays */
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-400 { animation-delay: 0.4s; }
+.delay-500 { animation-delay: 0.5s; }
+
+/* ═══════════ PARTY ELEGANCE — TYPOGRAPHY & ACCENTS ═══════════ */
+
+.font-display { font-family: var(--font-display); }
+.font-elegant { font-family: var(--font-elegant); }
+
+/* Elegant gold gradient text */
+.text-gold-gradient {
+  background: linear-gradient(135deg, #D4A853 0%, #E8C97A 40%, #D4A853 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Warm shimmer for party headers */
+@keyframes gold-shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+.text-shimmer-gold {
+  background: linear-gradient(90deg, #D4A853 0%, #F5E6C8 25%, #E8C97A 50%, #F5E6C8 75%, #D4A853 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gold-shimmer 4s linear infinite;
+}
+
+/* Sparkle animation for decorative dots */
+@keyframes sparkle {
+  0%, 100% { opacity: 0.3; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+.animate-sparkle { animation: sparkle 2s ease-in-out infinite; }
+
+/* Elegant divider with diamond center */
+.divider-elegant {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.divider-elegant::before,
+.divider-elegant::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(212,168,83,0.3), transparent);
+}
+
+/* Party card with warm undertones on dark bg */
+.party-card {
+  background: linear-gradient(145deg, rgba(25,22,18,0.95) 0%, rgba(18,16,14,0.98) 100%);
+  border: 1px solid rgba(212,168,83,0.12);
+  border-radius: 20px;
+  backdrop-filter: blur(8px);
+}
+.party-card-glow {
+  background: linear-gradient(145deg, rgba(25,22,18,0.95) 0%, rgba(18,16,14,0.98) 100%);
+  border: 1px solid rgba(212,168,83,0.2);
+  border-radius: 20px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 0 30px -10px rgba(212,168,83,0.1);
+}
+
+/* Party header with warm gradient */
+.party-header {
+  background: linear-gradient(180deg, rgba(12,10,8,0.98) 0%, rgba(8,7,5,0.95) 100%);
+  border-bottom: 1px solid rgba(212,168,83,0.1);
+  backdrop-filter: blur(12px);
+}
+
+/* Party background with subtle warm tone */
+.party-bg {
+  background: linear-gradient(180deg, #080604 0%, #0A0806 50%, #060504 100%);
+}
+
+/* Celebrant page specific — warm dark elegance */
+.celebrant-bg {
+  background: linear-gradient(180deg, #0C0A08 0%, #100D0A 100%);
+}
+
+/* Decorative corner flourish */
+.flourish-corner::before {
+  content: '';
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border-top: 2px solid rgba(212,168,83,0.15);
+  border-left: 2px solid rgba(212,168,83,0.15);
+  border-top-left-radius: 12px;
+  top: -1px;
+  left: -1px;
+  pointer-events: none;
+}
+.flourish-corner::after {
+  content: '';
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border-bottom: 2px solid rgba(212,168,83,0.15);
+  border-right: 2px solid rgba(212,168,83,0.15);
+  border-bottom-right-radius: 12px;
+  bottom: -1px;
+  right: -1px;
+  pointer-events: none;
+}
+
+/* ═══════════ LIVE DASHBOARD DARK THEME ═══════════ */
+
+.live-bg { background-color: #050505; }
+.live-card {
+  background: linear-gradient(145deg, rgba(20,20,20,0.9) 0%, rgba(15,15,15,0.95) 100%);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 20px;
+  backdrop-filter: blur(8px);
+}
+.live-card-glow {
+  background: linear-gradient(145deg, rgba(20,20,20,0.9) 0%, rgba(15,15,15,0.95) 100%);
+  border: 1px solid rgba(34,197,94,0.12);
+  border-radius: 20px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 0 24px -8px rgba(34,197,94,0.08);
+}
+.live-header {
+  background: linear-gradient(180deg, rgba(10,10,10,0.98) 0%, rgba(5,5,5,0.95) 100%);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  backdrop-filter: blur(12px);
+}
+
+/* ═══════════ GUEST PAGE STYLES ═══════════ */
+
+.guest-bg {
+  background: linear-gradient(180deg, #FAFAFA 0%, #F0F0F0 100%);
+}
+.theme-dark .guest-bg {
+  background: linear-gradient(180deg, #0F0F0F 0%, #0A0A0A 100%);
+}
+
+.guest-card {
+  background: #FFFFFF;
+  border: 1px solid #E8E8E8;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  transition: all 0.2s ease;
+}
+.guest-card:hover {
+  border-color: #D0D0D0;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+}
+.guest-card-selected {
+  background: #FFFFFF;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+  transition: all 0.2s ease;
+}
+
+.guest-header {
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+
+.guest-bottom-bar {
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid rgba(0,0,0,0.06);
+}
+
+/* ═══════════ SECTION DECORATIVE GRADIENTS ═══════════ */
+
+.section-dark-gradient {
+  background: linear-gradient(145deg, #141414 0%, #1A1A1A 50%, #161616 100%);
+  color: #F0F0F0;
+}
+.theme-light .section-dark-gradient { background: linear-gradient(145deg, #141414 0%, #1A1A1A 50%, #161616 100%); color: #F0F0F0; }
+.theme-light .section-dark-gradient .t-text-muted { color: #9C9C9C; }
+
+/* Subtle mesh gradient for hero backgrounds */
+.mesh-gradient {
+  position: relative;
+}
+.mesh-gradient::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 10% 20%, rgba(34,197,94,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 90% 80%, rgba(34,197,94,0.04) 0%, transparent 60%);
+  pointer-events: none;
+}
 
 /* ═══════════ DASHBOARD — SIDEBAR RAIL + FLOATING CONTAINER ═══════════ */
 

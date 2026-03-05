@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { api } from "@/lib/api";
 import { setAuthTokens } from "@/lib/auth";
+import { setVerifyCredentials } from "@/lib/auth-store";
 
 type InputMode = "email" | "phone";
 
@@ -39,12 +40,11 @@ export default function LoginForm({ onNavigate, onClose }: LoginFormProps) {
       const result = await api.post<{ message: string; access_token?: string; refresh_token?: string }>("/api/auth/login", body);
 
       if (result.message === "verify_required") {
-        if (mode === "email") {
-          localStorage.setItem("verify_email", email);
-        } else {
-          localStorage.setItem("verify_phone", phone);
-        }
-        localStorage.setItem("verify_password", password);
+        setVerifyCredentials({
+          email: mode === "email" ? email : undefined,
+          phone: mode === "phone" ? phone : undefined,
+          password,
+        });
         onNavigate("verify");
         return;
       }

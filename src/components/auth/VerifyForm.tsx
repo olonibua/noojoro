@@ -4,6 +4,7 @@ import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { api } from "@/lib/api";
 import { setAuthTokens } from "@/lib/auth";
+import { getVerifyCredentials, clearVerifyCredentials } from "@/lib/auth-store";
 
 interface VerifyFormProps {
   onClose: () => void;
@@ -63,8 +64,9 @@ export default function VerifyForm({ onClose }: VerifyFormProps) {
     setLoading(true);
 
     try {
-      const verifyEmail = localStorage.getItem("verify_email");
-      const verifyPhone = localStorage.getItem("verify_phone");
+      const creds = getVerifyCredentials();
+      const verifyEmail = creds.email;
+      const verifyPhone = creds.phone;
       const body: Record<string, string> = { code: fullCode };
       if (verifyEmail) body.email = verifyEmail;
       if (verifyPhone) body.phone = verifyPhone;
@@ -78,22 +80,20 @@ export default function VerifyForm({ onClose }: VerifyFormProps) {
       await api.post("/api/auth/verify", body);
 
       // Auto-login after successful verification
-      const loginBody: Record<string, string> = {
-        password: localStorage.getItem("verify_password") || "",
-      };
-      if (verifyEmail) loginBody.email = verifyEmail;
-      if (verifyPhone) loginBody.phone = verifyPhone;
+      if (creds.password) {
+        const loginBody: Record<string, string> = {
+          password: creds.password,
+        };
+        if (verifyEmail) loginBody.email = verifyEmail;
+        if (verifyPhone) loginBody.phone = verifyPhone;
 
-      if (loginBody.password) {
         const loginResult = await api.post<{ access_token?: string; refresh_token?: string }>("/api/auth/login", loginBody);
         if (loginResult.access_token) {
           setAuthTokens(loginResult.access_token, loginResult.refresh_token || undefined);
         }
       }
 
-      localStorage.removeItem("verify_email");
-      localStorage.removeItem("verify_phone");
-      localStorage.removeItem("verify_password");
+      clearVerifyCredentials();
       onClose();
       router.push("/dashboard");
     } catch (err) {
@@ -176,8 +176,9 @@ export default function VerifyForm({ onClose }: VerifyFormProps) {
           disabled={resending}
           className="font-medium text-eco hover:text-eco-dark disabled:opacity-50"
           onClick={async () => {
-            const verifyEmail = localStorage.getItem("verify_email");
-            const verifyPhone = localStorage.getItem("verify_phone");
+            const creds = getVerifyCredentials();
+            const verifyEmail = creds.email;
+            const verifyPhone = creds.phone;
             if (!verifyEmail && !verifyPhone) {
               setError("Missing email or phone. Please register again.");
               return;

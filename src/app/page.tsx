@@ -78,18 +78,19 @@ export default function LandingPage() {
       <Navbar />
 
       {/* ═══ HERO ═══ */}
-      <section className="px-6 pt-28 pb-20 lg:pt-36 lg:pb-28 t-bg">
-        <div className="mx-auto max-w-7xl">
+      <section className="relative px-6 pt-28 pb-20 lg:pt-36 lg:pb-28 t-bg mesh-gradient overflow-hidden">
+        <div className="mx-auto max-w-7xl relative z-10">
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
             {/* Left: Text */}
-            <div>
-              <p className="mb-5 text-sm font-semibold uppercase tracking-widest text-eco">
+            <div className="animate-slide-up-lg">
+              <div className="mb-5 inline-flex items-center gap-2 rounded-full border t-border px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-eco">
+                <span className="h-1.5 w-1.5 rounded-full bg-eco animate-pulse" />
                 Event &amp; Hospitality Operations
-              </p>
+              </div>
 
               <h1 className="text-4xl font-extrabold leading-[1.08] sm:text-5xl md:text-6xl lg:text-7xl">
                 No More{" "}
-                <span className="text-eco">Ojoro</span>
+                <span className="text-gradient">Ojoro</span>
               </h1>
 
               <p className="mt-6 max-w-xl text-lg leading-relaxed t-text-muted sm:text-xl">
@@ -99,25 +100,27 @@ export default function LandingPage() {
               <div className="mt-10 flex flex-col gap-4 sm:flex-row">
                 <Link
                   href="?auth=register" scroll={false}
-                  className="inline-flex items-center justify-center gap-2 rounded-full bg-eco px-8 py-4 text-lg font-bold text-white hover:bg-eco-dark transition-colors"
+                  className="animate-pulse-glow inline-flex items-center justify-center gap-2 rounded-full bg-eco px-8 py-4 text-lg font-bold text-white hover:bg-eco-dark transition-all hover:scale-[1.02]"
                 >
                   Get Started Free
                   <ArrowRight />
                 </Link>
                 <Link
                   href="#how-it-works"
-                  className="inline-flex items-center justify-center gap-2 rounded-full border t-border px-8 py-4 text-lg font-semibold t-text-secondary transition-colors hover:text-eco hover:border-eco"
+                  className="inline-flex items-center justify-center gap-2 rounded-full border t-border px-8 py-4 text-lg font-semibold t-text-secondary transition-all hover:text-eco hover:border-eco hover:scale-[1.02]"
                 >
                   See How It Works
                 </Link>
               </div>
 
-              <p className="mt-8 text-sm t-text-faint">
-                Zero double-servings · Works on 3G · Set up in minutes
-              </p>
+              <div className="mt-8 flex items-center gap-6 text-sm t-text-faint">
+                <span className="flex items-center gap-1.5"><Check /> Zero double-servings</span>
+                <span className="flex items-center gap-1.5"><Check /> Works on 3G</span>
+                <span className="flex items-center gap-1.5"><Check /> Set up in minutes</span>
+              </div>
 
               {/* View Live Event */}
-              <div className="mt-12 rounded-2xl border-2 t-border t-bg-card p-6">
+              <div className="mt-12 card-glass p-6">
                 <h3 className="mb-3 text-lg font-bold t-text">View Live Event</h3>
                 <p className="mb-4 text-sm t-text-muted">
                   Have an event ID? Monitor your event in real-time.
@@ -138,11 +141,11 @@ export default function LandingPage() {
                     name="eventId"
                     placeholder="Enter Event ID"
                     required
-                    className="flex-1 rounded-lg border t-border px-4 py-3 text-sm t-text placeholder-[#9C9C9C] outline-none focus:border-eco focus:ring-2 focus:ring-emerald-500/20"
+                    className="flex-1 t-input px-4 py-3 text-sm outline-none"
                   />
                   <button
                     type="submit"
-                    className="rounded-lg bg-eco px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-eco-dark"
+                    className="btn-primary px-6 py-3 text-sm"
                   >
                     View Live
                   </button>
@@ -151,8 +154,8 @@ export default function LandingPage() {
             </div>
 
             {/* Right: Illustration */}
-            <div className="flex justify-center lg:justify-end">
-              <div className="w-full max-w-md lg:max-w-lg overflow-hidden rounded-[20px] border t-border shadow-sm">
+            <div className="flex justify-center lg:justify-end animate-slide-up-lg delay-200">
+              <div className="w-full max-w-md lg:max-w-lg overflow-hidden rounded-[24px] border t-border shadow-xl shadow-black/5 animate-float">
                 <Image
                   src="/illustrations/dashboard.png"
                   alt="No Ojoro live dashboard"
@@ -168,23 +171,27 @@ export default function LandingPage() {
       </section>
 
       {/* ═══ BEFORE / AFTER ═══ */}
-      <section className="section-dark px-6 py-20">
+      <section className="section-dark-gradient px-6 py-24">
         <div className="mx-auto max-w-3xl text-center">
-          <h2 className="text-3xl font-bold text-[#F0F3EF] sm:text-4xl">The Problem We Solve</h2>
-          <p className="mt-4 text-lg text-[#9CA396]">
+          <h2 className="text-3xl font-bold text-white sm:text-4xl">The Problem We Solve</h2>
+          <p className="mt-4 text-lg text-neutral-400">
             At every Nigerian event the same story repeats. We built the system to fix it.
           </p>
         </div>
-        <div className="mx-auto mt-12 grid max-w-5xl gap-8 sm:grid-cols-2">
-          <div className="rounded-[20px] border border-white/8 bg-[#252622] overflow-hidden">
-            <Image src="/illustrations/before-chaos.png" alt="Before: Chaotic event service" width={600} height={400} className="w-full h-auto" />
-            <div className="bg-red-900/30 p-4 text-center">
+        <div className="mx-auto mt-14 grid max-w-5xl gap-8 sm:grid-cols-2">
+          <div className="group rounded-[24px] border border-white/6 bg-white/[0.03] overflow-hidden transition-all hover:border-red-500/20">
+            <div className="overflow-hidden">
+              <Image src="/illustrations/before-chaos.png" alt="Before: Chaotic event service" width={600} height={400} className="w-full h-auto transition-transform duration-500 group-hover:scale-105" />
+            </div>
+            <div className="bg-red-500/8 border-t border-red-500/10 p-4 text-center">
               <p className="text-sm font-bold text-red-400">Before: Chaos &amp; Double-Serving</p>
             </div>
           </div>
-          <div className="rounded-[20px] border border-white/8 bg-[#252622] overflow-hidden">
-            <Image src="/illustrations/after-noojoro.png" alt="After: Organized with No Ojoro" width={600} height={400} className="w-full h-auto" />
-            <div className="p-4 text-center" style={{ background: "rgba(34, 197, 94, 0.1)" }}>
+          <div className="group rounded-[24px] border border-white/6 bg-white/[0.03] overflow-hidden transition-all hover:border-emerald-500/20">
+            <div className="overflow-hidden">
+              <Image src="/illustrations/after-noojoro.png" alt="After: Organized with No Ojoro" width={600} height={400} className="w-full h-auto transition-transform duration-500 group-hover:scale-105" />
+            </div>
+            <div className="bg-emerald-500/8 border-t border-emerald-500/10 p-4 text-center">
               <p className="text-sm font-bold text-eco-light">After: Organized &amp; Fraud-Proof</p>
             </div>
           </div>
@@ -192,12 +199,12 @@ export default function LandingPage() {
       </section>
 
       {/* ═══ STATS ═══ */}
-      <section className="t-stat-bar px-6 py-16">
-        <div className="mx-auto grid max-w-5xl grid-cols-2 gap-8 sm:grid-cols-4">
-          {stats.map((stat, index) => (
-            <div key={stat.label} className={`text-center ${index < stats.length - 1 ? "sm:border-r t-border" : ""}`}>
-              <p className="stat-number text-eco">
-                {stat.value}<span className="text-xl">{stat.suffix}</span>
+      <section className="px-6 py-16 t-bg">
+        <div className="mx-auto grid max-w-5xl grid-cols-2 gap-6 sm:grid-cols-4">
+          {stats.map((stat) => (
+            <div key={stat.label} className="card-elevated p-6 text-center">
+              <p className="text-3xl font-bold text-gradient">
+                {stat.value}<span className="text-lg">{stat.suffix}</span>
               </p>
               <p className="stat-label mt-2 t-text-muted">
                 {stat.label}
@@ -251,27 +258,27 @@ export default function LandingPage() {
       </section>
 
       {/* ═══ FEATURES ═══ */}
-      <section id="features" className="section-dark px-6 py-24">
+      <section id="features" className="section-dark-gradient px-6 py-24">
         <div className="mx-auto max-w-6xl">
           <div className="grid gap-16 lg:grid-cols-2 lg:items-center">
             <div>
-              <h2 className="text-3xl font-bold text-[#F0F3EF] sm:text-4xl">
+              <h2 className="text-3xl font-bold text-white sm:text-4xl">
                 Everything You Need to Eliminate Ojoro
               </h2>
-              <p className="mt-4 text-lg text-[#9CA396]">
+              <p className="mt-4 text-lg text-neutral-400">
                 Built for Nigerian events — poor internet, large crowds, and high-pressure serving windows.
               </p>
               <div className="mt-10 grid gap-4 sm:grid-cols-2">
                 {features.map((feature) => (
-                  <div key={feature.title} className="rounded-[20px] border border-white/8 bg-[#252622] p-5">
-                    <h3 className="mb-1 text-sm font-bold text-[#F0F3EF]">{feature.title}</h3>
-                    <p className="text-xs leading-relaxed text-[#9CA396]">{feature.description}</p>
+                  <div key={feature.title} className="group rounded-[20px] border border-white/6 bg-white/[0.03] p-5 transition-all hover:border-emerald-500/20 hover:bg-emerald-500/[0.03]">
+                    <h3 className="mb-1.5 text-sm font-bold text-white">{feature.title}</h3>
+                    <p className="text-xs leading-relaxed text-neutral-400">{feature.description}</p>
                   </div>
                 ))}
               </div>
             </div>
             <div className="flex justify-center">
-              <Image src="/illustrations/phone-ordering.png" alt="Mobile ordering" width={480} height={480} className="rounded-[20px]" />
+              <Image src="/illustrations/phone-ordering.png" alt="Mobile ordering" width={480} height={480} className="rounded-[24px] shadow-2xl shadow-black/30" />
             </div>
           </div>
         </div>
@@ -332,30 +339,35 @@ export default function LandingPage() {
       </section>
 
       {/* ═══ TESTIMONIALS — dark section ═══ */}
-      <section className="section-dark px-6 py-24">
+      <section className="section-dark-gradient px-6 py-24">
         <div className="mx-auto max-w-6xl">
           <div className="text-center">
-            <h2 className="text-3xl font-bold text-[#F0F3EF] sm:text-4xl">Trusted by Real People</h2>
-            <p className="mt-4 text-lg text-[#9CA396]">
+            <h2 className="text-3xl font-bold text-white sm:text-4xl">Trusted by Real People</h2>
+            <p className="mt-4 text-lg text-neutral-400">
               Hear from caterers, bar owners, and event hosts who use No Ojoro.
             </p>
           </div>
 
           <div className="mt-16 grid gap-12 lg:grid-cols-2 lg:items-center">
             <div className="flex justify-center">
-              <Image src="/illustrations/dashboard.png" alt="No Ojoro dashboard" width={500} height={500} className="rounded-[20px]" />
+              <Image src="/illustrations/dashboard.png" alt="No Ojoro dashboard" width={500} height={500} className="rounded-[24px] shadow-2xl shadow-black/30" />
             </div>
             <div className="space-y-5">
               {testimonials.map((t) => (
-                <div key={t.name} className="rounded-[20px] border border-white/8 bg-[#252622] p-6">
-                  <p className="mb-4 text-sm leading-relaxed text-[#9CA396] italic">&ldquo;{t.quote}&rdquo;</p>
+                <div key={t.name} className="rounded-[20px] border border-white/6 bg-white/[0.03] p-6 transition-all hover:border-white/12">
+                  <div className="mb-4 flex gap-1">
+                    {[...Array(5)].map((_, i) => (
+                      <svg key={i} className="h-4 w-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
+                    ))}
+                  </div>
+                  <p className="mb-4 text-sm leading-relaxed text-neutral-300 italic">&ldquo;{t.quote}&rdquo;</p>
                   <div className="flex items-center gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-eco text-sm font-bold text-white">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-eco to-eco-dark text-sm font-bold text-white">
                       {t.name.charAt(0)}
                     </div>
                     <div>
-                      <p className="text-sm font-semibold text-[#F0F3EF]">{t.name}</p>
-                      <p className="text-xs text-[#6B7366]">{t.role}</p>
+                      <p className="text-sm font-semibold text-white">{t.name}</p>
+                      <p className="text-xs text-neutral-500">{t.role}</p>
                     </div>
                   </div>
                 </div>
@@ -422,23 +434,25 @@ export default function LandingPage() {
       </section>
 
       {/* ═══ FINAL CTA — dark ═══ */}
-      <section className="section-dark px-6 py-24">
-        <div className="mx-auto max-w-3xl text-center">
-          <h2 className="text-3xl font-bold text-[#F0F3EF] sm:text-4xl">
+      <section className="relative px-6 py-28 overflow-hidden" style={{ background: "linear-gradient(135deg, #0A0A0A 0%, #111 40%, #0F1F12 100%)" }}>
+        {/* Decorative glow */}
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-[500px] w-[500px] rounded-full bg-eco/5 blur-[120px] pointer-events-none" />
+        <div className="relative mx-auto max-w-3xl text-center z-10">
+          <h2 className="text-3xl font-bold text-white sm:text-5xl">
             Ready to Eliminate Ojoro?
           </h2>
-          <p className="mx-auto mt-4 max-w-xl text-lg text-[#9CA396]">
+          <p className="mx-auto mt-5 max-w-xl text-lg text-neutral-400">
             Join caterers and bar owners across Nigeria who are running smarter, fraud-free operations.
           </p>
           <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
             <Link
               href="?auth=register" scroll={false}
-              className="glow-green inline-flex items-center gap-2 rounded-full bg-eco px-10 py-4 text-lg font-bold text-white hover:bg-eco-dark"
+              className="animate-pulse-glow inline-flex items-center gap-2 rounded-full bg-eco px-10 py-4 text-lg font-bold text-white hover:bg-eco-dark transition-all hover:scale-[1.02]"
             >
               Get Started Now
               <ArrowRight />
             </Link>
-            <Link href="/contact" className="rounded-full border border-white/20 px-8 py-4 font-semibold text-[#F0F3EF] transition-all hover:bg-eco hover:border-eco hover:text-white">
+            <Link href="/contact" className="rounded-full border border-white/15 px-8 py-4 font-semibold text-white transition-all hover:bg-white/5 hover:border-white/25">
               Talk to Us
             </Link>
           </div>

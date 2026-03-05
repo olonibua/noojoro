@@ -307,13 +307,13 @@ export default function GuestCateringOrderPage() {
   /* --- Loading --- */
   if (phase === "loading") {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-white">
-        <div className="text-center">
+      <div className="flex min-h-screen items-center justify-center guest-bg">
+        <div className="text-center animate-fade-in">
           <div
             className="mx-auto mb-4 h-10 w-10 animate-spin rounded-full border-4 border-gray-200"
             style={{ borderTopColor: themeColor }}
           />
-          <p className="text-lg font-medium text-gray-700">Loading your menu...</p>
+          <p className="text-lg font-medium text-gray-500">Loading your menu...</p>
         </div>
       </div>
     );
@@ -322,15 +322,15 @@ export default function GuestCateringOrderPage() {
   /* --- Error --- */
   if (phase === "error") {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-white px-6">
-        <div className="text-center">
-          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-red-100">
-            <svg className="h-8 w-8 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+      <div className="flex min-h-screen items-center justify-center guest-bg px-6">
+        <div className="text-center animate-fade-in">
+          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-red-50 border border-red-100">
+            <svg className="h-8 w-8 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </div>
           <h1 className="mb-2 text-2xl font-bold text-gray-900">Oops!</h1>
-          <p className="text-lg text-gray-600">{errorMsg}</p>
+          <p className="text-base text-gray-500">{errorMsg}</p>
         </div>
       </div>
     );
@@ -399,9 +399,9 @@ export default function GuestCateringOrderPage() {
 
           <button
             onClick={skipSlideshow}
-            className="min-h-[48px] min-w-[120px] rounded-xl border-2 border-white/50 px-6 py-3 text-lg font-semibold text-white active:bg-white/10"
+            className="min-h-[48px] min-w-[120px] rounded-full border border-white/30 px-6 py-3 text-base font-semibold text-white/90 backdrop-blur-sm active:bg-white/10 transition-all"
           >
-            Skip
+            Skip to Menu
           </button>
         </div>
       </div>
@@ -415,13 +415,13 @@ export default function GuestCateringOrderPage() {
     );
 
     return (
-      <div className="min-h-screen bg-white pb-40">
+      <div className="min-h-screen guest-bg pb-40">
         {/* Header */}
-        <div className="sticky top-0 z-10 border-b border-gray-200 bg-white px-4 py-4">
+        <div className="guest-header sticky top-0 z-10 px-4 py-4">
           <h1 className="text-center text-xl font-bold text-gray-900">
             {tokenData.event_name}
           </h1>
-          <p className="mt-1 text-center text-sm text-gray-500">
+          <p className="mt-1 text-center text-sm text-gray-400">
             Select one item per category
           </p>
         </div>
@@ -537,19 +537,19 @@ export default function GuestCateringOrderPage() {
         </div>
 
         {/* Fixed bottom bar */}
-        <div className="fixed bottom-0 left-0 right-0 border-t border-gray-200 bg-white px-4 py-4">
+        <div className="guest-bottom-bar fixed bottom-0 left-0 right-0 px-4 py-4">
           <div className="mx-auto max-w-lg space-y-3">
             <button
               disabled={!allSelected}
               onClick={() => setPhase("summary")}
-              className="min-h-[52px] w-full rounded-xl px-6 py-3 text-lg font-bold text-white transition-opacity disabled:opacity-40"
-              style={{ backgroundColor: themeColor }}
+              className="min-h-[52px] w-full rounded-full px-6 py-3 text-lg font-bold text-white transition-all disabled:opacity-40"
+              style={{ backgroundColor: themeColor, boxShadow: allSelected ? `0 8px 24px ${themeColor}33` : 'none' }}
             >
               Review Order ({Object.keys(selections).length}/{tokenData.menu.length})
             </button>
             <button
               onClick={requestWaiter}
-              className="min-h-[48px] w-full rounded-xl border-2 border-gray-300 px-6 py-3 text-base font-semibold text-gray-700 active:bg-gray-100"
+              className="min-h-[48px] w-full rounded-full border border-gray-200 px-6 py-3 text-base font-semibold text-gray-600 active:bg-gray-50 transition-colors"
             >
               {waiterRequested ? "Waiter Notified!" : "Request a Waiter"}
             </button>
@@ -564,29 +564,29 @@ export default function GuestCateringOrderPage() {
     const selectedItems = getSelectedItems();
 
     return (
-      <div className="min-h-screen bg-white pb-40">
-        <div className="sticky top-0 z-10 border-b border-gray-200 bg-white px-4 py-4">
+      <div className="min-h-screen guest-bg pb-40">
+        <div className="guest-header sticky top-0 z-10 px-4 py-4">
           <h1 className="text-center text-xl font-bold text-gray-900">
             Order Summary
           </h1>
         </div>
 
         <div className="mx-auto max-w-lg px-4 py-6">
-          <div className="space-y-4">
+          <div className="space-y-3">
             {selectedItems.map(({ category, item }) => (
               <div
                 key={category}
-                className="flex items-center justify-between rounded-xl border border-gray-200 p-4"
+                className="guest-card flex items-center justify-between p-4"
               >
                 <div>
-                  <p className="text-sm font-medium text-gray-500">{category}</p>
-                  <p className="text-lg font-semibold text-gray-900">{item.name}</p>
+                  <p className="text-xs font-medium text-gray-400 uppercase tracking-wide">{category}</p>
+                  <p className="mt-0.5 text-base font-semibold text-gray-900">{item.name}</p>
                 </div>
                 {item.image_url && (
                   <img
                     src={item.image_url}
                     alt={item.name}
-                    className="h-12 w-12 rounded-lg object-cover"
+                    className="h-12 w-12 rounded-xl object-cover"
                   />
                 )}
               </div>
@@ -595,24 +595,24 @@ export default function GuestCateringOrderPage() {
 
           <button
             onClick={() => setPhase("menu")}
-            className="mt-6 min-h-[48px] w-full rounded-xl border-2 border-gray-300 px-6 py-3 text-base font-semibold text-gray-700 active:bg-gray-100"
+            className="mt-6 min-h-[48px] w-full rounded-full border border-gray-200 px-6 py-3 text-base font-semibold text-gray-600 active:bg-gray-50 transition-colors"
           >
             Edit Selections
           </button>
         </div>
 
-        <div className="fixed bottom-0 left-0 right-0 border-t border-gray-200 bg-white px-4 py-4">
+        <div className="guest-bottom-bar fixed bottom-0 left-0 right-0 px-4 py-4">
           <div className="mx-auto max-w-lg space-y-3">
             <button
               onClick={placeOrder}
-              className="min-h-[52px] w-full rounded-xl px-6 py-3 text-lg font-bold text-white"
-              style={{ backgroundColor: themeColor }}
+              className="min-h-[52px] w-full rounded-full px-6 py-3 text-lg font-bold text-white transition-all"
+              style={{ backgroundColor: themeColor, boxShadow: `0 8px 24px ${themeColor}33` }}
             >
               Place Order
             </button>
             <button
               onClick={requestWaiter}
-              className="min-h-[48px] w-full rounded-xl border-2 border-gray-300 px-6 py-3 text-base font-semibold text-gray-700 active:bg-gray-100"
+              className="min-h-[48px] w-full rounded-full border border-gray-200 px-6 py-3 text-base font-semibold text-gray-600 active:bg-gray-50 transition-colors"
             >
               {waiterRequested ? "Waiter Notified!" : "Request a Waiter"}
             </button>
@@ -625,13 +625,13 @@ export default function GuestCateringOrderPage() {
   /* --- Placing --- */
   if (phase === "placing") {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-white">
-        <div className="text-center">
+      <div className="flex min-h-screen items-center justify-center guest-bg">
+        <div className="text-center animate-fade-in">
           <div
             className="mx-auto mb-4 h-10 w-10 animate-spin rounded-full border-4 border-gray-200"
             style={{ borderTopColor: themeColor }}
           />
-          <p className="text-lg font-medium text-gray-700">Placing your order...</p>
+          <p className="text-lg font-medium text-gray-500">Placing your order...</p>
         </div>
       </div>
     );
@@ -640,12 +640,12 @@ export default function GuestCateringOrderPage() {
   /* --- Confirmed --- */
   if (phase === "confirmed") {
     return (
-      <div className="flex min-h-screen flex-col items-center justify-center bg-white px-6">
-        <div className="text-center">
+      <div className="flex min-h-screen flex-col items-center justify-center guest-bg px-6">
+        <div className="text-center animate-slide-up">
           {/* Green checkmark */}
           <div
-            className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full"
-            style={{ backgroundColor: themeColor + "1A" }}
+            className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full border"
+            style={{ backgroundColor: themeColor + "12", borderColor: themeColor + "20" }}
           >
             <svg
               className="h-10 w-10"
@@ -660,27 +660,27 @@ export default function GuestCateringOrderPage() {
           </div>
 
           <h1 className="mb-2 text-2xl font-bold text-gray-900">Order Placed!</h1>
-          <p className="mb-1 text-lg text-gray-600">
+          <p className="mb-1 text-lg text-gray-500">
             Order #{orderNumber}
           </p>
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-gray-400">
             Your food is being prepared. A waiter will bring it to you.
           </p>
         </div>
 
         <button
           onClick={requestWaiter}
-          className="mt-8 min-h-[52px] w-full max-w-sm rounded-xl border-2 border-gray-300 px-6 py-3 text-lg font-semibold text-gray-700 active:bg-gray-100"
+          className="mt-8 min-h-[52px] w-full max-w-sm rounded-full border border-gray-200 px-6 py-3 text-lg font-semibold text-gray-600 active:bg-gray-50 transition-colors"
         >
           {waiterRequested ? "Waiter Notified!" : "Request a Waiter"}
         </button>
 
         {/* Footer */}
         <div className="mt-12 text-center">
-          <p className="mb-1 text-sm font-medium text-gray-500">
+          <p className="mb-1 text-sm font-medium text-gray-400">
             Planning a party? Let&apos;s make it unforgettable!
           </p>
-          <p className="text-xs text-gray-400">Powered by No Ojoro</p>
+          <p className="text-xs text-gray-300">Powered by No Ojoro</p>
         </div>
       </div>
     );
