@@ -113,7 +113,10 @@ export default function GuestCateringOrderPage() {
   const [selections, setSelections] = useState<Record<string, string>>({});
   const [orderNumber, setOrderNumber] = useState("");
   const [waiterRequested, setWaiterRequested] = useState(false);
+  const [waiterLoading, setWaiterLoading] = useState(false);
+  const [waiterError, setWaiterError] = useState(false);
   const slideTimer = useRef<ReturnType<typeof setInterval> | null>(null);
+  const waiterTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const themeColor = tokenData?.primary_color || "#22C55E";
 
@@ -279,14 +282,29 @@ export default function GuestCateringOrderPage() {
 
   /* --- Request waiter --- */
   const requestWaiter = useCallback(async () => {
+    if (waiterLoading || waiterRequested) return;
+    setWaiterLoading(true);
+    setWaiterError(false);
     try {
       await api.post(`/api/order/catering/${eventId}/${tokenCode}/waiter`);
       setWaiterRequested(true);
-      setTimeout(() => setWaiterRequested(false), 5000);
+      if (waiterTimer.current) clearTimeout(waiterTimer.current);
+      waiterTimer.current = setTimeout(() => setWaiterRequested(false), 5000);
     } catch {
-      // silent fail
+      setWaiterError(true);
+      if (waiterTimer.current) clearTimeout(waiterTimer.current);
+      waiterTimer.current = setTimeout(() => setWaiterError(false), 3000);
+    } finally {
+      setWaiterLoading(false);
     }
-  }, [eventId, tokenCode]);
+  }, [eventId, tokenCode, waiterLoading, waiterRequested]);
+
+  /* --- Cleanup waiter timer --- */
+  useEffect(() => {
+    return () => {
+      if (waiterTimer.current) clearTimeout(waiterTimer.current);
+    };
+  }, []);
 
   /* --- Get selected item details for summary --- */
   const getSelectedItems = useCallback((): { category: string; item: MenuItem }[] => {
@@ -549,9 +567,10 @@ export default function GuestCateringOrderPage() {
             </button>
             <button
               onClick={requestWaiter}
-              className="min-h-[48px] w-full rounded-full border border-gray-200 px-6 py-3 text-base font-semibold text-gray-600 active:bg-gray-50 transition-colors"
+              disabled={waiterLoading || waiterRequested}
+              className={`min-h-[48px] w-full rounded-full border px-6 py-3 text-base font-semibold transition-colors disabled:opacity-60 ${waiterError ? "border-red-200 text-red-500 bg-red-50/50" : waiterRequested ? "border-emerald-200 text-emerald-600 bg-emerald-50/50" : "border-gray-200 text-gray-600 active:bg-gray-50"}`}
             >
-              {waiterRequested ? "Waiter Notified!" : "Request a Waiter"}
+              {waiterLoading ? "Notifying..." : waiterRequested ? "Waiter Notified!" : waiterError ? "Failed — Tap to Retry" : "Request a Waiter"}
             </button>
           </div>
         </div>
@@ -612,9 +631,10 @@ export default function GuestCateringOrderPage() {
             </button>
             <button
               onClick={requestWaiter}
-              className="min-h-[48px] w-full rounded-full border border-gray-200 px-6 py-3 text-base font-semibold text-gray-600 active:bg-gray-50 transition-colors"
+              disabled={waiterLoading || waiterRequested}
+              className={`min-h-[48px] w-full rounded-full border px-6 py-3 text-base font-semibold transition-colors disabled:opacity-60 ${waiterError ? "border-red-200 text-red-500 bg-red-50/50" : waiterRequested ? "border-emerald-200 text-emerald-600 bg-emerald-50/50" : "border-gray-200 text-gray-600 active:bg-gray-50"}`}
             >
-              {waiterRequested ? "Waiter Notified!" : "Request a Waiter"}
+              {waiterLoading ? "Notifying..." : waiterRequested ? "Waiter Notified!" : waiterError ? "Failed — Tap to Retry" : "Request a Waiter"}
             </button>
           </div>
         </div>
@@ -670,9 +690,10 @@ export default function GuestCateringOrderPage() {
 
         <button
           onClick={requestWaiter}
-          className="mt-8 min-h-[52px] w-full max-w-sm rounded-full border border-gray-200 px-6 py-3 text-lg font-semibold text-gray-600 active:bg-gray-50 transition-colors"
+          disabled={waiterLoading || waiterRequested}
+          className={`mt-8 min-h-[52px] w-full max-w-sm rounded-full border px-6 py-3 text-lg font-semibold transition-colors disabled:opacity-60 ${waiterError ? "border-red-200 text-red-500 bg-red-50/50" : waiterRequested ? "border-emerald-200 text-emerald-600 bg-emerald-50/50" : "border-gray-200 text-gray-600 active:bg-gray-50"}`}
         >
-          {waiterRequested ? "Waiter Notified!" : "Request a Waiter"}
+          {waiterLoading ? "Notifying..." : waiterRequested ? "Waiter Notified!" : waiterError ? "Failed — Tap to Retry" : "Request a Waiter"}
         </button>
 
         {/* Footer */}

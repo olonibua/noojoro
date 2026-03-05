@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useParams } from "next/navigation";
 import { api } from "@/lib/api";
 
@@ -110,6 +110,10 @@ export default function BarOrderPage() {
   const [orderNumber, setOrderNumber] = useState("");
   const [pastOrders, setPastOrders] = useState<PastOrder[]>([]);
   const [showHistory, setShowHistory] = useState(false);
+  const [waiterRequested, setWaiterRequested] = useState(false);
+  const [waiterLoading, setWaiterLoading] = useState(false);
+  const [waiterError, setWaiterError] = useState(false);
+  const waiterTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   /* --- Load venue data --- */
   useEffect(() => {
@@ -233,6 +237,32 @@ export default function BarOrderPage() {
     }
   }, [cart, venueId, tableNumber, venueData, loadPastOrders]);
 
+  /* --- Request waiter --- */
+  const requestWaiter = useCallback(async () => {
+    if (waiterLoading || waiterRequested) return;
+    setWaiterLoading(true);
+    setWaiterError(false);
+    try {
+      await api.post(`/api/order/bar/${venueId}/${tableNumber}/waiter`);
+      setWaiterRequested(true);
+      if (waiterTimer.current) clearTimeout(waiterTimer.current);
+      waiterTimer.current = setTimeout(() => setWaiterRequested(false), 5000);
+    } catch {
+      setWaiterError(true);
+      if (waiterTimer.current) clearTimeout(waiterTimer.current);
+      waiterTimer.current = setTimeout(() => setWaiterError(false), 3000);
+    } finally {
+      setWaiterLoading(false);
+    }
+  }, [venueId, tableNumber, waiterLoading, waiterRequested]);
+
+  /* --- Cleanup waiter timer --- */
+  useEffect(() => {
+    return () => {
+      if (waiterTimer.current) clearTimeout(waiterTimer.current);
+    };
+  }, []);
+
   /* ========== Render ========== */
 
   /* --- Loading --- */
@@ -301,6 +331,14 @@ export default function BarOrderPage() {
           View Order History
         </button>
 
+        <button
+          onClick={requestWaiter}
+          disabled={waiterLoading || waiterRequested}
+          className={`mt-3 min-h-[48px] w-full max-w-sm rounded-full border px-6 py-3 text-base font-semibold transition-colors disabled:opacity-60 ${waiterError ? "border-red-200 text-red-500 bg-red-50/50" : waiterRequested ? "border-emerald-200 text-emerald-600 bg-emerald-50/50" : "border-gray-200 text-gray-600 active:bg-gray-50"}`}
+        >
+          {waiterLoading ? "Notifying..." : waiterRequested ? "Waiter Notified!" : waiterError ? "Failed — Tap to Retry" : "Request a Waiter"}
+        </button>
+
         <p className="mt-8 text-xs text-gray-400">Powered by No Ojoro</p>
       </div>
     );
@@ -309,7 +347,7 @@ export default function BarOrderPage() {
   /* --- Menu + Cart --- */
   if (phase === "menu" && venueData) {
     return (
-      <div className="min-h-screen guest-bg pb-44">
+      <div className="min-h-screen guest-bg pb-52">
         {/* Header */}
         <div className="guest-header sticky top-0 z-10 px-4 py-4">
           <div className="mx-auto flex max-w-lg items-center gap-3">
@@ -466,7 +504,7 @@ export default function BarOrderPage() {
         {/* Fixed bottom cart bar */}
         {cartCount > 0 && (
           <div className="guest-bottom-bar fixed bottom-0 left-0 right-0 px-4 py-4">
-            <div className="mx-auto max-w-lg">
+            <div className="mx-auto max-w-lg space-y-3">
               <div className="mb-3 flex items-center justify-between">
                 <span className="text-base text-gray-500">
                   {cartCount} item{cartCount !== 1 ? "s" : ""}
@@ -480,6 +518,28 @@ export default function BarOrderPage() {
                 className="min-h-[52px] w-full rounded-full bg-emerald-500 px-6 py-3 text-lg font-bold text-white shadow-lg shadow-emerald-500/20 active:bg-emerald-600 transition-all"
               >
                 Place Order
+              </button>
+              <button
+                onClick={requestWaiter}
+                disabled={waiterLoading || waiterRequested}
+                className={`min-h-[48px] w-full rounded-full border px-6 py-3 text-base font-semibold transition-colors disabled:opacity-60 ${waiterError ? "border-red-200 text-red-500 bg-red-50/50" : waiterRequested ? "border-emerald-200 text-emerald-600 bg-emerald-50/50" : "border-gray-200 text-gray-600 active:bg-gray-50"}`}
+              >
+                {waiterLoading ? "Notifying..." : waiterRequested ? "Waiter Notified!" : waiterError ? "Failed — Tap to Retry" : "Request a Waiter"}
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Request Waiter (always visible, even with empty cart) */}
+        {cartCount === 0 && (
+          <div className="guest-bottom-bar fixed bottom-0 left-0 right-0 px-4 py-4">
+            <div className="mx-auto max-w-lg">
+              <button
+                onClick={requestWaiter}
+                disabled={waiterLoading || waiterRequested}
+                className={`min-h-[48px] w-full rounded-full border px-6 py-3 text-base font-semibold transition-colors disabled:opacity-60 ${waiterError ? "border-red-200 text-red-500 bg-red-50/50" : waiterRequested ? "border-emerald-200 text-emerald-600 bg-emerald-50/50" : "border-gray-200 text-gray-600 active:bg-gray-50"}`}
+              >
+                {waiterLoading ? "Notifying..." : waiterRequested ? "Waiter Notified!" : waiterError ? "Failed — Tap to Retry" : "Request a Waiter"}
               </button>
             </div>
           </div>
