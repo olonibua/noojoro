@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { api } from "@/lib/api";
+import { useToast } from "@/lib/toast";
 
 interface WalletData {
   total_earned: string;
@@ -33,9 +34,8 @@ export default function WithdrawalsPage() {
   const [bankName, setBankName] = useState("");
   const [accountNumber, setAccountNumber] = useState("");
   const [accountName, setAccountName] = useState("");
+  const toast = useToast();
   const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
 
   const loadData = async () => {
     try {
@@ -58,8 +58,6 @@ export default function WithdrawalsPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
-    setSuccess("");
     setSubmitting(true);
 
     try {
@@ -69,14 +67,14 @@ export default function WithdrawalsPage() {
         account_number: accountNumber,
         account_name: accountName,
       });
-      setSuccess("Withdrawal request submitted successfully!");
+      toast.success("Withdrawal request submitted successfully!");
       setAmount("");
       setBankName("");
       setAccountNumber("");
       setAccountName("");
       await loadData();
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to submit request");
+      toast.error(err instanceof Error ? err.message : "Failed to submit request");
     } finally {
       setSubmitting(false);
     }
@@ -129,18 +127,6 @@ export default function WithdrawalsPage() {
               <p className="text-lg font-bold text-eco">
                 NGN {fmt(String(Number(wallet.available_balance) - Number(wallet.pending_withdrawals)))}
               </p>
-            </div>
-          )}
-
-          {error && (
-            <div className="mb-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
-              {error}
-            </div>
-          )}
-
-          {success && (
-            <div className="mb-4 rounded-xl border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-600">
-              {success}
             </div>
           )}
 

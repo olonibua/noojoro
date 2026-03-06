@@ -309,6 +309,18 @@ html[data-theme="dark"] body { background-color: #0F0F0F; }
 .animate-float { animation: float 3s ease-in-out infinite; }
 .animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
 
+/* Toast notifications */
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(-12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes toast-out {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(-12px); }
+}
+.animate-toast-in { animation: toast-in 0.3s ease-out; }
+.animate-toast-out { animation: toast-out 0.3s ease-in forwards; }
+
 /* Staggered animation delays */
 .delay-100 { animation-delay: 0.1s; }
 .delay-200 { animation-delay: 0.2s; }

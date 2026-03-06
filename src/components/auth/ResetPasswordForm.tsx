@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { api } from "@/lib/api";
+import { useToast } from "@/lib/toast";
 
 type InputMode = "email" | "phone";
 type View = "request" | "verify" | "confirm";
@@ -11,6 +12,7 @@ interface ResetPasswordFormProps {
 }
 
 export default function ResetPasswordForm({ onNavigate }: ResetPasswordFormProps) {
+  const toast = useToast();
   const [view, setView] = useState<View>("request");
   const [mode, setMode] = useState<InputMode>("email");
   const [email, setEmail] = useState("");
@@ -21,13 +23,9 @@ export default function ResetPasswordForm({ onNavigate }: ResetPasswordFormProps
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
 
   async function handleRequest(e: React.FormEvent) {
     e.preventDefault();
-    setError("");
-    setSuccess("");
     setLoading(true);
 
     try {
@@ -39,10 +37,10 @@ export default function ResetPasswordForm({ onNavigate }: ResetPasswordFormProps
       }
 
       await api.post("/api/auth/password-reset/request", body);
-      setSuccess("A reset code has been sent. Check your inbox.");
+      toast.success("A reset code has been sent. Check your inbox.");
       setView("verify");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Request failed");
+      toast.error(err instanceof Error ? err.message : "Request failed");
     } finally {
       setLoading(false);
     }
@@ -50,8 +48,6 @@ export default function ResetPasswordForm({ onNavigate }: ResetPasswordFormProps
 
   async function handleVerify(e: React.FormEvent) {
     e.preventDefault();
-    setError("");
-    setSuccess("");
     setLoading(true);
 
     try {
@@ -63,10 +59,10 @@ export default function ResetPasswordForm({ onNavigate }: ResetPasswordFormProps
       }
 
       await api.post("/api/auth/password-reset/verify", body);
-      setSuccess("Code verified. Enter your new password.");
+      toast.success("Code verified. Enter your new password.");
       setView("confirm");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Verification failed");
+      toast.error(err instanceof Error ? err.message : "Verification failed");
     } finally {
       setLoading(false);
     }
@@ -74,11 +70,9 @@ export default function ResetPasswordForm({ onNavigate }: ResetPasswordFormProps
 
   async function handleConfirm(e: React.FormEvent) {
     e.preventDefault();
-    setError("");
-    setSuccess("");
 
     if (newPassword !== confirmPassword) {
-      setError("Passwords do not match");
+      toast.error("Passwords do not match");
       return;
     }
 
@@ -97,10 +91,10 @@ export default function ResetPasswordForm({ onNavigate }: ResetPasswordFormProps
       }
 
       await api.post("/api/auth/password-reset/confirm", body);
-      setSuccess("Password reset successful! Redirecting to login...");
+      toast.success("Password reset successful! Redirecting to login...");
       setTimeout(() => onNavigate("login"), 2000);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Reset failed");
+      toast.error(err instanceof Error ? err.message : "Reset failed");
     } finally {
       setLoading(false);
     }
@@ -129,18 +123,6 @@ export default function ResetPasswordForm({ onNavigate }: ResetPasswordFormProps
       <p className="mb-8 text-center text-sm t-text-muted">
         {headings[view].subtitle}
       </p>
-
-      {error && (
-        <div className="mb-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
-          {error}
-        </div>
-      )}
-
-      {success && (
-        <div className="mb-4 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-600">
-          {success}
-        </div>
-      )}
 
       {view === "request" && (
         <>
@@ -247,8 +229,6 @@ export default function ResetPasswordForm({ onNavigate }: ResetPasswordFormProps
             onClick={() => {
               setView("request");
               setToken("");
-              setError("");
-              setSuccess("");
             }}
             className="w-full py-2 text-sm t-text-faint hover:text-eco"
           >
@@ -342,8 +322,6 @@ export default function ResetPasswordForm({ onNavigate }: ResetPasswordFormProps
               setConfirmPassword("");
               setShowPassword(false);
               setShowConfirm(false);
-              setError("");
-              setSuccess("");
             }}
             className="w-full py-2 text-sm t-text-faint hover:text-eco"
           >

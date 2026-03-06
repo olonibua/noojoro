@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { api } from "@/lib/api";
 import { setAuthTokens } from "@/lib/auth";
 import { setVerifyCredentials } from "@/lib/auth-store";
+import { useToast } from "@/lib/toast";
 
 type InputMode = "email" | "phone";
 
@@ -15,17 +16,16 @@ interface LoginFormProps {
 
 export default function LoginForm({ onNavigate, onClose }: LoginFormProps) {
   const router = useRouter();
+  const toast = useToast();
   const [mode, setMode] = useState<InputMode>("email");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setError("");
     setLoading(true);
 
     try {
@@ -56,7 +56,7 @@ export default function LoginForm({ onNavigate, onClose }: LoginFormProps) {
       onClose();
       router.push("/dashboard");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Login failed");
+      toast.error(err instanceof Error ? err.message : "Login failed");
     } finally {
       setLoading(false);
     }
@@ -68,12 +68,6 @@ export default function LoginForm({ onNavigate, onClose }: LoginFormProps) {
       <p className="mb-8 text-center text-sm t-text-muted">
         Sign in to your No Ojoro account
       </p>
-
-      {error && (
-        <div className="mb-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
-          {error}
-        </div>
-      )}
 
       {/* Mode Tabs */}
       <div className="mb-6 flex overflow-hidden rounded-xl t-tab-bg p-1">

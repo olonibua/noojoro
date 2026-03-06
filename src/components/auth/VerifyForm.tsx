@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { api } from "@/lib/api";
 import { setAuthTokens } from "@/lib/auth";
 import { getVerifyCredentials, clearVerifyCredentials } from "@/lib/auth-store";
+import { useToast } from "@/lib/toast";
 
 interface VerifyFormProps {
   onClose: () => void;
@@ -12,10 +13,9 @@ interface VerifyFormProps {
 
 export default function VerifyForm({ onClose }: VerifyFormProps) {
   const router = useRouter();
+  const toast = useToast();
   const [code, setCode] = useState<string[]>(Array(6).fill(""));
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [resendMsg, setResendMsg] = useState("");
   const [resending, setResending] = useState(false);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
@@ -56,11 +56,10 @@ export default function VerifyForm({ onClose }: VerifyFormProps) {
     e.preventDefault();
     const fullCode = code.join("");
     if (fullCode.length !== 6) {
-      setError("Please enter the full 6-digit code");
+      toast.error("Please enter the full 6-digit code");
       return;
     }
 
-    setError("");
     setLoading(true);
 
     try {
@@ -72,7 +71,7 @@ export default function VerifyForm({ onClose }: VerifyFormProps) {
       if (verifyPhone) body.phone = verifyPhone;
 
       if (!verifyEmail && !verifyPhone) {
-        setError("Missing email or phone. Please register again.");
+        toast.error("Missing email or phone. Please register again.");
         setLoading(false);
         return;
       }
@@ -97,7 +96,7 @@ export default function VerifyForm({ onClose }: VerifyFormProps) {
       onClose();
       router.push("/dashboard");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Verification failed");
+      toast.error(err instanceof Error ? err.message : "Verification failed");
     } finally {
       setLoading(false);
     }
@@ -128,18 +127,6 @@ export default function VerifyForm({ onClose }: VerifyFormProps) {
       <p className="mb-8 text-center text-sm t-text-muted">
         Enter the 6-digit code sent to your email or phone
       </p>
-
-      {error && (
-        <div className="mb-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
-          {error}
-        </div>
-      )}
-
-      {resendMsg && (
-        <div className="mb-4 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-600">
-          {resendMsg}
-        </div>
-      )}
 
       <form onSubmit={handleSubmit}>
         <div className="mb-8 flex justify-center gap-3" onPaste={handlePaste}>
@@ -180,20 +167,18 @@ export default function VerifyForm({ onClose }: VerifyFormProps) {
             const verifyEmail = creds.email;
             const verifyPhone = creds.phone;
             if (!verifyEmail && !verifyPhone) {
-              setError("Missing email or phone. Please register again.");
+              toast.error("Missing email or phone. Please register again.");
               return;
             }
             setResending(true);
-            setError("");
-            setResendMsg("");
             try {
               const body: Record<string, string> = {};
               if (verifyEmail) body.email = verifyEmail;
               if (verifyPhone) body.phone = verifyPhone;
               await api.post("/api/auth/resend-otp", body);
-              setResendMsg("A new code has been sent!");
+              toast.success("A new code has been sent!");
             } catch (err) {
-              setError(err instanceof Error ? err.message : "Failed to resend");
+              toast.error(err instanceof Error ? err.message : "Failed to resend");
             } finally {
               setResending(false);
             }

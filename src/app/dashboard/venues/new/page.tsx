@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { api } from "@/lib/api";
+import { useToast } from "@/lib/toast";
 
 interface VenueResponse {
   id: string;
@@ -19,13 +20,12 @@ export default function CreateVenuePage() {
   const [address, setAddress] = useState("");
   const [tableCount, setTableCount] = useState(1);
   const [logoUrl, setLogoUrl] = useState("");
+  const toast = useToast();
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
-    setError("");
 
     try {
       const venue = await api.post<VenueResponse>("/api/venues", {
@@ -36,7 +36,7 @@ export default function CreateVenuePage() {
       });
       router.push(`/dashboard/venues/${venue.id}`);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to create venue");
+      toast.error(err instanceof Error ? err.message : "Failed to create venue");
     } finally {
       setLoading(false);
     }
@@ -70,12 +70,6 @@ export default function CreateVenuePage() {
         <p className="mb-8 text-sm t-text-muted">
           Set up your bar or venue to start taking orders.
         </p>
-
-        {error && (
-          <div className="mb-6 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-            {error}
-          </div>
-        )}
 
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Venue Name */}

@@ -167,14 +167,13 @@ export default function TokenManagementPage() {
         `/api/events/${eventId}/tokens/activate`,
         body
       );
-      if (data.activated_directly) {
-        setSuccess("Tokens activated successfully!");
-        await fetchStats();
-      } else if (data.authorization_url) {
+      if (data.authorization_url) {
         window.location.href = data.authorization_url;
-      } else {
+      } else if (data.activated_directly) {
         setSuccess("Tokens activated successfully!");
         await fetchStats();
+      } else {
+        setError("Payment could not be initialized. Please try again.");
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to activate tokens");
@@ -199,14 +198,14 @@ export default function TokenManagementPage() {
         `/api/events/${eventId}/tokens/activate`,
         body
       );
-      if (data.activated_directly) {
-        setSuccess("Tokens activated successfully!");
-        await fetchStats();
-      } else if (data.authorization_url) {
+      if (data.authorization_url) {
         window.location.href = data.authorization_url;
-      } else {
+      } else if (data.activated_directly) {
         setSuccess("Tokens activated successfully!");
         await fetchStats();
+        await fetchEvent();
+      } else {
+        setError("Payment could not be initialized. Please try again.");
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to process payment");

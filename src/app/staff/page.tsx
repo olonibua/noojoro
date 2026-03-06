@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { api } from "@/lib/api";
+import { useToast } from "@/lib/toast";
 
 interface LoginResponse {
   token: string;
@@ -12,12 +13,11 @@ export default function StaffLoginPage() {
   const router = useRouter();
   const [eventCode, setEventCode] = useState("");
   const [pin, setPin] = useState("");
+  const toast = useToast();
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setError("");
     setLoading(true);
 
     try {
@@ -28,7 +28,7 @@ export default function StaffLoginPage() {
       localStorage.setItem("staff_token", result.token);
       router.push("/staff/dashboard");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Login failed");
+      toast.error(err instanceof Error ? err.message : "Login failed");
     } finally {
       setLoading(false);
     }
@@ -47,12 +47,6 @@ export default function StaffLoginPage() {
           <h1 className="text-2xl font-bold t-text">Staff Login</h1>
           <p className="mt-1 text-base t-text-muted">Enter your event code and PIN</p>
         </div>
-
-        {error && (
-          <div className="mb-4 rounded-xl bg-red-50 px-4 py-3 text-base font-medium text-red-700">
-            {error}
-          </div>
-        )}
 
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>

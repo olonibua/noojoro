@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import ThemeProvider from "@/components/ui/ThemeProvider";
+import ToastProvider from "@/components/ui/ToastProvider";
 import AuthModal from "@/components/ui/AuthModal";
 
 export const metadata: Metadata = {
@@ -31,8 +32,10 @@ export default function RootLayout({
       </head>
       <body className="antialiased">
         <ThemeProvider>
-          {children}
-          <AuthModal />
+          <ToastProvider>
+            {children}
+            <AuthModal />
+          </ToastProvider>
         </ThemeProvider>
       </body>
     </html>

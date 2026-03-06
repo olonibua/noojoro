@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { api } from "@/lib/api";
 import { setVerifyCredentials } from "@/lib/auth-store";
+import { useToast } from "@/lib/toast";
 
 type InputMode = "email" | "phone";
 
@@ -12,6 +13,7 @@ interface RegisterFormProps {
 }
 
 export default function RegisterForm({ onNavigate, referralCode }: RegisterFormProps) {
+  const toast = useToast();
   const [mode, setMode] = useState<InputMode>("email");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -20,23 +22,20 @@ export default function RegisterForm({ onNavigate, referralCode }: RegisterFormP
   const [role, setRole] = useState("caterer");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setError("");
-
     // Frontend password validation
     if (password.length < 8) {
-      setError("Password must be at least 8 characters");
+      toast.error("Password must be at least 8 characters");
       return;
     }
     if (!/[A-Z]/.test(password)) {
-      setError("Password must include at least 1 capital letter");
+      toast.error("Password must include at least 1 capital letter");
       return;
     }
     if (!/[0-9]/.test(password)) {
-      setError("Password must include at least 1 number");
+      toast.error("Password must include at least 1 number");
       return;
     }
 
@@ -62,7 +61,7 @@ export default function RegisterForm({ onNavigate, referralCode }: RegisterFormP
       });
       onNavigate("verify");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Registration failed");
+      toast.error(err instanceof Error ? err.message : "Registration failed");
     } finally {
       setLoading(false);
     }
@@ -109,12 +108,6 @@ export default function RegisterForm({ onNavigate, referralCode }: RegisterFormP
           Phone Only
         </button>
       </div>
-
-      {error && (
-        <div className="mb-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
-          {error}
-        </div>
-      )}
 
       <form onSubmit={handleSubmit} className="space-y-5">
         {/* Full Name */}

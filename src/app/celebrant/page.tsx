@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { api } from "@/lib/api";
+import { useToast } from "@/lib/toast";
 
 interface LoginResponse {
   token: string;
@@ -15,8 +16,8 @@ function CelebrantLoginForm() {
   const passwordRef = useRef<HTMLInputElement>(null);
   const [eventId, setEventId] = useState("");
   const [password, setPassword] = useState("");
+  const toast = useToast();
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
 
   useEffect(() => {
     const eventParam = searchParams.get("event");
@@ -28,7 +29,6 @@ function CelebrantLoginForm() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setError("");
     setLoading(true);
 
     try {
@@ -39,7 +39,7 @@ function CelebrantLoginForm() {
       localStorage.setItem("celebrant_token", result.token);
       router.push(`/celebrant/${eventId}`);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Login failed");
+      toast.error(err instanceof Error ? err.message : "Login failed");
     } finally {
       setLoading(false);
     }
@@ -59,12 +59,6 @@ function CelebrantLoginForm() {
           Enter the event ID and password shared by your event organizer
         </p>
       </div>
-
-      {error && (
-        <div className="mb-4 rounded-xl bg-red-50 px-4 py-3 text-base font-medium text-red-700">
-          {error}
-        </div>
-      )}
 
       <form onSubmit={handleSubmit} className="space-y-5">
         <div>

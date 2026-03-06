@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { api } from "@/lib/api";
+import { useToast } from "@/lib/toast";
 import WizardSteps from "@/components/wizard/WizardSteps";
 
 interface CreateEventResponse {
@@ -11,8 +12,8 @@ interface CreateEventResponse {
 
 export default function CreateEventPage() {
   const router = useRouter();
+  const toast = useToast();
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
 
   const [form, setForm] = useState({
     name: "",
@@ -32,7 +33,6 @@ export default function CreateEventPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
     setLoading(true);
 
     try {
@@ -48,7 +48,7 @@ export default function CreateEventPage() {
       const result = await api.post<CreateEventResponse>("/api/events", payload);
       router.push(`/dashboard/events/${result.id}/menu`);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to create event");
+      toast.error(err instanceof Error ? err.message : "Failed to create event");
     } finally {
       setLoading(false);
     }
@@ -72,12 +72,6 @@ export default function CreateEventPage() {
         <p className="mt-1 text-sm t-text-muted">
           Set up your event details. You&apos;ll configure menu, staff, and styling next.
         </p>
-
-        {error && (
-          <div className="mt-4 rounded-lg bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-700">
-            {error}
-          </div>
-        )}
 
         <form onSubmit={handleSubmit} className="mt-6 space-y-5">
           {/* Event Name */}
