@@ -1,12 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { api } from "@/lib/api";
-import { clearAuthTokens } from "@/lib/auth";
+import { clearAuthTokens, recordActivity, isIdle } from "@/lib/auth";
 import type { User } from "@/lib/types";
 import { DesktopSidebar, MobileSidebar } from "@/components/dashboard/DashboardSidebar";
 import DashboardTopBar from "@/components/dashboard/DashboardTopBar";
+
+const IDLE_TIMEOUT_MS = 60 * 60 * 1000; // 1 hour
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
@@ -25,6 +27,33 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       })
       .finally(() => setLoading(false));
   }, [router]);
+
+  // Idle timeout: auto-logout after 1 hour of inactivity
+  const handleIdleLogout = useCallback(() => {
+    clearAuthTokens();
+    router.push("/?auth=login&reason=idle");
+  }, [router]);
+
+  useEffect(() => {
+    // Record initial activity
+    recordActivity();
+
+    const onActivity = () => recordActivity();
+    const events = ["mousedown", "keydown", "touchstart", "scroll"] as const;
+    events.forEach((e) => window.addEventListener(e, onActivity, { passive: true }));
+
+    // Check idle every 30 seconds
+    const interval = setInterval(() => {
+      if (isIdle(IDLE_TIMEOUT_MS)) {
+        handleIdleLogout();
+      }
+    }, 30_000);
+
+    return () => {
+      events.forEach((e) => window.removeEventListener(e, onActivity));
+      clearInterval(interval);
+    };
+  }, [handleIdleLogout]);
 
   const handleLogout = async () => {
     try {

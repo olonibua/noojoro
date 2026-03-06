@@ -27,6 +27,7 @@ export function getBearerToken(): string | null {
   if (typeof window === "undefined") return null;
   const token =
     getCookie("noojoro_token") ||
+    localStorage.getItem("noojoro_token") ||
     localStorage.getItem("staff_token") ||
     localStorage.getItem("bar_staff_token") ||
     localStorage.getItem("celebrant_token") ||
@@ -42,7 +43,7 @@ export function getBearerToken(): string | null {
 let refreshPromise: Promise<string | null> | null = null;
 
 async function tryRefreshToken(): Promise<string | null> {
-  const refreshToken = getCookie("noojoro_refresh");
+  const refreshToken = getCookie("noojoro_refresh") || localStorage.getItem("noojoro_refresh");
   if (!refreshToken || isTokenExpired(refreshToken)) {
     clearAuthTokens();
     return null;
@@ -85,7 +86,7 @@ async function request<T>(
   let token = getBearerToken();
 
   // If access token is expired, try refreshing before making the request
-  if (!token && getCookie("noojoro_refresh")) {
+  if (!token && (getCookie("noojoro_refresh") || localStorage.getItem("noojoro_refresh"))) {
     if (!refreshPromise) {
       refreshPromise = tryRefreshToken().finally(() => { refreshPromise = null; });
     }
@@ -114,7 +115,7 @@ async function request<T>(
   const response = await fetch(`${API_URL}${endpoint}`, config);
 
   // If 401, attempt one refresh and retry
-  if (response.status === 401 && getCookie("noojoro_refresh")) {
+  if (response.status === 401 && (getCookie("noojoro_refresh") || localStorage.getItem("noojoro_refresh"))) {
     if (!refreshPromise) {
       refreshPromise = tryRefreshToken().finally(() => { refreshPromise = null; });
     }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { api, ApiError } from "@/lib/api";
 
@@ -16,6 +16,14 @@ interface BackendSeat {
 interface BackendTable {
   table_number: number;
   seats: BackendSeat[];
+}
+
+interface WaiterRequest {
+  id: string;
+  table_number: number;
+  seat_number: number;
+  created_at: string;
+  status: string;
 }
 
 /* Display types used in the component */
@@ -34,6 +42,34 @@ interface TableInfo {
   seats: SeatInfo[];
 }
 
+/* ---------- Sound helper ---------- */
+
+function playNotificationSound() {
+  try {
+    const ctx = new AudioContext();
+    const now = ctx.currentTime;
+
+    // Two-tone chime: C5 then E5
+    [523.25, 659.25].forEach((freq, i) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = "sine";
+      osc.frequency.value = freq;
+      gain.gain.setValueAtTime(0.3, now + i * 0.15);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.15 + 0.3);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(now + i * 0.15);
+      osc.stop(now + i * 0.15 + 0.3);
+    });
+
+    // Clean up after sounds finish
+    setTimeout(() => ctx.close(), 1000);
+  } catch {
+    // AudioContext not available (e.g., SSR or blocked by browser)
+  }
+}
+
 /* ========== Component ========== */
 
 export default function StaffDashboardPage() {
@@ -41,17 +77,19 @@ export default function StaffDashboardPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [tables, setTables] = useState<TableInfo[]>([]);
+  const [waiterRequests, setWaiterRequests] = useState<WaiterRequest[]>([]);
   const [selectedSeat, setSelectedSeat] = useState<{
     table: string;
     seat: SeatInfo;
   } | null>(null);
+  const prevWaiterCountRef = useRef(0);
 
   const getToken = useCallback((): string | null => {
     if (typeof window === "undefined") return null;
     return localStorage.getItem("staff_token");
   }, []);
 
-  const fetchTables = useCallback(async () => {
+  const fetchData = useCallback(async () => {
     const token = getToken();
     if (!token) {
       router.push("/staff");
@@ -59,13 +97,17 @@ export default function StaffDashboardPage() {
     }
 
     try {
-      const result = await api.get<BackendTable[]>("/api/staff/tables");
+      const [tablesResult, waiterResult] = await Promise.all([
+        api.get<BackendTable[]>("/api/staff/tables"),
+        api.get<WaiterRequest[]>("/api/staff/waiter-requests").catch(() => [] as WaiterRequest[]),
+      ]);
+
       const statusMap: Record<string, DisplayStatus> = {
         grey: "empty",
         yellow: "waiting",
         green: "served",
       };
-      const mapped: TableInfo[] = result.map((t) => ({
+      const mapped: TableInfo[] = tablesResult.map((t) => ({
         table_number: String(t.table_number),
         seats: t.seats.map((s) => ({
           seat_number: s.seat_number,
@@ -75,6 +117,14 @@ export default function StaffDashboardPage() {
         })),
       }));
       setTables(mapped);
+
+      // Play sound when new waiter requests arrive
+      if (waiterResult.length > prevWaiterCountRef.current && prevWaiterCountRef.current >= 0) {
+        playNotificationSound();
+      }
+      prevWaiterCountRef.current = waiterResult.length;
+      setWaiterRequests(waiterResult);
+
       setError("");
     } catch (err) {
       if (err instanceof ApiError && (err.status === 401 || err.status === 403)) {
@@ -90,10 +140,32 @@ export default function StaffDashboardPage() {
 
   /* --- Initial load + polling --- */
   useEffect(() => {
-    fetchTables();
-    const interval = setInterval(fetchTables, 5000);
+    // Set to -1 so initial load doesn't trigger sound
+    prevWaiterCountRef.current = -1;
+    fetchData();
+    const interval = setInterval(fetchData, 5000);
     return () => clearInterval(interval);
-  }, [fetchTables]);
+  }, [fetchData]);
+
+  /* --- Acknowledge waiter request --- */
+  const acknowledgeRequest = useCallback(async (requestId: string) => {
+    try {
+      await api.post(`/api/staff/waiter-requests/${requestId}/acknowledge`);
+      setWaiterRequests((prev) => prev.filter((r) => r.id !== requestId));
+      prevWaiterCountRef.current = Math.max(0, prevWaiterCountRef.current - 1);
+    } catch {
+      // Will be removed on next poll if acknowledged
+    }
+  }, []);
+
+  /* --- Time ago helper --- */
+  function timeAgo(dateStr: string): string {
+    const diff = Math.floor((Date.now() - new Date(dateStr).getTime()) / 1000);
+    if (diff < 60) return "Just now";
+    const mins = Math.floor(diff / 60);
+    if (mins < 60) return `${mins}m ago`;
+    return `${Math.floor(mins / 60)}h ago`;
+  }
 
   /* --- Seat color --- */
   function seatColor(status: string): string {
@@ -126,7 +198,7 @@ export default function StaffDashboardPage() {
         <div className="text-center">
           <p className="mb-4 text-lg text-red-600">{error}</p>
           <button
-            onClick={fetchTables}
+            onClick={fetchData}
             className="min-h-[48px] rounded-xl bg-eco px-8 py-3 text-lg font-semibold text-white"
           >
             Retry
@@ -149,6 +221,44 @@ export default function StaffDashboardPage() {
           </p>
         </div>
       </div>
+
+      {/* Waiter Requests Banner */}
+      {waiterRequests.length > 0 && (
+        <div className="mx-auto max-w-2xl px-4 pt-3">
+          <div className="rounded-xl border-2 border-orange-300 bg-orange-50 p-3">
+            <div className="mb-2 flex items-center gap-2">
+              <span className="relative flex h-3 w-3">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-orange-400 opacity-75" />
+                <span className="relative inline-flex h-3 w-3 rounded-full bg-orange-500" />
+              </span>
+              <h3 className="text-sm font-bold text-orange-800">
+                {waiterRequests.length} Waiter Request{waiterRequests.length !== 1 ? "s" : ""}
+              </h3>
+            </div>
+            <div className="space-y-2">
+              {waiterRequests.map((req) => (
+                <div
+                  key={req.id}
+                  className="flex items-center justify-between rounded-lg bg-white px-3 py-2 shadow-sm"
+                >
+                  <div>
+                    <p className="text-sm font-semibold text-gray-900">
+                      Table {req.table_number}, Seat {req.seat_number}
+                    </p>
+                    <p className="text-xs text-gray-500">{timeAgo(req.created_at)}</p>
+                  </div>
+                  <button
+                    onClick={() => acknowledgeRequest(req.id)}
+                    className="rounded-lg bg-eco px-3 py-1.5 text-xs font-bold text-white active:bg-eco-dark"
+                  >
+                    On it
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Legend */}
       <div className="mx-auto max-w-2xl px-4 py-3">

@@ -502,6 +502,9 @@ export default function EventPreviewPage() {
                           {cat.name}
                         </h3>
                         <div className="space-y-1.5">
+                          {(cat.items || []).length === 0 && (
+                            <p className="text-xs opacity-40 italic py-1">No items added</p>
+                          )}
                           {(cat.items || [])
                             .sort((a, b) => a.display_order - b.display_order)
                             .map((item) => {
@@ -516,13 +519,18 @@ export default function EventPreviewPage() {
                                     backgroundColor: isSelected
                                       ? primaryColor
                                       : backgroundPhotoUrl
-                                      ? "rgba(255,255,255,0.1)"
+                                      ? "rgba(255,255,255,0.15)"
                                       : "#f5f5f5",
                                     color: isSelected
                                       ? "#ffffff"
                                       : backgroundPhotoUrl
                                       ? "#ffffff"
                                       : secondaryColor,
+                                    border: isSelected
+                                      ? `1px solid ${primaryColor}`
+                                      : backgroundPhotoUrl
+                                      ? "1px solid rgba(255,255,255,0.2)"
+                                      : "1px solid #e5e5e5",
                                     fontSize: previewFontSize,
                                     fontWeight: fontWeight === "bold" ? 700 : 400,
                                     fontStyle: fontStyle,
@@ -554,7 +562,7 @@ export default function EventPreviewPage() {
                                         </svg>
                                       )}
                                     </span>
-                                    <span className="text-sm">{item.name}</span>
+                                    <span className="text-sm font-medium">{item.name}</span>
                                   </span>
                                 </button>
                               );
@@ -563,6 +571,44 @@ export default function EventPreviewPage() {
                       </div>
                     ))}
                 </div>
+
+                {/* Order Summary (shows when items are selected) */}
+                {selectedItems.size > 0 && (
+                  <div className="mx-5 mb-3">
+                    <div
+                      className="rounded-xl p-3"
+                      style={{
+                        backgroundColor: backgroundPhotoUrl ? "rgba(255,255,255,0.12)" : "#f9fafb",
+                        border: backgroundPhotoUrl ? "1px solid rgba(255,255,255,0.15)" : "1px solid #e5e7eb",
+                      }}
+                    >
+                      <p
+                        className="text-xs font-bold uppercase tracking-wider mb-2"
+                        style={{ color: primaryColor }}
+                      >
+                        Your Selection
+                      </p>
+                      <div className="space-y-1">
+                        {categories
+                          .sort((a, b) => a.display_order - b.display_order)
+                          .flatMap((cat) =>
+                            (cat.items || [])
+                              .filter((item) => selectedItems.has(item.id))
+                              .map((item) => (
+                                <div
+                                  key={item.id}
+                                  className="flex items-center justify-between text-xs"
+                                  style={{ color: backgroundPhotoUrl ? "#ffffffcc" : "#6b7280" }}
+                                >
+                                  <span>{item.name}</span>
+                                  <span className="opacity-60">{cat.name}</span>
+                                </div>
+                              ))
+                          )}
+                      </div>
+                    </div>
+                  </div>
+                )}
 
                 {/* Request a Waiter button */}
                 <div className="px-5 pb-6 pt-2">

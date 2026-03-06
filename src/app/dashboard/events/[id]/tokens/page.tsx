@@ -16,14 +16,36 @@ interface TokenStats {
 }
 
 interface PaymentResponse {
-  authorization_url: string;
-  reference: string;
+  authorization_url: string | null;
+  reference: string | null;
+  original_amount: number | null;
+  final_amount: number | null;
+  discount_pct: number | null;
+  activated_directly: boolean;
 }
 
 interface EventData {
   id: string;
   name: string;
   total_tokens: number;
+  admin_discount_pct: number | null;
+}
+
+interface PricingData {
+  total_tokens: number;
+  price_per_token: number;
+  original_amount: number;
+  discount_pct: number;
+  discount_amount: number;
+  final_amount: number;
+  discount_source: string | null;
+}
+
+interface CodeValidation {
+  valid: boolean;
+  discount_type: string | null;
+  value: number | null;
+  message: string;
 }
 
 export default function TokenManagementPage() {
@@ -39,6 +61,13 @@ export default function TokenManagementPage() {
   const [downloading, setDownloading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+
+  // Discount state
+  const [discountCode, setDiscountCode] = useState("");
+  const [discountExpanded, setDiscountExpanded] = useState(false);
+  const [validatingCode, setValidatingCode] = useState(false);
+  const [codeValidation, setCodeValidation] = useState<CodeValidation | null>(null);
+  const [pricing, setPricing] = useState<PricingData | null>(null);
 
   const fetchStats = useCallback(async () => {
     try {
@@ -58,13 +87,59 @@ export default function TokenManagementPage() {
     }
   }, [eventId]);
 
+  const fetchPricing = useCallback(async (code?: string) => {
+    try {
+      const body = code ? { discount_code: code } : {};
+      const data = await api.post<PricingData>(
+        `/api/events/${eventId}/tokens/pricing`,
+        body
+      );
+      setPricing(data);
+    } catch {
+      // Non-critical — pricing preview is optional
+    }
+  }, [eventId]);
+
   useEffect(() => {
     const loadData = async () => {
-      await Promise.all([fetchStats(), fetchEvent()]);
+      await Promise.all([fetchStats(), fetchEvent(), fetchPricing()]);
       setLoading(false);
     };
     loadData();
-  }, [fetchStats, fetchEvent]);
+  }, [fetchStats, fetchEvent, fetchPricing]);
+
+  const handleApplyDiscount = async () => {
+    if (!discountCode.trim()) return;
+    setValidatingCode(true);
+    setCodeValidation(null);
+    try {
+      const result = await api.post<CodeValidation>("/api/discounts/validate", {
+        code: discountCode,
+      });
+      setCodeValidation(result);
+      if (result.valid) {
+        await fetchPricing(discountCode);
+      } else {
+        // Reset pricing to without code
+        await fetchPricing();
+      }
+    } catch (err) {
+      setCodeValidation({
+        valid: false,
+        discount_type: null,
+        value: null,
+        message: err instanceof Error ? err.message : "Failed to validate code",
+      });
+    } finally {
+      setValidatingCode(false);
+    }
+  };
+
+  const handleClearDiscount = async () => {
+    setDiscountCode("");
+    setCodeValidation(null);
+    await fetchPricing();
+  };
 
   const handleGenerate = async () => {
     setGenerating(true);
@@ -85,10 +160,17 @@ export default function TokenManagementPage() {
     setActivating(true);
     setError("");
     try {
+      const body = codeValidation?.valid && discountCode
+        ? { discount_code: discountCode }
+        : {};
       const data = await api.post<PaymentResponse>(
-        `/api/events/${eventId}/tokens/activate`
+        `/api/events/${eventId}/tokens/activate`,
+        body
       );
-      if (data.authorization_url) {
+      if (data.activated_directly) {
+        setSuccess("Tokens activated successfully!");
+        await fetchStats();
+      } else if (data.authorization_url) {
         window.location.href = data.authorization_url;
       } else {
         setSuccess("Tokens activated successfully!");
@@ -110,10 +192,17 @@ export default function TokenManagementPage() {
       await fetchStats();
       setGenerating(false);
       setActivating(true);
+      const body = codeValidation?.valid && discountCode
+        ? { discount_code: discountCode }
+        : {};
       const data = await api.post<PaymentResponse>(
-        `/api/events/${eventId}/tokens/activate`
+        `/api/events/${eventId}/tokens/activate`,
+        body
       );
-      if (data.authorization_url) {
+      if (data.activated_directly) {
+        setSuccess("Tokens activated successfully!");
+        await fetchStats();
+      } else if (data.authorization_url) {
         window.location.href = data.authorization_url;
       } else {
         setSuccess("Tokens activated successfully!");
@@ -167,10 +256,92 @@ export default function TokenManagementPage() {
   }
 
   const totalTokens = event?.total_tokens ?? 0;
-  const amount = totalTokens * 100;
+  const amount = totalTokens * 250;
+  const hasDiscount = pricing && pricing.discount_pct > 0;
+  const displayAmount = hasDiscount ? pricing.final_amount : amount;
   const isNoTokens = !stats || stats.total === 0;
   const isGenerated = stats !== null && stats.inactive > 0;
   const isActivated = stats !== null && stats.active > 0 && stats.inactive === 0;
+
+  const discountSection = (isNoTokens || isGenerated) && (
+    <div className="mt-4 text-left">
+      {/* Discount code toggle */}
+      {!discountExpanded ? (
+        <button
+          onClick={() => setDiscountExpanded(true)}
+          className="text-sm text-eco hover:text-eco-dark underline"
+        >
+          Have a discount code?
+        </button>
+      ) : (
+        <div className="rounded-lg border t-border p-4 t-bg">
+          <p className="text-sm font-medium t-text mb-2">Discount Code</p>
+          <div className="flex gap-2">
+            <input
+              type="text"
+              value={discountCode}
+              onChange={(e) => setDiscountCode(e.target.value.toUpperCase())}
+              placeholder="Enter code"
+              className="flex-1 rounded-lg border t-border px-3 py-2 text-sm t-text t-bg-card focus:outline-none focus:ring-2 focus:ring-eco"
+            />
+            {codeValidation?.valid ? (
+              <button
+                onClick={handleClearDiscount}
+                className="rounded-lg border border-red-300 px-4 py-2 text-sm font-medium text-red-600 hover:bg-red-50"
+              >
+                Clear
+              </button>
+            ) : (
+              <button
+                onClick={handleApplyDiscount}
+                disabled={validatingCode || !discountCode.trim()}
+                className="rounded-lg bg-eco px-4 py-2 text-sm font-medium text-white hover:bg-eco-dark disabled:opacity-50"
+              >
+                {validatingCode ? "..." : "Apply"}
+              </button>
+            )}
+          </div>
+          {codeValidation && (
+            <p className={`mt-2 text-xs ${codeValidation.valid ? "text-emerald-600" : "text-red-600"}`}>
+              {codeValidation.message}
+              {codeValidation.valid && codeValidation.discount_type === "percentage" && (
+                <> ({codeValidation.value}% off)</>
+              )}
+              {codeValidation.valid && codeValidation.discount_type === "fixed" && (
+                <> ({"\u20A6"}{Number(codeValidation.value).toLocaleString()} off)</>
+              )}
+            </p>
+          )}
+        </div>
+      )}
+
+      {/* Updated pricing display */}
+      {hasDiscount && (
+        <div className="mt-3 rounded-lg border border-emerald-200 bg-emerald-50 p-3">
+          <div className="flex items-center justify-between text-sm">
+            <span className="t-text-muted">Original price:</span>
+            <span className="line-through t-text-muted">
+              {"\u20A6"}{pricing.original_amount.toLocaleString()}
+            </span>
+          </div>
+          <div className="flex items-center justify-between text-sm mt-1">
+            <span className="t-text-muted">
+              Discount ({pricing.discount_pct}%{pricing.discount_source === "admin" ? " - Event discount" : ""}):
+            </span>
+            <span className="text-emerald-600 font-medium">
+              -{"\u20A6"}{pricing.discount_amount.toLocaleString()}
+            </span>
+          </div>
+          <div className="flex items-center justify-between text-sm mt-1 pt-1 border-t border-emerald-200">
+            <span className="font-semibold t-text">Final price:</span>
+            <span className="font-bold text-emerald-700">
+              {"\u20A6"}{pricing.final_amount.toLocaleString()}
+            </span>
+          </div>
+        </div>
+      )}
+    </div>
+  );
 
   return (
     <div className="mx-auto max-w-4xl">
@@ -214,13 +385,21 @@ export default function TokenManagementPage() {
           <p className="mt-2 t-text-muted">
             Total tokens to create: <span className="font-semibold t-text">{totalTokens}</span>.
             Total amount:{" "}
-            <span className="font-semibold t-text">
+            <span className={`font-semibold t-text ${hasDiscount ? "line-through text-gray-400" : ""}`}>
               {"\u20A6"}{amount.toLocaleString()}
-            </span>.
+            </span>
+            {hasDiscount && (
+              <span className="font-semibold text-emerald-600 ml-2">
+                {"\u20A6"}{displayAmount.toLocaleString()}
+              </span>
+            )}
           </p>
           <p className="mt-1 text-xs t-text-muted">
-            {"\u20A6"}100 per token
+            {"\u20A6"}250 per token
           </p>
+
+          {discountSection}
+
           <button
             onClick={handleConfirmAndPay}
             disabled={generating || activating}
@@ -269,8 +448,19 @@ export default function TokenManagementPage() {
           <h2 className="text-lg font-semibold t-text">Tokens generated. Awaiting payment.</h2>
           <p className="mt-2 t-text-muted">
             {stats.inactive} token{stats.inactive !== 1 ? "s" : ""} pending activation.
-            Total: {"\u20A6"}{(stats.inactive * 100).toLocaleString()}
+            Total:{" "}
+            <span className={hasDiscount ? "line-through text-gray-400" : ""}>
+              {"\u20A6"}{(stats.inactive * 250).toLocaleString()}
+            </span>
+            {hasDiscount && (
+              <span className="font-semibold text-emerald-600 ml-2">
+                {"\u20A6"}{pricing.final_amount.toLocaleString()}
+              </span>
+            )}
           </p>
+
+          {discountSection}
+
           <button
             onClick={handleActivate}
             disabled={activating}

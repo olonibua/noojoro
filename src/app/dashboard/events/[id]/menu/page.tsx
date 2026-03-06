@@ -23,6 +23,8 @@ interface MenuCategory {
 
 interface EventInfo {
   total_tokens: number;
+  table_count: number;
+  guests_per_table: number;
 }
 
 // Predefined category options
@@ -82,7 +84,7 @@ export default function MenuBuilderPage() {
       ]);
       const data = menuRes.categories;
       setCategories(Array.isArray(data) ? data : []);
-      setTotalGuests(eventRes.total_tokens || 0);
+      setTotalGuests(eventRes.table_count * eventRes.guests_per_table || 0);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to load menu");
     } finally {

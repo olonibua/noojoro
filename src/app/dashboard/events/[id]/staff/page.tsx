@@ -9,6 +9,7 @@ interface Staff {
   id: string;
   name: string;
   pin?: string;
+  event_code?: string;
   table_range_start?: number;
   table_range_end?: number;
   role?: string;
@@ -317,19 +318,27 @@ export default function StaffManagementPage() {
                   </div>
                 ) : (
                   <div className="flex items-center justify-between">
-                    <div>
+                    <div className="flex-1 min-w-0">
                       <p className="font-medium t-text">{s.name}</p>
-                      <div className="mt-1 flex flex-wrap gap-3 text-xs t-text-muted">
-                        {s.pin && <span>PIN: {s.pin}</span>}
-                        {s.table_range_start != null && s.table_range_end != null && (
-                          <span>
-                            Tables {s.table_range_start}-{s.table_range_end}
+                      <div className="mt-1.5 flex flex-wrap gap-2">
+                        {s.event_code && (
+                          <span className="inline-flex items-center gap-1 rounded bg-blue-50 px-2 py-0.5 text-xs font-mono font-semibold text-blue-700 border border-blue-200">
+                            ID: {s.event_code}
                           </span>
                         )}
-                        {s.role && <span className="capitalize">{s.role}</span>}
+                        {s.pin && (
+                          <span className="inline-flex items-center gap-1 rounded bg-purple-50 px-2 py-0.5 text-xs font-mono font-semibold text-purple-700 border border-purple-200">
+                            PIN: {s.pin}
+                          </span>
+                        )}
+                        {s.table_range_start != null && s.table_range_end != null && (
+                          <span className="inline-flex items-center rounded bg-gray-100 px-2 py-0.5 text-xs t-text-muted border t-border">
+                            Tables {s.table_range_start}&ndash;{s.table_range_end}
+                          </span>
+                        )}
                       </div>
                     </div>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 shrink-0 ml-3">
                       <button
                         onClick={() => startEdit(s)}
                         className="rounded px-2 py-1 text-xs font-medium t-text-muted hover:t-bg-secondary transition-colors"

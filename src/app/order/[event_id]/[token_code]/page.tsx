@@ -431,144 +431,217 @@ export default function GuestCateringOrderPage() {
     const allSelected = tokenData.menu.every(
       (g) => selections[g.category] !== undefined
     );
+    const selectedItems = getSelectedItems();
+    const hasSelections = selectedItems.length > 0;
 
     return (
-      <div className="min-h-screen guest-bg pb-40">
-        {/* Header */}
-        <div className="guest-header sticky top-0 z-10 px-4 py-4">
-          <h1 className="text-center text-xl font-bold text-gray-900">
-            {tokenData.event_name}
-          </h1>
-          <p className="mt-1 text-center text-sm text-gray-400">
-            Select one item per category
-          </p>
-        </div>
-
-        {/* Celebrant Message */}
-        {tokenData.celebrant_message && (
-          <div className="mx-auto max-w-lg px-4 pt-4">
-            <p
-              className="rounded-xl bg-gray-50 p-4 text-gray-600"
-              style={{
-                fontFamily: tokenData.fontStyle.fontFamily,
-                fontSize: tokenData.fontStyle.fontSize,
-                fontWeight: tokenData.fontStyle.fontWeight,
-                fontStyle: tokenData.fontStyle.fontStyle,
-                letterSpacing: tokenData.fontStyle.letterSpacing,
-                textAlign: tokenData.fontStyle.textAlign,
-              }}
-            >
-              {tokenData.celebrant_message}
-            </p>
+      <div className="relative min-h-screen pb-28">
+        {/* Background photo */}
+        {tokenData.background_photo && (
+          <div
+            className="fixed inset-0 bg-cover bg-center"
+            style={{ backgroundImage: `url(${tokenData.background_photo.url})` }}
+          >
+            <div className="absolute inset-0 bg-black/60" />
           </div>
         )}
+        {!tokenData.background_photo && (
+          <div className="fixed inset-0" style={{ background: "linear-gradient(180deg, #1A1A1A 0%, #0F0F0F 100%)" }} />
+        )}
 
-        {/* Categories */}
-        <div
-          className="mx-auto max-w-lg px-4 py-4"
-          style={{
-            fontFamily: tokenData.fontStyle.fontFamily,
-            fontSize: tokenData.fontStyle.fontSize,
-            fontWeight: tokenData.fontStyle.fontWeight,
-            fontStyle: tokenData.fontStyle.fontStyle,
-            letterSpacing: tokenData.fontStyle.letterSpacing,
-            textAlign: tokenData.fontStyle.textAlign,
-          }}
-        >
-          {tokenData.menu.map((group) => (
-            <div key={group.category} className="mb-8">
-              <h2
-                className="mb-3 text-lg font-bold"
-                style={{ color: themeColor }}
+        <div className="relative z-10">
+          {/* Header */}
+          <div className="px-4 pt-6 pb-2">
+            <h1
+              className="text-center text-2xl font-bold"
+              style={{ color: themeColor }}
+            >
+              {tokenData.event_name}
+            </h1>
+            <p
+              className="mt-1 text-center text-sm"
+              style={{ color: tokenData.background_photo ? "rgba(255,255,255,0.6)" : "#9CA3AF" }}
+            >
+              Select one item per category
+            </p>
+          </div>
+
+          {/* Celebrant Message */}
+          {tokenData.celebrant_message && (
+            <div className="mx-auto max-w-lg px-4 pt-2 pb-2">
+              <p
+                className="rounded-xl p-4"
+                style={{
+                  fontFamily: tokenData.fontStyle.fontFamily,
+                  fontSize: tokenData.fontStyle.fontSize,
+                  fontWeight: tokenData.fontStyle.fontWeight,
+                  fontStyle: tokenData.fontStyle.fontStyle,
+                  letterSpacing: tokenData.fontStyle.letterSpacing,
+                  textAlign: tokenData.fontStyle.textAlign,
+                  color: tokenData.background_photo ? "rgba(255,255,255,0.8)" : "#4B5563",
+                  backgroundColor: tokenData.background_photo ? "rgba(0,0,0,0.3)" : "#F9FAFB",
+                }}
               >
-                {group.category}
-              </h2>
-              <div className="space-y-3">
-                {group.items.map((item) => {
-                  const isSelected = selections[group.category] === item.id;
-                  const isDepleted = item.is_depleted;
+                {tokenData.celebrant_message}
+              </p>
+            </div>
+          )}
 
-                  return (
-                    <button
-                      key={item.id}
-                      disabled={isDepleted}
-                      onClick={() => selectItem(group.category, item.id)}
-                      className={`flex w-full items-center gap-4 rounded-xl border-2 p-4 text-left transition-colors ${
-                        isDepleted
-                          ? "cursor-not-allowed border-gray-200 bg-gray-50 opacity-60"
-                          : isSelected
-                          ? "border-current bg-opacity-5"
-                          : "border-gray-200 bg-white active:bg-gray-50"
-                      }`}
-                      style={
-                        isSelected && !isDepleted
-                          ? { borderColor: themeColor, backgroundColor: themeColor + "0D" }
-                          : undefined
-                      }
-                    >
-                      {/* Radio circle */}
-                      <div
-                        className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2"
+          {/* Categories with items */}
+          <div className="mx-auto max-w-lg px-4 py-4">
+            {tokenData.menu.map((group) => (
+              <div key={group.category} className="mb-6">
+                <h2
+                  className="mb-3 text-lg font-bold uppercase tracking-wide"
+                  style={{ color: themeColor }}
+                >
+                  {group.category}
+                </h2>
+                <div className="space-y-2">
+                  {group.items.map((item) => {
+                    const isSelected = selections[group.category] === item.id;
+                    const isDepleted = item.is_depleted;
+
+                    return (
+                      <button
+                        key={item.id}
+                        disabled={isDepleted}
+                        onClick={() => selectItem(group.category, item.id)}
+                        className={`flex w-full items-center gap-3 rounded-xl px-4 py-3 text-left transition-all ${
+                          isDepleted ? "cursor-not-allowed opacity-40" : ""
+                        }`}
                         style={{
-                          borderColor: isSelected ? themeColor : "#D1D5DB",
-                          backgroundColor: isSelected ? themeColor : "transparent",
+                          backgroundColor: isDepleted
+                            ? "rgba(255,255,255,0.05)"
+                            : isSelected
+                            ? themeColor
+                            : "rgba(255,255,255,0.1)",
+                          border: isSelected
+                            ? `2px solid ${themeColor}`
+                            : "2px solid transparent",
                         }}
                       >
-                        {isSelected && (
-                          <svg className="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                          </svg>
-                        )}
-                      </div>
+                        {/* Radio circle */}
+                        <div
+                          className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2"
+                          style={{
+                            borderColor: isSelected ? "#FFFFFF" : "rgba(255,255,255,0.4)",
+                            backgroundColor: isSelected ? "#FFFFFF" : "transparent",
+                          }}
+                        >
+                          {isSelected && (
+                            <svg className="h-3.5 w-3.5" style={{ color: themeColor }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                            </svg>
+                          )}
+                        </div>
 
-                      {/* Item image */}
-                      {item.image_url && (
-                        <img
-                          src={item.image_url}
-                          alt={item.name}
-                          className="h-14 w-14 shrink-0 rounded-lg object-cover"
-                        />
-                      )}
+                        {/* Item image */}
+                        {item.image_url && (
+                          <img
+                            src={item.image_url}
+                            alt={item.name}
+                            className="h-12 w-12 shrink-0 rounded-lg object-cover"
+                          />
+                        )}
 
-                      {/* Item info */}
-                      <div className="flex-1">
-                        <p className="text-base font-semibold text-gray-900">
-                          {item.name}
-                        </p>
-                        {item.description && (
-                          <p className="mt-0.5 text-sm text-gray-500">
-                            {item.description}
+                        {/* Item info */}
+                        <div className="flex-1">
+                          <p
+                            className="text-base font-semibold"
+                            style={{ color: isSelected ? "#FFFFFF" : "rgba(255,255,255,0.9)" }}
+                          >
+                            {item.name}
                           </p>
-                        )}
-                        {isDepleted && (
-                          <p className="mt-1 text-sm font-medium text-red-500">
-                            Sorry, this meal is finished
-                          </p>
-                        )}
-                      </div>
-                    </button>
-                  );
-                })}
+                          {item.description && (
+                            <p
+                              className="mt-0.5 text-sm"
+                              style={{ color: isSelected ? "rgba(255,255,255,0.8)" : "rgba(255,255,255,0.5)" }}
+                            >
+                              {item.description}
+                            </p>
+                          )}
+                          {isDepleted && (
+                            <p className="mt-1 text-sm font-medium text-red-400">
+                              Sorry, this meal is finished
+                            </p>
+                          )}
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Inline order summary */}
+          {hasSelections && (
+            <div className="mx-auto max-w-lg px-4 pb-4">
+              <div
+                className="rounded-2xl p-4"
+                style={{ backgroundColor: "rgba(0,0,0,0.4)", backdropFilter: "blur(12px)" }}
+              >
+                <h3
+                  className="mb-3 text-xs font-semibold uppercase tracking-wider"
+                  style={{ color: "rgba(255,255,255,0.5)" }}
+                >
+                  Your Order ({selectedItems.length}/{tokenData.menu.length})
+                </h3>
+                <div className="space-y-2">
+                  {selectedItems.map(({ category, item }) => (
+                    <div
+                      key={category}
+                      className="flex items-center justify-between"
+                    >
+                      <span className="text-xs uppercase tracking-wide" style={{ color: "rgba(255,255,255,0.5)" }}>
+                        {category}
+                      </span>
+                      <span className="text-sm font-medium" style={{ color: "#FFFFFF" }}>
+                        {item.name}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+                <button
+                  disabled={!allSelected}
+                  onClick={placeOrder}
+                  className="mt-4 min-h-[48px] w-full rounded-full px-6 py-3 text-base font-bold text-white transition-all disabled:opacity-40"
+                  style={{
+                    backgroundColor: themeColor,
+                    boxShadow: allSelected ? `0 8px 24px ${themeColor}33` : "none",
+                  }}
+                >
+                  {allSelected ? "Place Order" : `Select ${tokenData.menu.length - selectedItems.length} more`}
+                </button>
               </div>
             </div>
-          ))}
-        </div>
+          )}
 
-        {/* Fixed bottom bar */}
-        <div className="guest-bottom-bar fixed bottom-0 left-0 right-0 px-4 py-4">
-          <div className="mx-auto max-w-lg space-y-3">
-            <button
-              disabled={!allSelected}
-              onClick={() => setPhase("summary")}
-              className="min-h-[52px] w-full rounded-full px-6 py-3 text-lg font-bold text-white transition-all disabled:opacity-40"
-              style={{ backgroundColor: themeColor, boxShadow: allSelected ? `0 8px 24px ${themeColor}33` : 'none' }}
-            >
-              Review Order ({Object.keys(selections).length}/{tokenData.menu.length})
-            </button>
+          {/* Request a Waiter — always visible at bottom */}
+          <div className="mx-auto max-w-lg px-4 pb-6">
             <button
               onClick={requestWaiter}
               disabled={waiterLoading || waiterRequested}
-              className={`min-h-[48px] w-full rounded-full border px-6 py-3 text-base font-semibold transition-colors disabled:opacity-60 ${waiterError ? "border-red-200 text-red-500 bg-red-50/50" : waiterRequested ? "border-emerald-200 text-emerald-600 bg-emerald-50/50" : "border-gray-200 text-gray-600 active:bg-gray-50"}`}
+              className={`min-h-[52px] w-full rounded-full px-6 py-3 text-base font-semibold transition-colors disabled:opacity-60`}
+              style={{
+                backgroundColor: waiterError
+                  ? "rgba(239,68,68,0.15)"
+                  : waiterRequested
+                  ? "rgba(16,185,129,0.15)"
+                  : "rgba(255,255,255,0.12)",
+                color: waiterError
+                  ? "#EF4444"
+                  : waiterRequested
+                  ? "#10B981"
+                  : "rgba(255,255,255,0.8)",
+                border: "1px solid",
+                borderColor: waiterError
+                  ? "rgba(239,68,68,0.3)"
+                  : waiterRequested
+                  ? "rgba(16,185,129,0.3)"
+                  : "rgba(255,255,255,0.15)",
+              }}
             >
               {waiterLoading ? "Notifying..." : waiterRequested ? "Waiter Notified!" : waiterError ? "Failed — Tap to Retry" : "Request a Waiter"}
             </button>
